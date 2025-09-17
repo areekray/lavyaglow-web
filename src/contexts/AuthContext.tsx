@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import type { AuthContextType, User } from '@/types';
 import { supabase } from '@/services/supabase';
 import { useCart } from './CartContext';
@@ -214,7 +214,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('profiles')
         .update({
           full_name: updates.full_name,

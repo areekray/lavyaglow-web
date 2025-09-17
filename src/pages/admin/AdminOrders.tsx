@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function AdminOrders() {
   return (
     <div className="admin-section">

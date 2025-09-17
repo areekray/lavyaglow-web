@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { Product } from '@/types';
 import { priceOptimizer, type PriceBreakdown } from '@/utils/priceOptimizer';
 import { useCart } from '@/contexts/CartContext';
@@ -19,7 +19,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
   const [breakdown, setBreakdown] = useState<PriceBreakdown | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  const { addToCart, getCartItem } = useCart();
+  const { addToCart } = useCart();
 
   // FIXED: Calculate optimal pricing with correct actual_price usage
   useEffect(() => {
@@ -97,11 +97,11 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
     
     try {
       // Check if similar item already exists in cart
-      const existingItem = getCartItem(
-        product.id, 
-        purchaseMode, 
-        purchaseMode === 'set' ? selectedSet : undefined
-      );
+      // const existingItem = getCartItem(
+      //   product.id, 
+      //   purchaseMode, 
+      //   purchaseMode === 'set' ? selectedSet : undefined
+      // );
 
       // Add to cart
       addToCart({

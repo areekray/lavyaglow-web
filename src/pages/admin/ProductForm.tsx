@@ -74,7 +74,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
   useEffect(() => {
   // Auto-update set prices when actual price changes
   if (watchActualPrice > 0 && priceSetFields.length > 0) {
-    priceSetFields.forEach((field, index) => {
+    priceSetFields.forEach((_field, index) => {
       const setQuantity = watch(`price_sets.${index}.set_quantity` as const);
       if (setQuantity) {
         // Auto-calculate actual price for set
@@ -187,7 +187,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
       }
 
       // Handle price sets - now data.price_sets will exist
-      for (const [index, priceSetData] of data.price_sets.entries()) {
+      for (const priceSetData of data.price_sets) {
         if (priceSetData.id && priceSetData.id.startsWith('temp-')) {
           // Create new price set
           await productService.createPriceSet(savedProduct.id, {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import type { Product } from '@/types';
 import { productService } from '@/services/productService';
 import { ProductForm } from './ProductForm';
@@ -59,7 +59,7 @@ export function AdminProducts() {
     setEditingProduct(null);
   };
 
-  const handleFormSave = async (savedProduct: Product) => {
+  const handleFormSave = async () => {
     setShowForm(false);
     setEditingProduct(null);
     loadProducts();

@@ -145,7 +145,7 @@ export const priceOptimizer = {
     );
 
     const isOptimized = optimizedResult.totalPrice < naivePrice;
-    const setOptimizationSavings = naivePrice - optimizedResult.totalPrice;
+    // const setOptimizationSavings = naivePrice - optimizedResult.totalPrice;
 
     let optimizationMessage = '';
     if (isOptimized) {
