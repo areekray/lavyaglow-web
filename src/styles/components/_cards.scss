@@ -1,0 +1,87 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.product-card {
+  @include card;
+  overflow: hidden;
+  transition: all $transition-luxury;
+  
+  &__image {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    position: relative;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform $transition-luxury;
+    }
+  }
+  
+  &__content {
+    padding: $spacing-lg;
+  }
+  
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $luxury-text;
+    margin-bottom: $spacing-sm;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  &__category {
+    font-size: $font-size-xs;
+    color: $primary-color;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: $spacing-md;
+    font-weight: $font-weight-medium;
+  }
+  
+  &__price {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__stock {
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    
+    &--in-stock {
+      background-color: rgba($success-color, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(#4ade80, 0.3);
+    }
+    
+    &--out-of-stock {
+      background-color: rgba($error-color, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(#f87171, 0.3);
+    }
+  }
+  
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: $shadow-luxury;
+    border-color: $primary-color;
+    
+    .product-card__image img {
+      transform: scale(1.05);
+    }
+  }
+}

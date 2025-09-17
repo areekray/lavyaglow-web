@@ -1,0 +1,56 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: $spacing-md;
+  color: $luxury-text;
+}
+
+h1 {
+  font-size: $font-size-4xl;
+  @include respond-to(md) {
+    font-size: $font-size-5xl;
+  }
+  @include respond-to(lg) {
+    font-size: $font-size-6xl;
+  }
+}
+
+h2 {
+  font-size: $font-size-3xl;
+  @include respond-to(md) {
+    font-size: $font-size-4xl;
+  }
+}
+
+h3 {
+  font-size: $font-size-2xl;
+  @include respond-to(md) {
+    font-size: $font-size-3xl;
+  }
+}
+
+h4 {
+  font-size: $font-size-xl;
+  @include respond-to(md) {
+    font-size: $font-size-2xl;
+  }
+}
+
+p {
+  margin-bottom: $spacing-md;
+  color: $luxury-text-secondary;
+  line-height: 1.6;
+}
+
+// Utility classes
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-primary { color: $primary-color; }
+.text-luxury { color: $luxury-text; }
+.text-muted { color: $luxury-text-muted; }

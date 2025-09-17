@@ -1,0 +1,103 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.form-group {
+  margin-bottom: $spacing-lg;
+  
+  &__label {
+    display: block;
+    font-weight: $font-weight-medium;
+    color: $luxury-text;
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  &__input {
+    width: 100%;
+    padding: $spacing-md $spacing-lg;
+    background-color: $dark-tertiary;
+    border: 2px solid $dark-secondary;
+    border-radius: $border-radius-lg;
+    color: $luxury-text;
+    font-size: $font-size-base;
+    transition: all $transition-normal;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+      background-color: $dark-bg;
+    }
+    
+    &::placeholder {
+      color: $luxury-text-muted;
+    }
+    
+    &--error {
+      border-color: $error-color;
+    }
+  }
+  
+  &__error {
+    color: $error-color;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+    display: block;
+  }
+  
+  &__hint {
+    color: $luxury-text-muted;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+    display: block;
+  }
+}
+
+.auth-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: $spacing-3xl;
+  background-color: $dark-secondary;
+  border-radius: $border-radius-2xl;
+  box-shadow: $shadow-luxury;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    
+    h1 {
+      @include text-gradient;
+      margin-bottom: $spacing-sm;
+      font-family: $font-family-heading;
+    }
+    
+    p {
+      color: $luxury-text-secondary;
+      font-style: italic;
+    }
+  }
+  
+  &__footer {
+    text-align: center;
+    margin-top: $spacing-xl;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $dark-tertiary;
+    
+    p {
+      margin-bottom: 0;
+    }
+    
+    a {
+      color: $primary-color;
+      font-weight: $font-weight-medium;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      
+      &:hover {
+        color: $primary-light;
+      }
+    }
+  }
+}

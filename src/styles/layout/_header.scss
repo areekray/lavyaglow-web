@@ -1,0 +1,134 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.header-luxury {
+  background-color: $dark-bg;
+  border-bottom: 1px solid $dark-tertiary;
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  backdrop-filter: blur(10px);
+  
+  &__container {
+    @include container;
+    @include flex-between;
+    height: 5rem;
+    padding: 0 $spacing-xl;
+  }
+  
+  &__nav {
+    @include flex-center;
+    gap: $spacing-xl;
+    
+    &--left {
+      flex: 1;
+      justify-content: flex-start;
+    }
+    
+    &--right {
+      flex: 1;
+      justify-content: flex-end;
+      gap: $spacing-lg;
+    }
+  }
+  
+  &__link {
+    color: $luxury-text;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all $transition-normal;
+    position: relative;
+    padding: $spacing-sm 0;
+    
+    &:hover {
+      color: $primary-color;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: $primary-color;
+      transition: width $transition-normal;
+    }
+    
+    &:hover::after {
+      width: 100%;
+    }
+  }
+  
+  &__logo {
+    @include flex-center;
+    flex-direction: column;
+    z-index: $z-modal + 1;
+  }
+
+  &__logo-container {
+    @include flex-center;
+  }
+
+  &__logo-icon {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba($primary-color, 0.3));
+    
+    @include respond-to(md) {
+      width: 248px;
+      height: 248px;
+    }
+    
+    @include respond-to(sm) {
+      width: 232px;
+      height: 232px;
+    }
+  }
+  
+  &__logo-main {
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $primary-color;
+    letter-spacing: 2px;
+    display: block;
+    
+    @include respond-to(md) {
+      font-size: $font-size-3xl;
+    }
+  }
+
+  
+  &__cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: $luxury-text;
+    transition: all $transition-normal;
+    padding: $spacing-sm;
+    
+    &:hover {
+      color: $primary-color;
+    }
+    
+    &-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: $primary-color;
+      color: $dark-bg;
+      font-size: 10px;
+      font-weight: $font-weight-bold;
+      border-radius: $border-radius-full;
+      width: 18px;
+      height: 18px;
+      @include flex-center;
+      transform: translate(50%, -50%);
+    }
+  }
+}

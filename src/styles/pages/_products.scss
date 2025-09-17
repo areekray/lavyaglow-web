@@ -1,0 +1,598 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.products-page {
+  min-height: 100vh;
+  background-color: $dark-bg;
+  padding: $spacing-2xl 0;
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-3xl;
+    
+    @include respond-to-max(sm) {
+      margin-bottom: $spacing-2xl;
+    }
+  }
+  
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    color: $luxury-text;
+    margin-bottom: $spacing-md;
+    
+    @include respond-to-max(md) {
+      font-size: $font-size-3xl;
+    }
+    
+    @include respond-to-max(sm) {
+      font-size: $font-size-2xl;
+    }
+  }
+  
+  &__subtitle {
+    color: $luxury-text-secondary;
+    font-size: $font-size-lg;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  &__filters {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: $spacing-xl;
+    align-items: end;
+    margin-bottom: $spacing-3xl;
+    padding: $spacing-xl;
+    background-color: $dark-secondary;
+    border-radius: $border-radius-xl;
+    
+    @include respond-to-max(md) {
+      grid-template-columns: 1fr;
+      gap: $spacing-lg;
+      text-align: center;
+    }
+  }
+  
+  &__results-info {
+    justify-self: end;
+    color: $luxury-text-muted;
+    font-size: $font-size-sm;
+    
+    @include respond-to-max(md) {
+      justify-self: center;
+    }
+  }
+  
+  &__loading {
+    @include flex-center;
+    flex-direction: column;
+    padding: $spacing-4xl;
+    color: $luxury-text-muted;
+    
+    .loading__spinner {
+      margin-bottom: $spacing-lg;
+    }
+  }
+  
+  &__error {
+    text-align: center;
+    padding: $spacing-4xl;
+    background-color: $dark-secondary;
+    border-radius: $border-radius-xl;
+    
+    h3 {
+      color: $luxury-text;
+      margin-bottom: $spacing-md;
+    }
+    
+    p {
+      color: $luxury-text-muted;
+      margin-bottom: $spacing-xl;
+    }
+  }
+  
+  &__empty {
+    text-align: center;
+    padding: $spacing-4xl;
+    
+    h3 {
+      color: $luxury-text;
+      margin-bottom: $spacing-md;
+    }
+    
+    p {
+      color: $luxury-text-muted;
+      margin-bottom: $spacing-xl;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    &-actions {
+      display: flex;
+      gap: $spacing-lg;
+      justify-content: center;
+      
+      @include respond-to-max(sm) {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+  
+  &__back-to-top {
+    text-align: center;
+    margin-top: $spacing-3xl;
+  }
+}
+
+// Filter Components
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  
+  &__label {
+    color: $luxury-text;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+  }
+  
+  &__select,
+  &__input {
+    padding: $spacing-md $spacing-lg;
+    background-color: $dark-tertiary;
+    border: 2px solid $dark-secondary;
+    border-radius: $border-radius-lg;
+    color: $luxury-text;
+    font-size: $font-size-base;
+    transition: all $transition-normal;
+    min-width: 200px;
+    
+    @include respond-to-max(md) {
+      min-width: auto;
+      width: 100%;
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+  }
+  
+  &__input::placeholder {
+    color: $luxury-text-muted;
+  }
+}
+
+// Products Grid
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-2xl;
+  
+  @include respond-to-max(md) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: $spacing-xl;
+  }
+  
+  @include respond-to-max(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Product Card
+.product-card {
+  @include card;
+  overflow: hidden;
+  transition: transform $transition-normal;
+  cursor: pointer;
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+  
+  &__image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform $transition-normal;
+    
+    .product-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+  
+  &__featured-badge {
+    position: absolute;
+    top: $spacing-md;
+    left: $spacing-md;
+    background: linear-gradient(135deg, $primary-color, $primary-light);
+    color: $dark-bg;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  &__stock-badge {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    
+    &.stock-status--in-stock,
+    &.stock-status--bulk {
+      background-color: rgba(#22c55e, 0.9);
+      color: white;
+    }
+    
+    &.stock-status--out-of-stock {
+      background-color: rgba(#ef4444, 0.9);
+      color: white;
+    }
+  }
+  
+  &__content {
+    padding: $spacing-xl;
+  }
+  
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    color: $luxury-text;
+    margin-bottom: $spacing-xs;
+    line-height: 1.3;
+  }
+  
+  &__category {
+    color: $primary-color;
+    font-size: $font-size-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: $spacing-sm;
+    font-weight: $font-weight-medium;
+  }
+  
+  &__price {
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    color: $primary-color;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &__stock {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    margin-bottom: $spacing-md;
+    
+    &.stock-status--in-stock,
+    &.stock-status--bulk {
+      color: #22c55e;
+    }
+    
+    &.stock-status--out-of-stock {
+      color: #ef4444;
+    }
+  }
+  
+  &__description {
+    color: $luxury-text-secondary;
+    font-size: $font-size-sm;
+    line-height: 1.5;
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__characteristics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-lg;
+  }
+  
+  &__actions {
+    margin-top: auto;
+  }
+}
+
+.characteristic-tag {
+  padding: $spacing-xs $spacing-sm;
+  background-color: $dark-bg;
+  border: 1px solid $dark-tertiary;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  color: $luxury-text-secondary;
+}
+
+// Pricing Styles
+.product-card__pricing {
+  margin-bottom: $spacing-lg;
+  
+  .product-card__price-actual {
+    color: $luxury-text-muted;
+    text-decoration: line-through;
+    font-size: $font-size-lg;
+    margin-right: $spacing-sm;
+  }
+  
+  .product-card__price-discounted {
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    color: $primary-color;
+    font-weight: $font-weight-bold;
+    margin-right: $spacing-sm;
+  }
+  
+  .product-card__price-single {
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    color: $primary-color;
+    font-weight: $font-weight-bold;
+  }
+  
+  .product-card__discount-percentage {
+    color: #4ade80;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+// Discount Badge
+.product-card__discount-badge {
+  position: absolute;
+  bottom: $spacing-md;
+  left: $spacing-md;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transform: rotate(-10deg);
+}
+
+// Set Pricing
+.product-card__sets {
+  background-color: rgba($primary-color, 0.1);
+  border: 1px solid rgba($primary-color, 0.2);
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-lg;
+  
+  h4 {
+    color: $primary-color;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-sm;
+  }
+  
+  &-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+  
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: $font-size-xs;
+    
+    .set-quantity {
+      color: $luxury-text;
+      font-weight: $font-weight-medium;
+    }
+    
+    .set-pricing {
+      display: flex;
+      align-items: center;
+      gap: $spacing-xs;
+    }
+    
+    .set-price-actual {
+      color: $luxury-text-muted;
+      text-decoration: line-through;
+      font-size: $font-size-xs;
+    }
+    
+    .set-price-discounted {
+      color: $primary-color;
+      font-weight: $font-weight-semibold;
+    }
+    
+    .set-discount {
+      color: #4ade80;
+      font-size: $font-size-xs;
+    }
+  }
+  
+  .product-card__more-sets {
+    color: $luxury-text-muted;
+    font-size: $font-size-xs;
+    font-style: italic;
+    text-align: center;
+  }
+}
+
+// Bulk Order Message
+.product-card__bulk-message {
+  background-color: rgba(#3b82f6, 0.1);
+  border: 1px solid rgba(#3b82f6, 0.2);
+  border-radius: $border-radius-md;
+  padding: $spacing-md;
+  margin-bottom: $spacing-lg;
+  
+  h4 {
+    color: #3b82f6;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-xs;
+  }
+  
+  p {
+    color: $luxury-text-secondary;
+    font-size: $font-size-xs;
+    margin-bottom: $spacing-sm;
+  }
+  
+  .product-card__contact-options {
+    display: flex;
+    gap: $spacing-sm;
+    
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-medium;
+      text-decoration: none;
+      transition: all $transition-normal;
+      
+      &.whatsapp {
+        background-color: #25d366;
+        color: white;
+        
+        &:hover {
+          background-color: #128c7e;
+        }
+      }
+      
+      &.instagram {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+        color: white;
+        
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+    }
+  }
+}
+
+// Admin Form Pricing Styles
+.pricing-preview {
+  background-color: $dark-tertiary;
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  margin-top: $spacing-lg;
+  
+  h4 {
+    color: $luxury-text;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__display {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    
+    .pricing-preview__actual {
+      color: $luxury-text-muted;
+      text-decoration: line-through;
+      font-size: $font-size-lg;
+    }
+    
+    .pricing-preview__discounted {
+      color: $primary-color;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-bold;
+    }
+    
+    .pricing-preview__discount {
+      color: #4ade80;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}
+
+.price-sets {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.price-set {
+  background-color: $dark-tertiary;
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  border: 1px solid $dark-secondary;
+  
+  h4 {
+    color: $luxury-text;
+    margin-bottom: $spacing-md;
+  }
+  
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: $spacing-md;
+    align-items: end;
+    
+    @include respond-to-max(md) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  &__remove {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $border-radius-md;
+    cursor: pointer;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    transition: all $transition-normal;
+    
+    &:hover {
+      background-color: #dc2626;
+    }
+  }
+  
+  &__preview {
+    margin-top: $spacing-md;
+    padding-top: $spacing-md;
+    border-top: 1px solid $dark-secondary;
+    
+    &-text {
+      color: $luxury-text-secondary;
+      font-size: $font-size-sm;
+      
+      .actual-price {
+        color: $luxury-text-muted;
+        text-decoration: line-through;
+        margin: 0 $spacing-xs;
+      }
+      
+      .discounted-price {
+        color: $primary-color;
+        font-weight: $font-weight-semibold;
+        margin-right: $spacing-xs;
+      }
+      
+      .discount {
+        color: #4ade80;
+      }
+    }
+  }
+}
+

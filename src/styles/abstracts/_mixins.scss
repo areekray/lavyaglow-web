@@ -1,0 +1,128 @@
+@use '../abstracts/variables' as *;
+
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) { @content; }
+  }
+  @if $breakpoint == md {
+    @media (min-width: $breakpoint-md) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) { @content; }
+  }
+  @if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) { @content; }
+  }
+  @if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) { @content; }
+  }
+}
+
+@mixin respond-to-max($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: #{$breakpoint-sm}) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (max-width: #{$breakpoint-md}) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (max-width: #{$breakpoint-lg}) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (max-width: #{$breakpoint-xl}) { @content; }
+  }
+  @else if $breakpoint == 2xl {
+    @media (max-width: #{$breakpoint-2xl}) { @content; }
+  }
+}
+
+@mixin container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+  
+  @include respond-to(sm) {
+    max-width: 640px;
+  }
+  @include respond-to(md) {
+    max-width: 768px;
+  }
+  @include respond-to(lg) {
+    max-width: 1024px;
+    padding: 0 $spacing-lg;
+  }
+  @include respond-to(xl) {
+    max-width: 1280px;
+  }
+  @include respond-to(2xl) {
+    max-width: 1536px;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: $border-radius-lg;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-normal;
+  font-family: inherit;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin card {
+  background-color: $dark-tertiary;
+  border: 1px solid $dark-secondary;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-lg;
+  
+  &:hover {
+    box-shadow: $shadow-luxury;
+    transform: translateY(-2px);
+    transition: all $transition-normal;
+  }
+}
+
+@mixin grid-responsive($cols: 4, $gap: $spacing-lg) {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $gap;
+  
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include respond-to(lg) {
+    grid-template-columns: repeat($cols, 1fr);
+  }
+}
+
+@mixin text-gradient {
+  background: linear-gradient(135deg, $primary-color, $primary-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

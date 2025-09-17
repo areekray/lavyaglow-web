@@ -1,0 +1,207 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.home {
+  background-color: $dark-bg;
+}
+
+.hero-luxury {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        135deg,
+        rgba($dark-bg, 0.8) 0%,
+        rgba($dark-secondary, 0.6) 50%,
+        rgba($dark-bg, 0.9) 100%
+      );
+    }
+  }
+  
+  &__bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  &__container {
+    @include container;
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 0 $spacing-xl;
+  }
+  
+  &__content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    color: $luxury-text;
+    line-height: 1.1;
+    margin-bottom: $spacing-lg;
+    letter-spacing: 2px;
+    
+    @include respond-to(md) {
+      font-size: $font-size-5xl;
+    }
+    
+    @include respond-to(lg) {
+      font-size: $font-size-6xl;
+    }
+  }
+  
+  &__subtitle {
+    font-family: $font-family-accent;
+    font-size: $font-size-3xl;
+    color: $primary-color;
+    margin-bottom: $spacing-2xl;
+    font-weight: $font-weight-normal;
+    
+    @include respond-to(md) {
+      font-size: $font-size-4xl;
+    }
+  }
+  
+  &__description {
+    margin-bottom: $spacing-3xl;
+    
+    p {
+      font-size: $font-size-lg;
+      color: $luxury-text-secondary;
+      line-height: 1.7;
+      margin-bottom: $spacing-md;
+      
+      @include respond-to(md) {
+        font-size: $font-size-xl;
+      }
+    }
+  }
+}
+
+.featured-luxury {
+  padding: $spacing-5xl 0;
+  background-color: $dark-secondary;
+  
+  &__container {
+    @include container;
+  }
+  
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-4xl;
+  }
+  
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    color: $luxury-text;
+    margin-bottom: $spacing-md;
+    font-weight: $font-weight-normal;
+  }
+  
+  &__subtitle {
+    font-family: $font-family-accent;
+    font-size: $font-size-2xl;
+    color: $primary-color;
+  }
+  
+  &__grid {
+    @include grid-responsive(4, $spacing-xl);
+    margin-bottom: $spacing-3xl;
+  }
+  
+  &__cta {
+    text-align: center;
+  }
+}
+
+.loading {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-4xl;
+  color: $luxury-text-muted;
+  
+  &__spinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid $dark-tertiary;
+    border-top: 2px solid $primary-color;
+    border-radius: 50%;
+    margin-bottom: $spacing-lg;
+    animation: spin 1s linear infinite;
+  }
+}
+
+.values-luxury {
+  padding: $spacing-5xl 0;
+  background-color: $dark-bg;
+  
+  &__container {
+    @include container;
+  }
+  
+  &__grid {
+    @include grid-responsive(3, $spacing-3xl);
+  }
+  
+  &__item {
+    text-align: center;
+    padding: $spacing-xl;
+    
+    h4 {
+      font-family: $font-family-heading;
+      font-size: $font-size-xl;
+      color: $luxury-text;
+      margin-bottom: $spacing-lg;
+      font-weight: $font-weight-semibold;
+    }
+    
+    p {
+      color: $luxury-text-secondary;
+      line-height: 1.6;
+    }
+  }
+  
+  &__icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto $spacing-lg;
+    @include flex-center;
+    border: 2px solid $primary-color;
+    border-radius: 50%;
+    color: $primary-color;
+    transition: all $transition-luxury;
+    font-size: $font-size-2xl;
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $dark-bg;
+      transform: scale(1.05);
+    }
+  }
+}
