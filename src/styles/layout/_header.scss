@@ -14,11 +14,71 @@
     @include flex-between;
     height: 5rem;
     padding: 0 $spacing-xl;
+    position: relative;
+    
+    @include respond-to-max(sm) {
+      padding: 0 $spacing-lg;
+      height: 4rem;
+    }
+  }
+
+  // Mobile Menu Toggle Button
+  &__menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-sm;
+    z-index: $z-modal + 2;
+    
+    @include respond-to-max(md) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  // Hamburger Menu Icon
+  &__menu-icon {
+    width: 24px;
+    height: 18px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: $luxury-text;
+      transition: all $transition-normal;
+      transform-origin: center;
+    }
+    
+    &--open {
+      span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+    }
   }
   
+  // Desktop Navigation
   &__nav {
     @include flex-center;
     gap: $spacing-xl;
+    
+    @include respond-to-max(md) {
+      display: none;
+    }
     
     &--left {
       flex: 1;
@@ -60,12 +120,33 @@
     &:hover::after {
       width: 100%;
     }
+
+    &--button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+    }
   }
   
+  // Logo Styles
   &__logo {
     @include flex-center;
     flex-direction: column;
     z-index: $z-modal + 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    @include respond-to-max(md) {
+      position: static;
+      transform: none;
+      flex: 1;
+    }
   }
 
   &__logo-container {
@@ -78,31 +159,179 @@
     object-fit: contain;
     filter: drop-shadow(0 2px 4px rgba($primary-color, 0.3));
     
-    @include respond-to(md) {
-      width: 248px;
-      height: 248px;
+    @include respond-to-max(lg) {
+      width: 200px;
+      height: 200px;
     }
     
-    @include respond-to(sm) {
-      width: 232px;
-      height: 232px;
+    @include respond-to-max(md) {
+      width: 120px;
+      height: 120px;
     }
-  }
-  
-  &__logo-main {
-    font-family: $font-family-heading;
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
-    color: $primary-color;
-    letter-spacing: 2px;
-    display: block;
     
-    @include respond-to(md) {
-      font-size: $font-size-3xl;
+    @include respond-to-max(sm) {
+      width: 100px;
+      height: 100px;
     }
   }
 
-  
+  // Mobile Cart Icon
+  &__mobile-cart {
+    display: none;
+    z-index: $z-modal + 2;
+    
+    @include respond-to-max(md) {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // Role Badge
+  &__role-badge {
+    background-color: $primary-color;
+    color: $dark-bg;
+    font-size: 10px;
+    font-weight: $font-weight-bold;
+    padding: 2px 6px;
+    border-radius: $border-radius-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  // Mobile Menu Drawer
+  &__mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: $z-modal;
+    pointer-events: none;
+    
+    @include respond-to(lg) {
+      display: none;
+    }
+    
+    &--open {
+      pointer-events: all;
+      
+      .header-luxury__mobile-menu-overlay {
+        opacity: 1;
+      }
+      
+      .header-luxury__mobile-menu-content {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &__mobile-menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($dark-bg, 0.8);
+    opacity: 0;
+    transition: opacity $transition-normal;
+    backdrop-filter: blur(4px);
+  }
+
+  &__mobile-menu-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100%;
+    background-color: $dark-bg;
+    border-right: 1px solid $dark-tertiary;
+    transform: translateX(-100%);
+    transition: transform $transition-normal;
+    overflow-y: auto;
+    
+    @include respond-to-max(sm) {
+      width: 280px;
+    }
+  }
+
+  &__mobile-menu-header {
+    @include flex-between;
+    padding: $spacing-xl;
+    border-bottom: 1px solid $dark-tertiary;
+  }
+
+  &__mobile-menu-title {
+    color: $primary-color;
+    font-family: $font-family-heading;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    margin: 0;
+  }
+
+  &__mobile-menu-close {
+    background: none;
+    border: none;
+    color: $luxury-text;
+    font-size: $font-size-2xl;
+    cursor: pointer;
+    padding: $spacing-sm;
+    transition: color $transition-normal;
+    
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  &__mobile-menu-links {
+    padding: $spacing-xl 0;
+  }
+
+  &__mobile-link {
+    display: block;
+    padding: $spacing-lg $spacing-xl;
+    color: $luxury-text;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all $transition-normal;
+    border-bottom: 1px solid transparent;
+    
+    &:hover {
+      color: $primary-color;
+      background-color: rgba($primary-color, 0.1);
+      border-bottom-color: $primary-color;
+    }
+
+    &--button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  &__mobile-role-badge {
+    background-color: $primary-color;
+    color: $dark-bg;
+    font-size: 12px;
+    font-weight: $font-weight-bold;
+    padding: $spacing-xs $spacing-sm;
+    margin: $spacing-sm $spacing-xl;
+    border-radius: $border-radius-sm;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    width: fit-content;
+  }
+
+  // Cart Icon Styles
   &__cart {
     display: flex;
     align-items: center;
@@ -130,5 +359,14 @@
       @include flex-center;
       transform: translate(50%, -50%);
     }
+  }
+}
+
+// Prevent body scroll when mobile menu is open
+body.mobile-menu-open {
+  overflow: hidden;
+  
+  @include respond-to-max(lg) {
+    overflow: auto;
   }
 }

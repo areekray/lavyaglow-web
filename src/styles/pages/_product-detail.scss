@@ -43,7 +43,19 @@
     
     @include respond-to-max(lg) {
       grid-template-columns: 1fr;
-      gap: $spacing-2xl;
+      gap: $spacing-lg;
+      & > div {
+        max-width: calc(100vw - $spacing-xl);  
+      }
+    }
+    @include respond-to-max(md) {
+      gap: $spacing-md;
+    }
+    @include respond-to-max(sm) {
+      gap: $spacing-sm;
+    }
+    @include respond-to-max(xs) {
+      gap: $spacing-xs;
     }
   }
   

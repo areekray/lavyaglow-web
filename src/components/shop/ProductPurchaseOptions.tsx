@@ -296,7 +296,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
               )}
 
               {/* SET OPTIMIZATION DISPLAY */}
-              {breakdown && breakdown.isOptimized && (
+              {breakdown && breakdown.isOptimized && selectedSet && (
                 <div className="optimization-info optimization-info--set">
                   <div className="optimization-badge">
                     🚀 Set Optimization Active
@@ -308,24 +308,8 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
             </div>
           )}
 
-          {/* Bulk Order Message */}
-          {product.can_do_bulk && (
-            <div className="bulk-info">
-              <h4>📦 Bulk Orders Available</h4>
-              <p>For large quantities or custom requirements:</p>
-              <div className="contact-links">
-                <a href="https://wa.me/+919038644125" target="_blank" rel="noopener noreferrer">
-                  📱 WhatsApp
-                </a>
-                <a href="https://instagram.com/lavyaglow" target="_blank" rel="noopener noreferrer">
-                  📷 Instagram
-                </a>
-              </div>
-            </div>
-          )}
-
           {/* FIXED Price Summary - Shows correct pricing */}
-          {breakdown && (
+          {breakdown && ((purchaseMode === 'set' && hasSets && selectedSet) || (purchaseMode === 'piece')) && (
             <div className="price-summary">
               <div className="price-breakdown">
                 <div className="price-line">
@@ -372,10 +356,27 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                 fullWidth
                 disabled={!breakdown.totalPieces || isAddingToCart}
                 loading={isAddingToCart}
+                className='add-to-cart'
               >
-                {isAddingToCart ? 'Adding to Cart...' : `Add ${breakdown.totalPieces} piece${breakdown.totalPieces > 1 ? 's' : ''} to Cart`}
-                <span className="button-price">₹{breakdown.totalPrice.toFixed(2)}</span>
+                {isAddingToCart ? 'Adding to Cart...' : `Add to Cart`}
+                {/* <span className="button-price">₹{breakdown.totalPrice.toFixed(2)}</span> */}
               </Button>
+            </div>
+          )}
+          
+          {/* Bulk Order Message */}
+          {product.can_do_bulk && (
+            <div className="bulk-info">
+              <h4>📦 Bulk Orders Available</h4>
+              <p>For large quantities or custom requirements:</p>
+              <div className="contact-links">
+                <a href="https://wa.me/+919038644125" target="_blank" rel="noopener noreferrer">
+                  📱 WhatsApp
+                </a>
+                <a href="https://instagram.com/lavyaglow" target="_blank" rel="noopener noreferrer">
+                  📷 Instagram
+                </a>
+              </div>
             </div>
           )}
         </>
