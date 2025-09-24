@@ -5,8 +5,6 @@ import { productService } from '@/services/productService';
 import { ProductPurchaseOptions } from '@/components/shop/ProductPurchaseOptions';
 import type { PriceBreakdown } from '@/utils/priceOptimizer';
 import { Button } from '@/components/ui/Button';
-import toast from 'react-hot-toast';
-import { ColorChips } from '@/components/layout/ColorChips';
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();

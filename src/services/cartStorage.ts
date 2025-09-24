@@ -155,7 +155,8 @@ class CartStorageService {
             purchaseType: storedItem.purchaseType,
             setId: storedItem.setId,
             breakdown: storedItem.breakdown,
-            addedAt: storedItem.addedAt
+            addedAt: storedItem.addedAt,
+            selectedColor: ''
           };
           validItems.push(cartItem);
           continue;
@@ -190,7 +191,8 @@ class CartStorageService {
             purchaseType: storedItem.purchaseType,
             setId: storedItem.setId,
             breakdown: storedItem.breakdown, // Will be recalculated by context
-            addedAt: storedItem.addedAt
+            addedAt: storedItem.addedAt,
+            selectedColor: ''
           };
           
           updatedItems.push({ item: cartItem, changes });
@@ -227,7 +229,8 @@ class CartStorageService {
           purchaseType: storedItem.purchaseType,
           setId: storedItem.setId,
           breakdown: storedItem.breakdown, // Will be recalculated by context
-          addedAt: storedItem.addedAt
+          addedAt: storedItem.addedAt,
+          selectedColor: ''
         };
 
         if (changes.length > 0) {

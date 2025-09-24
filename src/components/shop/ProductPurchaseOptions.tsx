@@ -5,7 +5,6 @@ import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import toast from 'react-hot-toast';
-import { stringToArray } from '@/constants/productOptions';
 import { ColorSelector } from '../features/ColorSelector';
 
 interface ProductPurchaseOptionsProps {

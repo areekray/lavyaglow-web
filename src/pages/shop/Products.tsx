@@ -4,7 +4,6 @@ import type { Product } from '@/types';
 import { productService } from '@/services/productService';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
-import { stringToArray } from '@/constants/productOptions';
 import { ColorChips } from '@/components/layout/ColorChips';
 
 export function Products() {
