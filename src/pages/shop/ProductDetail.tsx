@@ -6,6 +6,7 @@ import { ProductPurchaseOptions } from '@/components/shop/ProductPurchaseOptions
 import type { PriceBreakdown } from '@/utils/priceOptimizer';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+import { ColorChips } from '@/components/layout/ColorChips';
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -52,10 +53,6 @@ export function ProductDetail() {
       breakdown: breakdown.breakdown,
       savings: breakdown.savings
     });
-    
-    toast.success(
-      `Added ${quantity} piece${quantity > 1 ? 's' : ''} of ${product?.name} to cart for ₹${breakdown.totalPrice.toFixed(2)}!`
-    );
   };
 
   const nextImage = () => {
@@ -232,6 +229,14 @@ export function ProductDetail() {
               <div className="product-info__characteristics">
                 <h3>Product Details</h3>
                 <dl className="characteristics-list">
+                  {/* {product.characteristics.colors && (
+                    <>
+                      <dt>🎨 Colors</dt>
+                      <dd>
+                        <ColorChips colors={product.characteristics.colors} showLabel={true} />
+                      </dd>
+                    </>
+                  )} */}
                   {product.characteristics.scent && (
                     <>
                       <dt>🌸 Scent</dt>
@@ -242,12 +247,6 @@ export function ProductDetail() {
                     <>
                       <dt>⏰ Burn Time</dt>
                       <dd>{product.characteristics.burn_time}</dd>
-                    </>
-                  )}
-                  {product.characteristics.weight && (
-                    <>
-                      <dt>⚖️ Weight</dt>
-                      <dd>{product.characteristics.weight}</dd>
                     </>
                   )}
                   {product.characteristics.dimensions && (

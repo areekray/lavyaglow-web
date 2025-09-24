@@ -4,6 +4,8 @@ import type { Product } from '@/types';
 import { productService } from '@/services/productService';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+import { stringToArray } from '@/constants/productOptions';
+import { ColorChips } from '@/components/layout/ColorChips';
 
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -49,7 +51,8 @@ export function Products() {
         product.name.toLowerCase().includes(searchLower) ||
         product.category.toLowerCase().includes(searchLower) ||
         product.description?.toLowerCase().includes(searchLower) ||
-        product.characteristics?.scent?.toLowerCase().includes(searchLower)
+        product.characteristics?.scent?.toLowerCase().includes(searchLower) ||
+        product.characteristics?.colors?.toLowerCase().includes(searchLower)
       );
     }
 
@@ -195,19 +198,17 @@ export function Products() {
               }
             </p>
           )} */}
-
-          {product.characteristics && Object.keys(product.characteristics).length > 0 && (
-            <div className="product-card__characteristics">
-              {product.characteristics.scent && (
-                <span className="characteristic-tag">🌸 {product.characteristics.scent}</span>
-              )}
-              {product.characteristics.burn_time && (
-                <span className="characteristic-tag">⏰ {product.characteristics.burn_time}</span>
-              )}
-              {product.characteristics.weight && (
-                <span className="characteristic-tag">⚖️ {product.characteristics.weight}</span>
+          {/* {product.characteristics && Object.keys(product.characteristics).length > 0 && (*/}
+            <div className="product-card__characteristics"> 
+              {product.characteristics?.colors && (
+                <div className="product-card__colors">
+                  <ColorChips colors={product.characteristics.colors} />
+                </div>
               )}
             </div>
+          {/* )} */}
+          {product.characteristics.scent && (
+            <span className="characteristic-tag">🌸 {product.characteristics.scent}</span>
           )}
 
           {/* <div className="product-card__actions">

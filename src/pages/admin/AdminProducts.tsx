@@ -4,6 +4,7 @@ import { productService } from '@/services/productService';
 import { ProductForm } from './ProductForm';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
+import { ColorChips } from '@/components/layout/ColorChips';
 
 export function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -181,6 +182,13 @@ export function AdminProducts() {
                       </div>
                     </div>
 
+                    <div className="product-card__characteristics"> 
+                        {product.characteristics?.colors && (
+                          <div className="product-card__colors">
+                            <ColorChips colors={product.characteristics.colors} />
+                          </div>
+                        )}
+                        </div>
                     {product.characteristics && Object.keys(product.characteristics).length > 0 && (
                       <div className="admin-product-card__characteristics">
                         {product.characteristics.scent && (
@@ -188,9 +196,6 @@ export function AdminProducts() {
                         )}
                         {product.characteristics.burn_time && (
                           <span className="characteristic-tag">⏰ {product.characteristics.burn_time}</span>
-                        )}
-                        {product.characteristics.weight && (
-                          <span className="characteristic-tag">⚖️ {product.characteristics.weight}</span>
                         )}
                       </div>
                     )}

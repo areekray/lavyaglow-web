@@ -596,3 +596,58 @@
   }
 }
 
+.product-card__colors {
+  margin-top: 0.5rem;
+  
+  .colors-label {
+    font-size: 0.75rem;
+    color: var(--luxury-text-secondary);
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+}
+
+.color-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.color-tag {
+  background-color: var(--primary-color);
+  color: var(--dark-bg);
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.color-tag-more {
+  background-color: var(--dark-tertiary);
+  color: var(--luxury-text-secondary);
+  font-size: 0.625rem;
+  font-style: italic;
+  padding: 0.125rem 0.5rem;
+  border-radius: 12px;
+}
+
+// Product detail colors
+.available-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.color-chip {
+  background-color: var(--dark-secondary);
+  border: 1px solid var(--primary-color);
+  color: var(--luxury-text);
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+

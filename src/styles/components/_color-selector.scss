@@ -1,0 +1,334 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.color-selector {
+  margin: $spacing-lg 0;
+  
+  &__label {
+    @include flex-between;
+    margin-bottom: $spacing-md;
+    
+    span:first-child {
+      color: $luxury-text;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+  
+  &__selected-name {
+    color: $primary-color;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    background-color: rgba($primary-color, 0.1);
+    padding: 2px $spacing-xs;
+    border-radius: $border-radius-sm;
+    border: 1px solid rgba($primary-color, 0.2);
+  }
+  
+  &__options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: $spacing-sm;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: $spacing-xs;
+    border-radius: $border-radius-md;
+    background-color: rgba($dark-secondary, 0.5);
+    
+    @include respond-to(md) {
+      grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+      gap: $spacing-xs;
+    }
+    
+    @include respond-to(sm) {
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+    }
+  }
+  
+  &__show-more {
+    margin-top: $spacing-sm;
+    background: none;
+    border: 1px dashed rgba($primary-color, 0.3);
+    color: $luxury-text-secondary;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-xs;
+    cursor: pointer;
+    transition: all $transition-normal;
+    
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+  }
+  
+  // Size variations
+  &--sm {
+    .color-selector__options {
+      grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+    }
+    
+    .color-option {
+      width: 35px;
+      height: 35px;
+    }
+  }
+  
+  &--lg {
+    .color-selector__options {
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+    
+    .color-option {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.color-option {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: 3px solid transparent;
+  border-radius: $border-radius-full;
+  cursor: pointer;
+  transition: all $transition-normal;
+  background: none;
+  padding: 3px;
+  overflow: hidden;
+  
+  &:hover {
+    transform: scale(1.1);
+    border-color: rgba($luxury-text, 0.2);
+    
+    .color-option__name {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  &--selected {
+    border-color: $primary-color;
+    transform: scale(1.1);
+    box-shadow: 
+      0 0 0 2px rgba($primary-color, 0.2),
+      0 4px 12px rgba($primary-color, 0.15);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border: 2px solid $primary-color;
+      border-radius: $border-radius-full;
+      animation: pulseRing 2s infinite;
+    }
+  }
+  
+  &--special {
+    &::after {
+      content: '✨';
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      font-size: 10px;
+      z-index: 2;
+    }
+  }
+  
+  &__swatch {
+    width: 100%;
+    height: 100%;
+    border-radius: $border-radius-full;
+    border: 2px solid rgba($luxury-text, 0.1);
+    position: relative;
+    overflow: hidden;
+    
+    // Checkerboard pattern for transparent colors
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0, 0, 0, 0.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0, 0, 0, 0.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0, 0, 0, 0.05) 75%);
+      background-size: 8px 8px;
+      background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+      z-index: -1;
+    }
+  }
+  
+  &__check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: $primary-color;
+    border-radius: $border-radius-full;
+    color: white;
+    @include flex-center;
+    box-shadow: 0 2px 8px rgba($primary-color, 0.4);
+    z-index: 3;
+  }
+  
+  &__name {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: $dark-bg;
+    color: $luxury-text;
+    padding: 4px 8px;
+    border-radius: $border-radius-sm;
+    font-size: 10px;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all $transition-normal;
+    z-index: 4;
+    border: 1px solid $dark-tertiary;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    
+    // Arrow pointing up
+    &::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 4px solid $dark-bg;
+    }
+  }
+  
+  // Special effects
+  &__glitter-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.8) 1px, transparent 2px),
+      radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.6) 1px, transparent 2px),
+      radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.7) 1px, transparent 2px),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.5) 1px, transparent 2px);
+    animation: sparkle 2s infinite;
+  }
+  
+  &__marble-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%),
+      linear-gradient(-45deg, transparent 40%, rgba(0, 0, 0, 0.05) 60%, transparent 80%);
+    mix-blend-mode: overlay;
+  }
+  
+  // Focus states for accessibility
+  &:focus {
+    outline: 2px solid $primary-color;
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+// Animations
+@keyframes pulseRing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .color-option__swatch {
+    border-width: 3px;
+    border-color: $luxury-text;
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .color-option {
+    transition: none;
+    animation: none;
+    
+    &:hover {
+      transform: none;
+    }
+    
+    &--selected {
+      transform: none;
+      
+      &::before {
+        animation: none;
+      }
+    }
+  }
+  
+  .color-option__glitter-effect {
+    animation: none;
+  }
+}
+
+// Mobile optimizations
+@include respond-to(sm) {
+  .color-option {
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
+    
+    &__check {
+      width: 16px;
+      height: 16px;
+      
+      svg {
+        width: 10px;
+        height: 10px;
+      }
+    }
+    
+    &__name {
+      font-size: 9px;
+      bottom: -25px;
+    }
+  }
+}

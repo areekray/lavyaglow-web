@@ -24,7 +24,7 @@ export interface Product {
   characteristics: {
     scent?: string;
     burn_time?: string;
-    weight?: string;
+    colors: string;
     dimensions?: string;
   };
   instagram_media_id?: string;
@@ -55,7 +55,7 @@ export interface ProductFormData {
   can_do_bulk: boolean;
   scent: string;
   burn_time: string;
-  weight: string;
+  colors: string;
   dimensions: string;
   instagram_media_id: string;
   highlight_in_home: boolean;

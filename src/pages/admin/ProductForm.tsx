@@ -6,7 +6,14 @@ import Input from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 import { intParseHandler } from '@/utils/misc';
-
+import { MultiSelect } from '@/components/ui/MultiSelect';
+import { 
+  groupedScents, 
+  groupedColors, 
+  stringToArray, 
+  arrayToString,
+  colorHexMap 
+} from '@/constants/productOptions';
 interface ProductFormProps {
   product: Product | null;
   onClose: () => void;
@@ -31,7 +38,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
       can_do_bulk: product?.can_do_bulk || false,
       scent: product?.characteristics?.scent || '',
       burn_time: product?.characteristics?.burn_time || '',
-      weight: product?.characteristics?.weight || '',
+      colors: product?.characteristics?.colors || '',
       dimensions: product?.characteristics?.dimensions || '',
       instagram_media_id: product?.instagram_media_id || '',
       highlight_in_home: product?.highlight_in_home || false,
@@ -172,7 +179,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
         characteristics: {
           scent: data.scent || undefined,
           burn_time: data.burn_time || undefined,
-          weight: data.weight || undefined,
+          colors: data.colors || '',
           dimensions: data.dimensions || undefined,
         },
         instagram_media_id: data.instagram_media_id || undefined,
@@ -513,11 +520,16 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
             <h3 className="product-form__section-title">Product Characteristics</h3>
             
             <div className="product-form__row">
-                <Input
-                label="Scent"
-                placeholder="e.g., Vanilla, Lavender"
-                {...register('scent')}
-                error={errors.scent?.message}
+                <MultiSelect
+                  label="Scents"
+                  options={groupedScents}
+                  selected={stringToArray(watch('scent'))}
+                  onChange={(selectedScents) => {
+                    setValue('scent', arrayToString(selectedScents));
+                  }}
+                  placeholder="Select scents..."
+                  error={errors.scent?.message}
+                  maxHeight="300px"
                 />
 
                 <Input
@@ -529,11 +541,18 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
             </div>
 
             <div className="product-form__row">
-                <Input
-                label="Weight"
-                placeholder="e.g., 200g"
-                {...register('weight')}
-                error={errors.weight?.message}
+                <MultiSelect
+                  label="Colors"
+                  options={groupedColors}
+                  selected={stringToArray(watch('colors'))}
+                  onChange={(selectedColors) => {
+                    setValue('colors', arrayToString(selectedColors));
+                  }}
+                  placeholder="Select colors..."
+                  error={errors.colors?.message}
+                  colorMap={colorHexMap}
+                  showVisualIndicators={true}
+                  maxHeight="300px"
                 />
 
                 <Input

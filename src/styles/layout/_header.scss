@@ -169,10 +169,10 @@
       height: 120px;
     }
     
-    @include respond-to-max(sm) {
-      width: 100px;
-      height: 100px;
-    }
+    // @include respond-to-max(sm) {
+    //   width: 100px;
+    //   height: 100px;
+    // }
   }
 
   // Mobile Cart Icon

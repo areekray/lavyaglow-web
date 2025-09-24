@@ -5,6 +5,8 @@ import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import toast from 'react-hot-toast';
+import { stringToArray } from '@/constants/productOptions';
+import { ColorSelector } from '../features/ColorSelector';
 
 interface ProductPurchaseOptionsProps {
   product: Product;
@@ -18,6 +20,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
   const [setsCount, setSetsCount] = useState(1);
   const [breakdown, setBreakdown] = useState<PriceBreakdown | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   const { addToCart } = useCart();
 
@@ -33,6 +36,16 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
       setBreakdown(result);
     }
   }, [pieceQuantity, product.discounted_price, product.actual_price, product.price_sets, purchaseMode]);
+
+  // useEffect(() => {
+  //   // Set default color if available
+  //   if (product.characteristics?.colors && !selectedColor) {
+  //     const colors = stringToArray(product.characteristics.colors);
+  //     if (colors.length > 0) {
+  //       setSelectedColor(colors[0]);
+  //     }
+  //   }
+  // }, [product.characteristics, selectedColor]);
 
   // FIXED: Calculate set optimization with correct actual_price usage  
   useEffect(() => {
@@ -92,9 +105,11 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
 
   const handleAddToCart = async () => {
     if (!breakdown) return;
-    
+    if (product.characteristics?.colors && !selectedColor) {
+      toast.error('Please select a color');
+      return;
+    }
     setIsAddingToCart(true);
-    
     try {
       // Check if similar item already exists in cart
       // const existingItem = getCartItem(
@@ -109,16 +124,17 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
         quantity: purchaseMode === 'piece' ? pieceQuantity : setsCount,
         purchaseType: purchaseMode,
         setId: purchaseMode === 'set' ? selectedSet : undefined,
-        breakdown
+        breakdown,
+        selectedColor: selectedColor as string
       });
 
       // Success message
       const itemDescription = purchaseMode === 'set' 
         ? `${setsCount} set${setsCount > 1 ? 's' : ''} (${breakdown.totalPieces} pieces)`
         : `${pieceQuantity} piece${pieceQuantity > 1 ? 's' : ''}`;
-
+      const colorInfo = selectedColor ? ` in ${selectedColor}` : '';
       toast.success(
-        `Added ${itemDescription} of ${product.name} to cart!`,
+        `Added ${itemDescription} of ${product.name}${colorInfo} to cart!`,
         {
           duration: 3000,
           icon: '🛒',
@@ -162,7 +178,15 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
           {stockStatus.text}
         </div>
       </div>
-
+      
+      {product.characteristics?.colors && (
+        <ColorSelector
+            availableColors={product.characteristics.colors}
+            selectedColor={selectedColor}
+            onColorSelect={setSelectedColor}
+            size="md"
+          />
+      )}
       {!stockStatus.available ? (
         <div className="purchase-options__unavailable">
           <p>This product is currently out of stock.</p>
@@ -170,7 +194,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
             <div className="bulk-contact">
               <p>For bulk orders, contact us:</p>
               <div className="contact-links">
-                <a href="https://wa.me/+919038644125" target="_blank" rel="noopener noreferrer">
+                <a href="https://wa.me/+919036758208" target="_blank" rel="noopener noreferrer">
                   📱 WhatsApp
                 </a>
                 <a href="https://instagram.com/lavyaglow" target="_blank" rel="noopener noreferrer">
@@ -238,7 +262,6 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                 </div>
                 <small>Per piece: ₹{product.discounted_price}</small>
               </div>
-
               {breakdown && hasSets && breakdown.savings > 0 && (
                 <div className="optimization-info">
                   <div className="optimization-badge">

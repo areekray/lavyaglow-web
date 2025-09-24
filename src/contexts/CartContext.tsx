@@ -12,6 +12,7 @@ export interface CartItem {
   setId?: string;
   breakdown: PriceBreakdown;
   addedAt: string;
+  selectedColor: string;
 }
 
 interface CartState {
