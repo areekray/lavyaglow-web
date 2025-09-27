@@ -41,13 +41,13 @@ export const imageUploadService = {
       console.log('Uploading compressed file to:', filePath);
 
       // Upload compressed file to Supabase Storage
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from('product-images')
         .upload(filePath, compressedFile, {
           cacheControl: '3600',
           upsert: false
         });
-
+        
       if (error) {
         console.error('Upload error:', error);
         throw new Error(`Upload failed: ${error.message}`);
