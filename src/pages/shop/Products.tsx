@@ -5,6 +5,7 @@ import { productService } from '@/services/productService';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 import { ColorChips } from '@/components/layout/ColorChips';
+import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
 
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -95,15 +96,14 @@ export function Products() {
     return (
       <article className="product-card" onClick={() => navigate(`/products/${product.id}`)}>
         <div className="product-card__image-container">
-          <img
-            src={product.images[0] || ''}
+          <ImageWithPlaceholder
+            src={product.images[0] || '/default-candle.jpg'}
             alt={product.name}
+            width="100%"
+            placeholder="shimmer"
+            priority={false}
             className="product-card__image"
-            loading="lazy"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = '';
-            }}
+            fallback="/default-candle-fallback.jpg"
           />
           
           {product.highlight_in_home && (

@@ -5,6 +5,7 @@ import { productService } from '@/services/productService';
 import { ProductPurchaseOptions } from '@/components/shop/ProductPurchaseOptions';
 import type { PriceBreakdown } from '@/utils/priceOptimizer';
 import { Button } from '@/components/ui/Button';
+import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -126,14 +127,14 @@ export function ProductDetail() {
           {/* Image Gallery */}
           <div className="product-gallery">
             <div className="product-gallery__main">
-              <img
-                src={product.images[currentImageIndex] || ''}
+              <ImageWithPlaceholder
+                src={product.images[currentImageIndex] || '/default-candle.jpg'}
                 alt={product.name}
+                width="100%"
+                placeholder="shimmer"
+                priority={false}
                 className="product-gallery__image"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = '';
-                }}
+                fallback="/default-candle-fallback.jpg"
               />
               
               {/* Image Navigation */}

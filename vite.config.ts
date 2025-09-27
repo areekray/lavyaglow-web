@@ -37,7 +37,49 @@ export default defineConfig({
         ]
       },
       workbox: {
+        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5MB per file
         runtimeCaching: [
+          {
+            urlPattern: ({ url }) => {
+              return url.hostname.includes('supabase.co') && 
+                     url.pathname.includes('/storage/v1/object/public/product-images/');
+            },
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'lavyaglow-product-images',
+              expiration: {
+                maxEntries: 200, // Cache up to 200 product images
+                maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year cache
+                purgeOnQuotaError: true // Auto cleanup when storage full
+              },
+              cacheableResponse: {
+                statuses: [0, 200, 206] // Cache successful responses
+              },
+              plugins: [
+                {
+                  cachedResponseWillBeUsed: async ({ cachedResponse }) => {
+                    return cachedResponse;
+                  }
+                }
+              ]
+            }
+          },
+          {
+            urlPattern: ({ url }) => {
+              return url.hostname.includes('supabase.co') && 
+                     url.pathname.includes('/rest/v1/') &&
+                     !url.pathname.includes('/storage/'); // Exclude storage URLs
+            },
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'lavyaglow-supabase-api',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 10 * 60 // 10 minutes for API data
+              },
+              networkTimeoutSeconds: 3 // Fallback to cache after 3s
+            }
+          },
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/,
             handler: 'StaleWhileRevalidate',
@@ -67,17 +109,6 @@ export default defineConfig({
               }
             }
           },
-          {
-            urlPattern: /^https:\/\/.*\.supabase\.co\/.*/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'supabase-api',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 5 * 60
-              }
-            }
-          }
         ]
       },
       devOptions: {

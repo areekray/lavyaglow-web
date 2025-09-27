@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-e328c5da'], (function (workbox) { 'use strict';
+define(['./workbox-471b75d6'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -79,12 +79,44 @@ define(['./workbox-e328c5da'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.0nlgfmqfng8"
+    "revision": "0.vcqnuaqod9g"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
     allowlist: [/^\/$/]
   }));
+  workbox.registerRoute(({
+    url
+  }) => {
+    return url.hostname.includes("supabase.co") && url.pathname.includes("/storage/v1/object/public/product-images/");
+  }, new workbox.CacheFirst({
+    "cacheName": "lavyaglow-product-images",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 200,
+      maxAgeSeconds: 31536000,
+      purgeOnQuotaError: true
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200, 206]
+    }), {
+      cachedResponseWillBeUsed: async ({
+        cachedResponse
+      }) => {
+        return cachedResponse;
+      }
+    }]
+  }), 'GET');
+  workbox.registerRoute(({
+    url
+  }) => {
+    return url.hostname.includes("supabase.co") && url.pathname.includes("/rest/v1/") && !url.pathname.includes("/storage/");
+  }, new workbox.NetworkFirst({
+    "cacheName": "lavyaglow-supabase-api",
+    "networkTimeoutSeconds": 3,
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 50,
+      maxAgeSeconds: 600
+    })]
+  }), 'GET');
   workbox.registerRoute(/^https:\/\/fonts\.googleapis\.com\/.*/, new workbox.StaleWhileRevalidate({
     "cacheName": "google-fonts-stylesheets",
     plugins: []
@@ -101,13 +133,6 @@ define(['./workbox-e328c5da'], (function (workbox) { 'use strict';
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 60,
       maxAgeSeconds: 2592000
-    })]
-  }), 'GET');
-  workbox.registerRoute(/^https:\/\/.*\.supabase\.co\/.*/, new workbox.NetworkFirst({
-    "cacheName": "supabase-api",
-    plugins: [new workbox.ExpirationPlugin({
-      maxEntries: 50,
-      maxAgeSeconds: 300
     })]
   }), 'GET');
 

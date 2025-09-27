@@ -15,6 +15,7 @@
 @use 'components/cards' as *;
 @use 'components/purchase-options' as *;
 @use 'components/color-selector' as *;
+@use 'components/image-with-placeholder' as *;
 
 // Pages
 @use 'pages/home' as *;
@@ -103,5 +104,41 @@
     border-radius: 50%;
     margin-bottom: $spacing-lg;
     animation: spin 1s linear infinite;
+  }
+}
+
+// Add to your ProductForm styles
+.upload-progress {
+  margin: $spacing-md 0;
+  
+  &__item {
+    @include flex-between;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-xs;
+    font-size: $font-size-sm;
+    
+    .progress-bar {
+      flex: 1;
+      height: 4px;
+      background-color: rgba($primary-color, 0.2);
+      border-radius: $border-radius-sm;
+      overflow: hidden;
+      
+      &__fill {
+        height: 100%;
+        background-color: $primary-color;
+        transition: width $transition-normal;
+      }
+    }
+  }
+}
+
+.image-upload {
+  &__hint {
+    color: $luxury-text-secondary;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+    font-style: italic;
   }
 }

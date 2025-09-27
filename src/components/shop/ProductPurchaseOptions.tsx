@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import toast from 'react-hot-toast';
 import { ColorSelector } from '../features/ColorSelector';
+import { stringToArray } from '@/constants/productOptions';
 
 interface ProductPurchaseOptionsProps {
   product: Product;
@@ -36,15 +37,15 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
     }
   }, [pieceQuantity, product.discounted_price, product.actual_price, product.price_sets, purchaseMode]);
 
-  // useEffect(() => {
-  //   // Set default color if available
-  //   if (product.characteristics?.colors && !selectedColor) {
-  //     const colors = stringToArray(product.characteristics.colors);
-  //     if (colors.length > 0) {
-  //       setSelectedColor(colors[0]);
-  //     }
-  //   }
-  // }, [product.characteristics, selectedColor]);
+  useEffect(() => {
+    // Set default color if available
+    if (product.characteristics?.colors && !selectedColor) {
+      const colors = stringToArray(product.characteristics.colors);
+      if (colors.length === 1) {
+        setSelectedColor(colors[0]);
+      }
+    }
+  }, [product.characteristics, selectedColor]);
 
   // FIXED: Calculate set optimization with correct actual_price usage  
   useEffect(() => {

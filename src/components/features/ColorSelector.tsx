@@ -36,7 +36,7 @@ export function ColorSelector({
   return (
     <div className={`color-selector color-selector--${size}`}>
       <div className="color-selector__label">
-        <span>Choose Color</span>
+        <span>{colors?.length > 1 ?'Choose Color' : 'Color'}</span>
         {selectedColor && (
           <span className="color-selector__selected-name">
             {selectedColor}

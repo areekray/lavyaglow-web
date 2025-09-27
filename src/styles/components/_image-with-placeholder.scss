@@ -1,0 +1,279 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.image-with-placeholder {
+  position: relative;
+  overflow: hidden;
+  border-radius: $border-radius-md;
+  background-color: $dark-secondary;
+  
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity $transition-normal;
+    border-radius: inherit;
+    
+    &.loading {
+      opacity: 0;
+    }
+    
+    &.loaded {
+      opacity: 1;
+    }
+  }
+}
+
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  @include flex-center;
+  flex-direction: column;
+  background-color: $dark-secondary;
+  border-radius: inherit;
+  
+  // Shimmer placeholder (default)
+  &--shimmer {
+    background: linear-gradient(
+      90deg,
+      $dark-secondary 0%,
+    //   lighten($dark-secondary, 5%) 25%,
+      $dark-secondary 50%,
+    //   lighten($dark-secondary, 5%) 75%,
+      $dark-secondary 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    
+    .shimmer-animation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($primary-color, 0.1) 50%,
+        transparent 100%
+      );
+      animation: shimmerMove 2s infinite;
+    }
+    
+    .placeholder-icon {
+      font-size: 3rem;
+      opacity: 0.3;
+      z-index: 1;
+    }
+  }
+  
+  // Blur placeholder
+  &--blur {
+    background: radial-gradient(
+      circle at center,
+      rgba($primary-color, 0.1) 0%,
+      rgba($primary-color, 0.05) 50%,
+      transparent 100%
+    );
+    backdrop-filter: blur(20px);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      width: 60%;
+      height: 60%;
+      background: linear-gradient(
+        45deg,
+        rgba($primary-color, 0.2),
+        rgba($secondary-color, 0.2)
+      );
+      border-radius: $border-radius-full;
+      filter: blur(30px);
+      animation: pulse 2s infinite;
+    }
+  }
+  
+  // Skeleton placeholder
+  &--skeleton {
+    // background-color: lighten($dark-secondary, 2%);
+    
+    .skeleton-shimmer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba($luxury-text, 0.05) 25%,
+        rgba($luxury-text, 0.1) 50%,
+        rgba($luxury-text, 0.05) 75%,
+        transparent 100%
+      );
+      animation: skeletonWave 2s infinite;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 20%;
+        left: 20%;
+        width: 60%;
+        height: 15%;
+        background-color: rgba($luxury-text, 0.1);
+        border-radius: $border-radius-sm;
+      }
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 20%;
+        left: 20%;
+        width: 40%;
+        height: 10%;
+        background-color: rgba($luxury-text, 0.08);
+        border-radius: $border-radius-sm;
+      }
+    }
+  }
+  
+  // Candle-themed placeholder
+  &--candle {
+    background: linear-gradient(
+      135deg,
+      rgba($primary-color, 0.05) 0%,
+      rgba($secondary-color, 0.05) 100%
+    );
+    
+    .candle-icon {
+      font-size: 4rem;
+      margin-bottom: $spacing-md;
+      animation: candleFlicker 3s infinite;
+      filter: drop-shadow(0 0 10px rgba($primary-color, 0.3));
+    }
+    
+    .loading-text {
+      color: $luxury-text-secondary;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      text-align: center;
+      opacity: 0.7;
+      animation: fadeInOut 2s infinite;
+    }
+  }
+  
+  // Error placeholder
+  &--error {
+    background-color: rgba($error-color, 0.1);
+    border: 1px dashed rgba($error-color, 0.3);
+    
+    .error-icon {
+      font-size: 2rem;
+      margin-bottom: $spacing-sm;
+      opacity: 0.6;
+    }
+    
+    .error-text {
+      color: $error-color;
+      font-size: $font-size-xs;
+      text-align: center;
+      opacity: 0.8;
+    }
+  }
+}
+
+// Animations
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes shimmerMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes skeletonWave {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes candleFlicker {
+  0%, 100% { 
+    transform: scale(1) rotate(-1deg);
+    filter: drop-shadow(0 0 10px rgba($primary-color, 0.3));
+  }
+  25% { 
+    transform: scale(1.05) rotate(1deg);
+    filter: drop-shadow(0 0 15px rgba($primary-color, 0.4));
+  }
+  50% { 
+    transform: scale(1.02) rotate(-0.5deg);
+    filter: drop-shadow(0 0 12px rgba($primary-color, 0.35));
+  }
+  75% { 
+    transform: scale(1.08) rotate(0.5deg);
+    filter: drop-shadow(0 0 18px rgba($primary-color, 0.45));
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+// Responsive adjustments
+@include respond-to(sm) {
+  .image-placeholder {
+    &--candle .candle-icon {
+      font-size: 3rem;
+    }
+    
+    &--shimmer .placeholder-icon {
+      font-size: 2rem;
+    }
+  }
+}
+
+// Dark theme optimizations
+@media (prefers-color-scheme: dark) {
+  .image-placeholder {
+    &--skeleton .skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.03) 25%,
+        rgba(255, 255, 255, 0.06) 50%,
+        rgba(255, 255, 255, 0.03) 75%,
+        transparent 100%
+      );
+    }
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .image-placeholder {
+    animation: none;
+    
+    * {
+      animation: none;
+      transition: none;
+    }
+  }
+}

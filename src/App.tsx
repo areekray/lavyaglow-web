@@ -14,6 +14,7 @@ import { Profile } from '@/pages/auth/Profile';
 import { AdminPage } from '@/pages/admin/AdminPage';
 import '@/styles/main.scss';
 import { ProductDetail } from './pages/shop/ProductDetail';
+import { ScrollToTop } from './components/layout/ScrollToTop';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
     <AuthProvider>
         <Router>
           <div className="App">
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />

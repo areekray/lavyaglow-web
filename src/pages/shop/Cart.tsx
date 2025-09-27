@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import toast from 'react-hot-toast';
 import { productService } from '@/services/productService';
+import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
 
 export function Cart() {
   const { state: cart, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -146,13 +147,14 @@ export function Cart() {
               return (
                 <div key={item.id} className="cart-item">
                   <div className="cart-item__image">
-                    <img
-                      src={item.product.images[0] || ''}
+                    <ImageWithPlaceholder
+                      src={item.product.images[0] || '/default-candle.jpg'}
                       alt={item.product.name}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = '';
-                      }}
+                      width="100%"
+                      placeholder="shimmer"
+                      priority={false}
+                      className="product-card__img"
+                      fallback="/default-candle-fallback.jpg"
                     />
                   </div>
 

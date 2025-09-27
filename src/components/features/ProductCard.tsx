@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import type { Product } from '@/types';
 import { useCart } from '@/contexts/CartContext';
+import { ImageWithPlaceholder } from '../ui/ImageWithPlaceholder';
 
 interface ProductCardProps {
   product: Product;
@@ -19,10 +20,13 @@ export function ProductCard({ product }: ProductCardProps) {
     <div className="product-card">
       <Link to={`/products/${product.id}`}>
         <div className="product-card__image">
-          <img
-            src={product.images[0] || ''}
+          <ImageWithPlaceholder
+            src={product.images[0] || '/default-candle.jpg'}
             alt={product.name}
-            loading="lazy"
+            width="100%"
+            placeholder="shimmer"
+            priority={false}
+            fallback="/default-candle-fallback.jpg"
           />
         </div>
       </Link>

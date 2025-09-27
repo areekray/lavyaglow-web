@@ -5,6 +5,8 @@ import { ProductForm } from './ProductForm';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 import { ColorChips } from '@/components/layout/ColorChips';
+import { imageUploadService } from '@/services/imageUploadService';
+import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
 
 export function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -46,6 +48,9 @@ export function AdminProducts() {
     }
 
     try {
+      product.images?.forEach((image) => {
+        imageUploadService.deleteImage(image);
+      })
       await productService.deleteProduct(product.id);
       toast.success(`Product "${product.name}" deleted successfully`);
       loadProducts();
@@ -148,13 +153,13 @@ export function AdminProducts() {
               return (
                 <div key={product.id} className="admin-product-card">
                   <div className="admin-product-card__image">
-                    <img
-                      src={product.images[0] || ''}
+                    <ImageWithPlaceholder
+                      src={product.images[0] || '/default-candle.jpg'}
                       alt={product.name}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = '';
-                      }}
+                      width="100%"
+                      placeholder="shimmer"
+                      priority={false}
+                      fallback="/default-candle-fallback.jpg"
                     />
                     <div className="admin-product-card__badges">
                       <span className={`stock-badge stock-badge--${stockStatus.class}`}>
