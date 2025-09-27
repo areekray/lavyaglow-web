@@ -4,6 +4,7 @@ import { ProductCard } from '@/components/features/ProductCard';
 import { productService } from '@/services/productService';
 import type { Product } from '@/types';
 import { Button } from '@/components/ui/Button';
+import { HeroCarousel } from '@/components/features/HeroCarousel';
 
 export function Home() {
   const [curatedProducts, setCuratedProducts] = useState<Product[]>([]);
@@ -27,42 +28,73 @@ export function Home() {
   return (
     <div className="home">
       <section className="hero-luxury">
-        <div className="hero-luxury__background">
-          <img 
-            src="https://cdn.grateful.org/uploads/2023/09/22140603/LIGHT-A-CANDLE-cover.png" 
-            alt="Luxury candles background"
-            className="hero-luxury__bg-image"
-          />
-        </div>
+        <HeroCarousel />
         
         <div className="hero-luxury__container">
           <div className="hero-luxury__content">
+            <div className="hero-luxury__badge">
+              <span>✨ Made in India • 100% Handmade • Made with Love</span>
+            </div>
+            
             <h1 className="hero-luxury__title">
-              WE INVITE YOU<br />
-              TO SHARE OUR<br />
-              LOVE FOR
+              GIFTING REIMAGINED<br />
+              <span className="title-accent">THE LAVYAGLOW WAY</span>
             </h1>
+            
             <div className="hero-luxury__subtitle">
-              Handcrafted Excellence
+              Handcrafted Luxury Scented Candles for Timeless Gifting
             </div>
             
             <div className="hero-luxury__description">
               <p>
-                LavyaGlow started as an inspiration to create premium handcrafted candles
-                that transform spaces with sophisticated scents and sculptural beauty.
+                Where tradition meets luxury. Each LavyaGlow candle is meticulously handcrafted with 
+                100% soy wax, creating non-toxic, earth-friendly masterpieces that transform 
+                moments into memories.
               </p>
             </div>
+
+            <div className="hero-luxury__features">
+              <div className="feature-pill">
+                <span className="feature-icon">🌱</span>
+                <span>100% Soy Wax</span>
+              </div>
+              <div className="feature-pill">
+                <span className="feature-icon">🌿</span>
+                <span>Non-toxic</span>
+              </div>
+              <div className="feature-pill">
+                <span className="feature-icon">🌍</span>
+                <span>Earth-friendly</span>
+              </div>
+            </div>
             
-            <div style={{ marginTop: '3rem' }}>
+            <div className="hero-luxury__cta">
               <Link to="/products">
-                <Button variant="luxury" size="lg">
-                  Explore Collection
+                <Button variant="luxury" size="lg" className="cta-primary">
+                  <span>Discover Our Collection</span>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10H16M16 10L12 6M16 10L12 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Button>
+              </Link>
+              
+              <Link to="/about" className="cta-secondary">
+                <span>Our Story</span>
               </Link>
             </div>
           </div>
         </div>
+
+        {/* <div className="hero-luxury__scroll-indicator">
+          <div className="scroll-arrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <span>Scroll to explore</span>
+        </div> */}
       </section>
+
 
       <section className="featured-luxury">
         <div className="featured-luxury__container">

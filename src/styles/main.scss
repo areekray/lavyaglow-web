@@ -1,7 +1,7 @@
 // Abstracts - using @use for internal SCSS files
 @use 'abstracts/variables' as *;
 @use 'abstracts/mixins' as *;
-
+@use "sass:color";
 // Base
 @use 'base/reset' as *;
 @use 'base/typography' as *;
@@ -16,6 +16,7 @@
 @use 'components/purchase-options' as *;
 @use 'components/color-selector' as *;
 @use 'components/image-with-placeholder' as *;
+@use 'components/pwa-update-modal' as *;
 
 // Pages
 @use 'pages/home' as *;
@@ -140,5 +141,164 @@
     font-size: $font-size-sm;
     margin-top: $spacing-xs;
     font-style: italic;
+  }
+}
+
+.hero-carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  
+  &__background {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  &__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transform: scale(1.1);
+    transition: all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    
+    &.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    &.loaded {
+      background-image: inherit;
+    }
+  }
+  
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba($dark-bg, 0.85) 0%,
+      rgba($dark-secondary, 0.7) 30%,
+      rgba($dark-bg, 0.4) 60%,
+      rgba($dark-bg, 0.8) 100%
+    );
+  }
+  
+  &__indicators {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: $spacing-md;
+    z-index: 3;
+    
+    @include respond-to(sm) {
+      bottom: 1rem;
+      gap: $spacing-sm;
+    }
+  }
+  
+  &__indicator {
+    width: 50px;
+    height: 4px;
+    background-color: rgba($luxury-text, 0.3);
+    border: none;
+    border-radius: $border-radius-full;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all $transition-normal;
+    
+    @include respond-to(sm) {
+      width: 30px;
+      height: 3px;
+    }
+    
+    &:hover {
+      background-color: rgba($luxury-text, 0.5);
+    }
+    
+    &.active {
+      background-color: rgba($primary-color, 0.4);
+      
+      .indicator-progress {
+        width: 100%;
+      }
+    }
+  }
+  
+  .indicator-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, $primary-color 0%, color.adjust($primary-color, $lightness:15%) 100%);
+    border-radius: inherit;
+    transition: width 6s linear;
+  }
+  
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    background-color: rgba($dark-secondary, 0.8);
+    border: 1px solid rgba($primary-color, 0.3);
+    border-radius: $border-radius-full;
+    width: 50px;
+    height: 50px;
+    @include flex-center;
+    color: $luxury-text;
+    cursor: pointer;
+    transition: all $transition-normal;
+    backdrop-filter: blur(10px);
+    
+    @include respond-to(sm) {
+      width: 40px;
+      height: 40px;
+      
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+    
+    &:hover {
+      background-color: rgba($primary-color, 0.9);
+      color: $dark-bg;
+      border-color: $primary-color;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    &--prev {
+      left: 2rem;
+      
+      @include respond-to(sm) {
+        left: 1rem;
+      }
+    }
+    
+    &--next {
+      right: 2rem;
+      
+      @include respond-to(sm) {
+        right: 1rem;
+      }
+    }
   }
 }
