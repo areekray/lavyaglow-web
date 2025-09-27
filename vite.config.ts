@@ -109,6 +109,17 @@ export default defineConfig({
               }
             }
           },
+          {
+            urlPattern: /^https:\/\/lh3\.googleusercontent\.com\/.*/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-drive-images',
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 30 * 24 * 60 * 60
+              }
+            }
+          },
         ]
       },
       devOptions: {

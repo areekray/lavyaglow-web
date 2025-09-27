@@ -15,9 +15,9 @@ root.render(
 // Register service worker with auto update
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm('New content available. Reload?')) {
-      updateSW(true)
-    }
+    // if (confirm('New content available. Reload?')) {
+    //   updateSW(true)
+    // }
   },
   onOfflineReady() {
     console.log('App ready to work offline')
