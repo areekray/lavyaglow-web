@@ -15,8 +15,17 @@ import { AdminPage } from '@/pages/admin/AdminPage';
 import '@/styles/main.scss';
 import { ProductDetail } from './pages/shop/ProductDetail';
 import { ScrollToTop } from './components/layout/ScrollToTop';
+import { usePWAUpdate } from './hooks/usePWAUpdate';
+import { PWAUpdateModal } from './components/ui/PWAUpdateModal';
 
 function App() {
+  const { 
+    showUpdateModal, 
+    isUpdating, 
+    handleUpdate, 
+    handleCloseModal,
+    offlineReady 
+  } = usePWAUpdate();
   return (
       <CartProvider>
     <AuthProvider>
@@ -53,7 +62,13 @@ function App() {
               <Route path="auth/login" element={<Login />} />
               <Route path="auth/register" element={<Register />} />
             </Routes>
-            
+            {/* PWA Update Modal */}
+            <PWAUpdateModal
+              isOpen={showUpdateModal}
+              onUpdate={handleUpdate}
+              onClose={handleCloseModal}
+              isUpdating={isUpdating}
+            />
             <Toaster 
               position="bottom-center"
               toastOptions={{
@@ -78,6 +93,12 @@ function App() {
               }}
             />
           </div>
+          {/* Optional: Offline indicator */}
+          {offlineReady && (
+            <div className="offline-ready-toast">
+              🕯️ LavyaGlow is ready to work offline!
+            </div>
+          )}
         </Router>
     </AuthProvider>
       </CartProvider>
