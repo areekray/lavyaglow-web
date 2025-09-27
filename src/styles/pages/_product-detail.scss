@@ -87,6 +87,9 @@
 
 // Product Gallery
 .product-gallery {
+  @include respond-to-max(sm) {
+    position: relative;
+  }
   &__main {
     position: relative;
     margin-bottom: $spacing-lg;
@@ -146,6 +149,11 @@
     gap: $spacing-sm;
     overflow-x: auto;
     padding-bottom: $spacing-sm;
+    @include respond-to-max(sm) {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
   }
   
   &__thumbnail {
@@ -185,7 +193,7 @@
   letter-spacing: 0.5px;
   
   &--featured {
-    background: linear-gradient(135deg, $primary-color, $primary-light);
+    background: linear-gradient(135deg, #e8e3d8c7, #ffffff7d);
     color: $dark-bg;
   }
   
@@ -252,6 +260,9 @@
   &__description,
   &__characteristics,
   &__sets {
+    @include respond-to-max(sm) {
+      display: none;
+    }
     margin-bottom: $spacing-2xl;
     
     h3 {
@@ -333,7 +344,7 @@
   
   &__price-discounted {
     color: $primary-color;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-medium;
     font-size: $font-size-lg;
   }
   

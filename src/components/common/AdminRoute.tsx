@@ -26,7 +26,7 @@ export function AdminRoute({ children, requireStaffOnly = false }: AdminRoutePro
             width: '40px',
             height: '40px',
             border: '2px solid #3d2317',
-            borderTop: '2px solid #c17817',
+            borderTop: '2px solid #e8e3d8',
             borderRadius: '50%',
             margin: '0 auto 1rem',
             animation: 'spin 1s linear infinite'
@@ -64,9 +64,9 @@ export function AdminRoute({ children, requireStaffOnly = false }: AdminRoutePro
       }}>
         <div>
           <h1 style={{
-            color: '#c17817',
+            color: '#e8e3d8',
             marginBottom: '1rem',
-            fontFamily: 'Playfair Display'
+            fontFamily: 'Proza Libre'
           }}>
             Access Denied
           </h1>
@@ -82,7 +82,7 @@ export function AdminRoute({ children, requireStaffOnly = false }: AdminRoutePro
           <button
             onClick={() => window.history.back()}
             style={{
-              backgroundColor: '#c17817',
+              backgroundColor: '#e8e3d8',
               color: '#1a1612',
               border: 'none',
               padding: '0.75rem 2rem',

@@ -142,7 +142,7 @@ export function Home() {
                 🚚
               </div>
               <h4>Pan-India Delivery</h4>
-              <p>Carefully packaged and delivered across India, bringing luxury to your doorstep.</p>
+              <p>Carefully packaged and delivered across India, dispatched within 3-4 days.</p>
             </div>
             
             <div className="values-luxury__item">

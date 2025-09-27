@@ -57,7 +57,7 @@
   
   &__title {
     font-family: $font-family-heading;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
     font-weight: $font-weight-bold;
     color: $luxury-text;
     line-height: 1.1;
@@ -65,12 +65,25 @@
     letter-spacing: 1px;
     
     .title-accent {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       background: linear-gradient(135deg, $primary-color 0%, color.adjust($primary-color, $lightness:20%) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       display: block;
       margin-top: $spacing-sm;
+      background: linear-gradient(
+        90deg,
+        #FEDB37,
+        #FDB931,
+        #9f7928,
+        #8A6E2F,
+        #FEDB37
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 3s linear infinite;
     }
   }
   
@@ -187,6 +200,13 @@
   &__grid {
     @include grid-responsive(4, $spacing-xl);
     margin-bottom: $spacing-3xl;
+    @include respond-to-max(sm) {
+      grid-template-columns: repeat(2, 1fr);
+      & > .product-card {
+        max-height: 200px;
+        outline: 1px solid $primary-color;
+      }
+    }
   }
   
   &__cta {

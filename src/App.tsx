@@ -76,7 +76,7 @@ function App() {
                 style: {
                   background: '#3d2317',
                   color: '#e8e3d8',
-                  border: '1px solid #c17817'
+                  border: '1px solid #e8e3d8'
                 },
                 success: {
                   iconTheme: {

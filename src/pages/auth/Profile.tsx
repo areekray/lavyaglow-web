@@ -61,7 +61,7 @@ export function Profile() {
             marginBottom: '2rem',
             border: '1px solid #4a2e1a'
           }}>
-            <h3 style={{ color: '#c17817', marginBottom: '0.5rem' }}>Account Information</h3>
+            <h3 style={{ color: '#e8e3d8', marginBottom: '0.5rem' }}>Account Information</h3>
             <p style={{ margin: '0.25rem 0' }}>Email: <strong>{user.email}</strong></p>
             <p style={{ margin: '0.25rem 0' }}>
               Role: <strong style={{ 
@@ -107,10 +107,10 @@ export function Profile() {
               marginTop: '2rem',
               padding: '1rem',
               backgroundColor: 'rgba(193, 120, 23, 0.1)',
-              border: '1px solid #c17817',
+              border: '1px solid #e8e3d8',
               borderRadius: '0.5rem'
             }}>
-              <h4 style={{ color: '#c17817', marginBottom: '0.5rem' }}>
+              <h4 style={{ color: '#e8e3d8', marginBottom: '0.5rem' }}>
                 {user.isAdmin ? 'Admin' : 'Staff'} Note
               </h4>
               <p style={{ fontSize: '0.875rem', color: '#c9beb0' }}>

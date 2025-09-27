@@ -4,7 +4,6 @@ import type { Product } from '@/types';
 import { productService } from '@/services/productService';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
-import { ColorChips } from '@/components/layout/ColorChips';
 import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
 
 export function Products() {
@@ -94,10 +93,13 @@ export function Products() {
     const discountPercentage = productService.calculateDiscountPercentage(product.actual_price, product.discounted_price);
 
     return (
-      <article className="product-card" onClick={() => navigate(`/products/${product.id}`)}>
+      <article
+        className="product-card"
+        onClick={() => navigate(`/products/${product.id}`)}
+      >
         <div className="product-card__image-container">
           <ImageWithPlaceholder
-            src={product.images[0] || '/default-candle.jpg'}
+            src={product.images[0] || "/default-candle.jpg"}
             alt={product.name}
             width="100%"
             placeholder="shimmer"
@@ -105,20 +107,28 @@ export function Products() {
             className="product-card__image"
             fallback="/default-candle-fallback.jpg"
           />
-          
-          {product.highlight_in_home && (
+
+          {product.price_sets && product.price_sets.length > 0 && (
             <div className="product-card__featured-badge">
-              ✨ Curated Collection
+              ✨ Upto{" "}
+              {(
+                ((product.price_sets[product.price_sets.length - 1]
+                  .actual_price -
+                  product.price_sets[product.price_sets.length - 1]
+                    .discounted_price) /
+                  product.price_sets[product.price_sets.length - 1]
+                    .actual_price) *
+                100
+              ).toFixed()}{" "}
+              % off in sets
             </div>
           )}
-          
-          <div className={`product-card__stock-badge ${stockStatus.className}`}>
-            {stockStatus.available ? '✓ Available' : '✗ Out of Stock'}
-          </div>
 
-          {discountPercentage > 0 && (
-            <div className="product-card__discount-badge">
-              {discountPercentage}% OFF
+          {!stockStatus.available && (
+            <div
+              className={`product-card__stock-badge ${stockStatus.className}`}
+            >
+              {"✗ Out of Stock"}
             </div>
           )}
         </div>
@@ -126,22 +136,30 @@ export function Products() {
         <div className="product-card__content">
           <h3 className="product-card__title">{product.name}</h3>
           <p className="product-card__category">{product.category}</p>
-          
+
           {/* Pricing Display */}
           <div className="product-card__pricing">
             {discountPercentage > 0 ? (
               <>
-                <span className="product-card__price-actual">₹{product.actual_price?.toFixed(2)}</span>
-                <span className="product-card__price-discounted">₹{product.discounted_price?.toFixed(2)}</span>
-                <span className="product-card__discount-percentage">({discountPercentage}% off)</span>
+                <span className="product-card__price-actual">
+                  ₹{product.actual_price?.toFixed(0)}
+                </span>
+                <span className="product-card__price-discounted">
+                  ₹{product.discounted_price?.toFixed(0)}
+                </span>
+                <span className="product-card__discount-percentage">
+                  ({discountPercentage}% off)
+                </span>
               </>
             ) : (
-              <span className="product-card__price-single">₹{product.discounted_price?.toFixed(2)}</span>
+              <span className="product-card__price-single">
+                ₹{product.discounted_price?.toFixed(2)}
+              </span>
             )}
           </div>
 
           {/* Set Pricing Preview */}
-          {product.price_sets && product.price_sets.length > 0 && stockStatus.available && (
+          {/* {product.price_sets && product.price_sets.length > 0 && stockStatus.available && (
             <div className="product-card__sets">
               <h4>Set Discounts Available:</h4>
               <div className="product-card__sets-list">
@@ -167,7 +185,7 @@ export function Products() {
                 )}
               </div>
             </div>
-          )}
+          )} */}
 
           {/* <div className={`product-card__stock ${stockStatus.className}`}>
             {stockStatus.text}
@@ -198,17 +216,17 @@ export function Products() {
             </p>
           )} */}
           {/* {product.characteristics && Object.keys(product.characteristics).length > 0 && (*/}
-            <div className="product-card__characteristics"> 
+          {/* <div className="product-card__characteristics"> 
               {product.characteristics?.colors && (
                 <div className="product-card__colors">
                   <ColorChips colors={product.characteristics.colors} />
                 </div>
               )}
-            </div>
+            </div> */}
           {/* )} */}
-          {product.characteristics.scent && (
+          {/* {product.characteristics.scent && (
             <span className="characteristic-tag">🌸 {product.characteristics.scent}</span>
-          )}
+          )} */}
 
           {/* <div className="product-card__actions">
             <Button
@@ -293,7 +311,7 @@ export function Products() {
         </div>
 
         {/* Content */}
-        <main className="products-page__content">
+        <section className="products-page__content">
           {loading ? (
             <div className="products-page__loading">
               <div className="loading__spinner"></div>
@@ -342,7 +360,7 @@ export function Products() {
               ))}
             </div>
           )}
-        </main>
+        </section>
       </div>
     </div>
   );

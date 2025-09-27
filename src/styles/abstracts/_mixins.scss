@@ -19,7 +19,10 @@
 }
 
 @mixin respond-to-max($breakpoint) {
-  @if $breakpoint == sm {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-xs}) { @content; }
+  }
+  @else if $breakpoint == sm {
     @media (max-width: #{$breakpoint-sm}) { @content; }
   }
   @else if $breakpoint == md {

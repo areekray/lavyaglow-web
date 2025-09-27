@@ -52,11 +52,11 @@ export function Login() {
             {message && (
               <div style={{
                 backgroundColor: 'rgba(193, 120, 23, 0.1)',
-                border: '1px solid #c17817',
+                border: '1px solid #e8e3d8',
                 borderRadius: '0.5rem',
                 padding: '0.75rem',
                 marginTop: '1rem',
-                color: '#c17817',
+                color: '#e8e3d8',
                 fontSize: '0.875rem'
               }}>
                 {message}
