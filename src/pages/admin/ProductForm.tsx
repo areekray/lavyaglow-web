@@ -143,7 +143,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
       const fileArray = Array.from(files);
 
       // Show upload progress
-      const uploadPromises = fileArray.map(async (file, index) => {
+      const uploadPromises = fileArray.map(async (file) => {
         setUploadProgress((prev) => ({ ...prev, [file.name]: 0 }));
 
         // Upload to Supabase Storage
