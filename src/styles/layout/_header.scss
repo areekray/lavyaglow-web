@@ -8,6 +8,11 @@
   top: 0;
   z-index: $z-sticky;
   backdrop-filter: blur(10px);
+  overflow: hidden;
+
+  @include respond-to-max(sm) {
+    position: relative;
+  }
   
   &__container {
     @include container;
@@ -35,6 +40,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  &__back-btn {
+    display: none;
+    @include respond-to-max(sm) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $primary-color;
+      font-size: $font-size-lg;
+      padding: $spacing-sm;
     }
   }
 

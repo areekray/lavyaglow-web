@@ -17,6 +17,7 @@
 @use 'components/color-selector' as *;
 @use 'components/image-with-placeholder' as *;
 @use 'components/pwa-update-modal' as *;
+@use 'components/filter-drawer' as *;
 
 // Pages
 @use 'pages/home' as *;
@@ -300,5 +301,30 @@
         right: 1rem;
       }
     }
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-2xl;
+  font-size: $font-size-sm;
+  
+  @include respond-to-max(sm) {
+    display: none;
+  }
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  span:last-child {
+    color: $luxury-text-muted;
   }
 }

@@ -82,7 +82,7 @@ define(['./workbox-231de4a8'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.d93kj6lftao"
+    "revision": "0.mhn9i6u1qlo"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -133,6 +133,13 @@ define(['./workbox-231de4a8'], (function (workbox) { 'use strict';
   }), 'GET');
   workbox.registerRoute(/^https:\/\/images\.unsplash\.com\/.*/, new workbox.CacheFirst({
     "cacheName": "unsplash-images",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 60,
+      maxAgeSeconds: 2592000
+    })]
+  }), 'GET');
+  workbox.registerRoute(/^https:\/\/lh3\.googleusercontent\.com\/.*/, new workbox.CacheFirst({
+    "cacheName": "google-drive-images",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 60,
       maxAgeSeconds: 2592000

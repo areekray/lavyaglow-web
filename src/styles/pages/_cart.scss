@@ -6,32 +6,15 @@
   background-color: $dark-bg;
   padding: $spacing-2xl 0;
   
+  @include respond-to-max(sm) {
+    padding: $spacing-lg 0;
+  }
+  
 //   .container {
 //     max-width: 1200px;
 //     margin: 0 auto;
 //     padding: 0 $spacing-lg;
 //   }
-}
-
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: $spacing-sm;
-  margin-bottom: $spacing-2xl;
-  font-size: $font-size-sm;
-  
-  a {
-    color: $primary-color;
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  
-  span:last-child {
-    color: $luxury-text-muted;
-  }
 }
 
 .cart-loading,

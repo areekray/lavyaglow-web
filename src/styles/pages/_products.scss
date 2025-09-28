@@ -6,12 +6,16 @@
   background-color: $dark-bg;
   padding: $spacing-2xl 0;
   
+  @include respond-to-max(sm) {
+    padding: $spacing-lg 0;
+  }
+  
   &__header {
     text-align: center;
     margin-bottom: $spacing-3xl;
     
     @include respond-to-max(sm) {
-      margin-bottom: $spacing-2xl;
+      margin-bottom: $spacing-xl;
     }
   }
   
@@ -35,12 +39,15 @@
     font-size: $font-size-lg;
     max-width: 600px;
     margin: 0 auto;
+    @include respond-to-max(sm) {
+      display: none;
+    }
   }
   
   &__filters {
     display: grid;
     grid-template-columns: auto auto 1fr;
-    gap: $spacing-xl;
+    gap: $spacing-sm;
     align-items: end;
     margin-bottom: $spacing-3xl;
     padding: $spacing-xl;
@@ -48,9 +55,7 @@
     border-radius: $border-radius-xl;
     
     @include respond-to-max(md) {
-      grid-template-columns: 1fr;
-      gap: $spacing-lg;
-      text-align: center;
+      margin-bottom: $spacing-xl;
     }
   }
   
@@ -61,6 +66,7 @@
     
     @include respond-to-max(md) {
       justify-self: center;
+      display: none
     }
   }
   
@@ -130,9 +136,15 @@
 // Filter Components
 .filter-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: $spacing-sm;
-  
+  align-items: center;
+  position: relative;
+  &__icon {
+    position: absolute;
+    left: $spacing-md;
+    max-height: calc(100% - 2rem);
+  }
   &__label {
     color: $luxury-text;
     font-size: $font-size-sm;
@@ -149,6 +161,7 @@
     font-size: $font-size-base;
     transition: all $transition-normal;
     min-width: 200px;
+    padding-left: $spacing-2xl;
     
     @include respond-to-max(md) {
       min-width: auto;
@@ -179,6 +192,7 @@
   
   @include respond-to-max(sm) {
     grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 }
 
@@ -223,6 +237,9 @@
     font-weight: $font-weight-bold;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     @include respond-to-max(sm) {
       font-size: 0.5rem;
       left: $spacing-xs;
@@ -350,6 +367,8 @@
 // Pricing Styles
 .product-card__pricing {
   margin-bottom: $spacing-lg;
+  overflow: hidden;
+  text-overflow: ellipsis;
   
   .product-card__price-actual {
     color: $luxury-text-muted;
@@ -688,3 +707,54 @@
   font-weight: 500;
 }
 
+.filter-button {
+  @include flex-between;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-lg;
+  background-color: $dark-tertiary;
+  border: 2px solid $dark-secondary;
+  border-radius: $border-radius-lg;
+  color: $luxury-text;
+  font-size: $font-size-base;
+  cursor: pointer;
+  transition: all $transition-normal;
+  width: 56px;
+  padding: 10px;
+  
+  &:hover {
+    border-color: rgba($primary-color, 0.4);
+    background-color: rgba($primary-color, 0.05);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  &__icon {
+    font-size: $font-size-lg;
+  }
+  
+  &__text {
+    flex: 1;
+    text-align: left;
+    font-weight: $font-weight-medium;
+    text-transform: capitalize;
+  }
+  
+  &__arrow {
+    @include flex-center;
+    transition: transform $transition-normal;
+    color: $luxury-text-secondary;
+  }
+  
+  &:hover &__arrow {
+    transform: rotate(180deg);
+    color: $primary-color;
+  }
+}
+
+.products-page__active-filters {
+  @include flex-center;
+  justify-content: flex-start;
+}

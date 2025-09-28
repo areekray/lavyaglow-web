@@ -6,6 +6,10 @@
   background-color: $dark-bg;
   padding: $spacing-2xl 0;
   
+  @include respond-to-max(sm) {
+    padding: $spacing-lg 0;
+  }
+
   &__container {
     @include container;
   }

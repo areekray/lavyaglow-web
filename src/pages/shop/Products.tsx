@@ -5,6 +5,12 @@ import { productService } from '@/services/productService';
 import { Button } from '@/components/ui/Button';
 import toast from 'react-hot-toast';
 import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
+import { CategoryChip } from '@/components/ui/CategoryChip';
+import { CategoryFilterDrawer } from '@/components/ui/CategoryFilterDrawer';
+import { 
+  MagnifyingGlassIcon,
+  AdjustmentsHorizontalIcon,
+} from '@heroicons/react/24/outline';
 
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -13,6 +19,7 @@ export function Products() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -267,38 +274,31 @@ export function Products() {
         </header>
 
         {/* Filters */}
-        <div className="products-page__filters">
+        {!loading && <div className="products-page__filters">
           <div className="filter-group">
-            <label htmlFor="category-filter" className="filter-group__label">
-              Category:
-            </label>
-            <select
-              id="category-filter"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="filter-group__select"
-            >
-              <option value="">All Categories</option>
-              {getAvailableCategories().map(category => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label htmlFor="search-filter" className="filter-group__label">
-              Search:
-            </label>
+            <MagnifyingGlassIcon className="filter-group__icon w-5 h-5" />
             <input
               id="search-filter"
               type="text"
-              placeholder="Search by name, category, or scent..."
+              placeholder="Search by name, category or characteristics."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="filter-group__input"
             />
+          </div>
+
+          <div className="filter-group">
+            <button
+              className="filter-button"
+              onClick={() => setIsFilterDrawerOpen(true)}
+              aria-label="Open category filter"
+            >
+              <AdjustmentsHorizontalIcon className="filter-button__icon w-5 h-5" />
+              {/* <span className="filter-button__text">
+                {selectedCategory || 'All Categories'}
+              </span>
+              <ChevronDownIcon className="filter-button__arrow w-4 h-4" /> */}
+            </button>
           </div>
 
           <div className="products-page__results-info">
@@ -308,7 +308,16 @@ export function Products() {
               </span>
             )}
           </div>
-        </div>
+        </div>}
+        
+        {selectedCategory && (
+          <div className="products-page__active-filters">
+            <CategoryChip
+              category={selectedCategory}
+              onRemove={() => setSelectedCategory('')}
+            />
+          </div>
+        )}
 
         {/* Content */}
         <section className="products-page__content">
@@ -361,6 +370,13 @@ export function Products() {
             </div>
           )}
         </section>
+        <CategoryFilterDrawer
+          categories={getAvailableCategories()}
+          selectedCategory={selectedCategory}
+          onCategorySelect={setSelectedCategory}
+          isOpen={isFilterDrawerOpen}
+          onClose={() => setIsFilterDrawerOpen(false)}
+        />
       </div>
     </div>
   );

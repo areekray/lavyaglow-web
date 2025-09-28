@@ -1,13 +1,15 @@
 import { stringToArray, colorHexMap } from '@/constants/productOptions';
 
 interface ColorSelectorProps {
+  id: string;
   availableColors: string;
   selectedColor: string | null;
   onColorSelect: (color: string) => void;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function ColorSelector({ 
+export function ColorSelector({
+  id,
   availableColors, 
   selectedColor, 
   onColorSelect,
@@ -34,7 +36,7 @@ export function ColorSelector({
   };
 
   return (
-    <div className={`color-selector color-selector--${size}`}>
+    <div id={id} className={`color-selector color-selector--${size}`}>
       <div className="color-selector__label">
         <span>{colors?.length > 1 ?'Choose Color' : 'Color'}</span>
         {selectedColor && (

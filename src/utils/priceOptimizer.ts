@@ -171,7 +171,7 @@ export const priceOptimizer = {
       if (item.type === 'set') {
         return item.quantity + ' x Set of ' + item.setSize;
       } else {
-        return item.quantity + ' x Individual piece' + (item.quantity > 1 ? 's' : '');
+        return item.quantity + ' x single piece' + (item.quantity > 1 ? 's' : '');
       }
     });
 
@@ -189,7 +189,7 @@ export const priceOptimizer = {
     if (breakdown.savings <= 0) return '';
     
     const percentage = this.getTotalDiscountPercentage(breakdown);
-    return 'You save ₹' + breakdown.savings.toFixed(2) + ' (' + percentage + '% total discount)';
+    return 'You save ₹' + breakdown.savings.toFixed(2) + ' (' + percentage + '% discount)';
   },
 
   // Test function to verify calculations

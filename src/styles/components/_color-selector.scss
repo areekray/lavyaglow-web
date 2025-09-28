@@ -178,7 +178,7 @@
     height: 20px;
     background-color: $primary-color;
     border-radius: $border-radius-full;
-    color: white;
+    color: $secondary-color;
     @include flex-center;
     box-shadow: 0 2px 8px rgba($primary-color, 0.4);
     z-index: 3;

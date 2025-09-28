@@ -5,12 +5,19 @@
   border-radius: $border-radius-xl;
   padding: $spacing-lg;
   border: 2px solid $dark-tertiary;
+
+  @include respond-to-max(sm) {
+    padding-top: $spacing-sm;
+  }
   
   &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: $spacing-xl;
+    @include respond-to-max(xs) {
+      margin-bottom: $spacing-lg;
+    }
     
     h3 {
       color: $luxury-text;
@@ -57,6 +64,11 @@
     margin-left: -$spacing-lg;
     width: calc(100% + 2*$spacing-lg);
   }
+
+  @include respond-to-max(xs) {
+    margin-bottom: $spacing-lg;
+  }
+
   .mode-tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -111,12 +123,16 @@
 
 .purchase-section {
   margin-bottom: $spacing-2xl;
-  
+  @include respond-to-max(sm) {
+    margin-bottom: $spacing-lg;
+  }
   .quantity-input,
   .set-selection,
   .set-quantity-input {
     margin-bottom: $spacing-lg;
-    
+    // @include respond-to-max(sm) {
+    //   margin-bottom: 0;
+    // }
     label {
       display: block;
       color: $luxury-text;
@@ -137,7 +153,9 @@
     align-items: baseline;
     gap: $spacing-sm;
     max-width: 200px;
-    
+    .form-group {
+      margin-bottom: 0 !important;
+    }
     button {
       width: 40px;
       height: 40px;
@@ -191,11 +209,11 @@
   margin-bottom: $spacing-lg;
   
   &--set {
-    background: rgba(#10b981, 0.1);
-    border-color: rgba(#10b981, 0.3);
+    // background: rgba(#10b981, 0.1);
+    // border-color: rgba(#10b981, 0.3);
     
     .optimization-badge {
-      background: #10b981;
+      // background: #10b981;
       color: white;
     }
   }
@@ -226,7 +244,6 @@
     color: $luxury-text;
     
     &.savings {
-      color: #22c55e;
       font-weight: $font-weight-semibold;
     }
   }
@@ -240,11 +257,11 @@
   margin-top: $spacing-lg;
   
   h4 {
-    color: #3b82f6;
     margin-bottom: $spacing-sm;
   }
   
-  p {
+  small {
+    display: block;
     color: $luxury-text-muted;
     margin-bottom: $spacing-md;
   }
@@ -288,9 +305,12 @@
   background: $dark-bg;
   border-radius: $border-radius-lg;
   padding: $spacing-xl;
-  border: 2px solid $primary-color;
+  border: 1px solid $primary-color;
   margin-bottom: $spacing-xl;
-  
+  @include respond-to-max(sm) {
+    margin-bottom: $spacing-lg;
+    padding: $spacing-lg;
+  }
   .price-breakdown {
     margin-bottom: $spacing-lg;
   }
@@ -317,7 +337,6 @@
     }
     
     &.savings {
-      color: #22c55e;
       font-weight: $font-weight-semibold;
       font-size: $font-size-sm;
     }
@@ -381,21 +400,15 @@
   }
   
   &.savings {
-    color: #22c55e;
-    font-weight: $font-weight-semibold;
+    font-weight: $font-weight-medium;
     font-size: $font-size-base;
   }
   
   // NEW: Total discount styling
   &.total-discount {
-    color: #10b981;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-lg;
-    background: rgba(#10b981, 0.1);
-    padding: $spacing-sm $spacing-md;
-    border-radius: $border-radius-sm;
-    margin-top: $spacing-sm;
-    border: 1px solid rgba(#10b981, 0.2);
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base;
+    // border: 1px solid rgba(#10b981, 0.2);
   }
 }
 
@@ -408,11 +421,11 @@
   margin-bottom: $spacing-lg;
   
   &--set {
-    background: rgba(#10b981, 0.1);
-    border-color: rgba(#10b981, 0.3);
+    // background: rgba(#10b981, 0.1);
+    // border-color: rgba(#10b981, 0.3);
     
     .optimization-badge {
-      background: #10b981;
+      // background: #10b981;
       color: white;
     }
   }
@@ -439,7 +452,6 @@
     color: $luxury-text;
     
     &.savings {
-      color: #22c55e;
       font-weight: $font-weight-semibold;
     }
   }

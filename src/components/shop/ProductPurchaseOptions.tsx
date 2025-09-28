@@ -106,6 +106,10 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
   const handleAddToCart = async () => {
     if (!breakdown) return;
     if (product.characteristics?.colors && !selectedColor) {
+      const element = document.getElementById("product-color-selector");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" }); // smooth scroll
+      }
       toast.error('Please select a color');
       return;
     }
@@ -172,20 +176,22 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
 
   return (
     <div className="purchase-options">
-      <div className="purchase-options__header">
-        <h3>Purchase Options</h3>
-        <div className={`stock-status ${stockStatus.available ? 'in-stock' : 'out-of-stock'}`}>
-          {stockStatus.text}
+      {!stockStatus.available && (
+        <div className="purchase-options__header">
+          <div className={`stock-status out-of-stock'}`}>
+            {stockStatus.text}
+          </div>
         </div>
-      </div>
-      
+      )}
+
       {product.characteristics?.colors && (
         <ColorSelector
-            availableColors={product.characteristics.colors}
-            selectedColor={selectedColor}
-            onColorSelect={setSelectedColor}
-            size="md"
-          />
+          id='product-color-selector'
+          availableColors={product.characteristics.colors}
+          selectedColor={selectedColor}
+          onColorSelect={setSelectedColor}
+          size="md"
+        />
       )}
       {!stockStatus.available ? (
         <div className="purchase-options__unavailable">
@@ -194,10 +200,18 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
             <div className="bulk-contact">
               <p>For bulk orders, contact us:</p>
               <div className="contact-links">
-                <a href="https://wa.me/+919036758208" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://wa.me/+919036758208"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   📱 WhatsApp
                 </a>
-                <a href="https://instagram.com/lavyaglow" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://instagram.com/lavyaglow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   📷 Instagram
                 </a>
               </div>
@@ -211,8 +225,10 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
             <div className="purchase-mode">
               <div className="mode-tabs">
                 <button
-                  className={`mode-tab ${purchaseMode === 'piece' ? 'active' : ''}`}
-                  onClick={() => setPurchaseMode('piece')}
+                  className={`mode-tab ${
+                    purchaseMode === "piece" ? "active" : ""
+                  }`}
+                  onClick={() => setPurchaseMode("piece")}
                 >
                   <span className="mode-icon">🔢</span>
                   <div>
@@ -221,13 +237,27 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                   </div>
                 </button>
                 <button
-                  className={`mode-tab ${purchaseMode === 'set' ? 'active' : ''}`}
-                  onClick={() => setPurchaseMode('set')}
+                  className={`mode-tab ${
+                    purchaseMode === "set" ? "active" : ""
+                  }`}
+                  onClick={() => setPurchaseMode("set")}
                 >
                   <span className="mode-icon">📦</span>
                   <div>
                     <strong>By Sets</strong>
-                    <small>Optimized bundle pricing</small>
+                    {product.price_sets && product.price_sets.length > 0 && (<small>
+                      Upto{" "}
+                      <span style={{ fontWeight: '600' }}>{(
+                        ((product.price_sets[product.price_sets.length - 1]
+                          .actual_price -
+                          product.price_sets[product.price_sets.length - 1]
+                            .discounted_price) /
+                          product.price_sets[product.price_sets.length - 1]
+                            .actual_price) *
+                        100
+                      ).toFixed()}{" "}
+                      %</span> off on buying in sets
+                    </small>)}
                   </div>
                 </button>
               </div>
@@ -235,12 +265,12 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
           )}
 
           {/* Piece Purchase */}
-          {purchaseMode === 'piece' && (
+          {purchaseMode === "piece" && (
             <div className="purchase-section">
               <div className="quantity-input">
                 <label>Number of Pieces:</label>
                 <div className="quantity-controls">
-                  <button 
+                  <button
                     onClick={() => handlePieceQuantityChange(pieceQuantity - 1)}
                     disabled={pieceQuantity <= 1}
                   >
@@ -249,42 +279,53 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                   <Input
                     type="number"
                     value={pieceQuantity.toString()}
-                    onChange={(e) => handlePieceQuantityChange(parseInt(e.target.value) || 1)}
+                    onChange={(e) =>
+                      handlePieceQuantityChange(parseInt(e.target.value) || 1)
+                    }
                     min="1"
-                    max={product.can_do_bulk ? undefined : product.stock_quantity}
+                    max={
+                      product.can_do_bulk ? undefined : product.stock_quantity
+                    }
                   />
-                  <button 
+                  <button
                     onClick={() => handlePieceQuantityChange(pieceQuantity + 1)}
-                    disabled={!product.can_do_bulk && pieceQuantity >= product.stock_quantity}
+                    disabled={
+                      !product.can_do_bulk &&
+                      pieceQuantity >= product.stock_quantity
+                    }
                   >
                     +
                   </button>
                 </div>
-                <small>Per piece: ₹{product.discounted_price}</small>
+                {/* <small>Per piece: ₹{product.discounted_price}</small> */}
               </div>
-              {breakdown && hasSets && breakdown.savings > 0 && (
+              {breakdown && hasSets && breakdown.savings > 0 && priceOptimizer.getBreakdownText(breakdown)?.includes('Set') && (
                 <div className="optimization-info">
                   <div className="optimization-badge">
                     🎯 Smart Optimization Active
                   </div>
-                  <p>{priceOptimizer.getBreakdownText(breakdown)}</p>
-                  <p className="savings">{priceOptimizer.getSavingsMessage(breakdown)}</p>
+                  <br />
+                  <small>{priceOptimizer.getBreakdownText(breakdown)}</small>
+                  <br />
+                  <small className="savings" style={{ fontWeight: '600' }}>
+                    {priceOptimizer.getSavingsMessage(breakdown)}
+                  </small>
                 </div>
               )}
             </div>
           )}
 
           {/* Set Purchase - ENHANCED WITH OPTIMIZATION */}
-          {purchaseMode === 'set' && hasSets && (
+          {purchaseMode === "set" && hasSets && (
             <div className="purchase-section">
               <div className="set-selection">
                 <label>Choose Set Size:</label>
-                <select 
+                <select
                   value={selectedSet}
                   onChange={(e) => setSelectedSet(e.target.value)}
                 >
                   <option value="">Select a set...</option>
-                  {product.price_sets!.map(set => (
+                  {product.price_sets!.map((set) => (
                     <option key={set.id} value={set.id}>
                       Set of {set.set_quantity} - ₹{set.discounted_price}
                     </option>
@@ -296,7 +337,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                 <div className="set-quantity-input">
                   <label>Number of Sets:</label>
                   <div className="quantity-controls">
-                    <button 
+                    <button
                       onClick={() => handleSetsCountChange(setsCount - 1)}
                       disabled={setsCount <= 1}
                     >
@@ -305,16 +346,24 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                     <Input
                       type="number"
                       value={setsCount.toString()}
-                      onChange={(e) => handleSetsCountChange(parseInt(e.target.value) || 1)}
+                      onChange={(e) =>
+                        handleSetsCountChange(parseInt(e.target.value) || 1)
+                      }
                       min="1"
                     />
-                    <button 
+                    <button
                       onClick={() => handleSetsCountChange(setsCount + 1)}
                     >
                       +
                     </button>
                   </div>
-                  <small>Total pieces: {selectedSet ? (product.price_sets?.find(s => s.id === selectedSet)?.set_quantity || 0) * setsCount : 0}</small>
+                  <small>
+                    Total pieces:{" "}
+                    {selectedSet
+                      ? (product.price_sets?.find((s) => s.id === selectedSet)
+                          ?.set_quantity || 0) * setsCount
+                      : 0}
+                  </small>
                 </div>
               )}
 
@@ -324,79 +373,100 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                   <div className="optimization-badge">
                     🚀 Set Optimization Active
                   </div>
-                  <p className="optimization-message">{breakdown.optimizationMessage}</p>
-                  <p className="savings">{priceOptimizer.getSavingsMessage(breakdown)}</p>
+                  <br />
+                  <small className="optimization-message">
+                    {breakdown.optimizationMessage}
+                  </small>
+                  <br />
+                  <small className="savings">
+                    {priceOptimizer.getSavingsMessage(breakdown)}
+                  </small>
                 </div>
               )}
             </div>
           )}
 
           {/* FIXED Price Summary - Shows correct pricing */}
-          {breakdown && ((purchaseMode === 'set' && hasSets && selectedSet) || (purchaseMode === 'piece')) && (
-            <div className="price-summary">
-              <div className="price-breakdown">
-                <div className="price-line">
-                  <span>Total Pieces:</span>
-                  <span>{breakdown.totalPieces}</span>
+          {breakdown &&
+            ((purchaseMode === "set" && hasSets && selectedSet) ||
+              purchaseMode === "piece") && (
+              <div className="price-summary">
+                <div className="price-breakdown">
+                  <div className="price-line">
+                    <span>Total Pieces:</span>
+                    <span>{breakdown.totalPieces}</span>
+                  </div>
+                  <div className="price-line original">
+                    <span>Regular Price:</span>
+                    <span>₹{breakdown.originalPrice.toFixed(2)}</span>
+                  </div>
+                  <div className="price-line total">
+                    <span>Your Price:</span>
+                    <span>₹{breakdown.totalPrice.toFixed(2)}</span>
+                  </div>
+                  <div className="price-line savings">
+                    <span>You Save:</span>
+                    <span>₹{breakdown.savings.toFixed(2)}</span>
+                  </div>
+                  {/* Total Discount Percentage */}
+                  <div className="price-line total-discount">
+                    <span>Total Discount:</span>
+                    <span>
+                      {priceOptimizer.getTotalDiscountPercentage(breakdown)}%
+                    </span>
+                  </div>
                 </div>
-                <div className="price-line original">
-                  <span>Regular Price:</span>
-                  <span>₹{breakdown.originalPrice.toFixed(2)}</span>
-                </div>
-                <div className="price-line total">
-                  <span>Your Price:</span>
-                  <span>₹{breakdown.totalPrice.toFixed(2)}</span>
-                </div>
-                <div className="price-line savings">
-                  <span>You Save:</span>
-                  <span>₹{breakdown.savings.toFixed(2)}</span>
-                </div>
-                {/* Total Discount Percentage */}
-                <div className="price-line total-discount">
-                  <span>Total Discount:</span>
-                  <span>{priceOptimizer.getTotalDiscountPercentage(breakdown)}%</span>
-                </div>
+
+                {breakdown.breakdown.length > 1 && (
+                  <div className="breakdown-details">
+                    <h5>Optimized Purchase:</h5>
+                    <ul>
+                      {breakdown.breakdown.map((item, index) => (
+                        <li key={index}>
+                          {item.quantity} x{" "}
+                          {item.type === "set"
+                            ? `Set of ${item.setSize}`
+                            : "Individual"}
+                          = ₹{item.totalPrice.toFixed(2)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <Button
+                  onClick={handleAddToCart}
+                  variant="primary"
+                  size="lg"
+                  fullWidth
+                  disabled={!breakdown.totalPieces || isAddingToCart}
+                  loading={isAddingToCart}
+                  className="add-to-cart"
+                >
+                  {isAddingToCart ? "Adding to Cart..." : `Add to Cart`}
+                  {/* <span className="button-price">₹{breakdown.totalPrice.toFixed(2)}</span> */}
+                </Button>
               </div>
+            )}
 
-              {breakdown.breakdown.length > 1 && (
-                <div className="breakdown-details">
-                  <h5>Optimized Purchase:</h5>
-                  <ul>
-                    {breakdown.breakdown.map((item, index) => (
-                      <li key={index}>
-                        {item.quantity} x {item.type === 'set' ? `Set of ${item.setSize}` : 'Individual'} 
-                        = ₹{item.totalPrice.toFixed(2)}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <Button
-                onClick={handleAddToCart}
-                variant="primary"
-                size="lg"
-                fullWidth
-                disabled={!breakdown.totalPieces || isAddingToCart}
-                loading={isAddingToCart}
-                className='add-to-cart'
-              >
-                {isAddingToCart ? 'Adding to Cart...' : `Add to Cart`}
-                {/* <span className="button-price">₹{breakdown.totalPrice.toFixed(2)}</span> */}
-              </Button>
-            </div>
-          )}
-          
           {/* Bulk Order Message */}
           {product.can_do_bulk && (
             <div className="bulk-info">
               <h4>📦 Bulk Orders Available</h4>
-              <p>For large quantities or custom requirements:</p>
+              <small>For large quantities or custom requirements:</small>
               <div className="contact-links">
-                <a href="https://wa.me/+919038644125" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://wa.me/+919038644125"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   📱 WhatsApp
                 </a>
-                <a href="https://instagram.com/lavyaglow" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://instagram.com/lavyaglow"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   📷 Instagram
                 </a>
               </div>

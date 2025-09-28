@@ -115,13 +115,13 @@ export function ProductDetail() {
     <div className="product-detail">
       <div className="container">
         {/* Breadcrumb */}
-        {/* <nav className="breadcrumb">
+        <nav className="breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
           <Link to="/products">Products</Link>
           <span>/</span>
           <span>{product.name}</span>
-        </nav> */}
+        </nav>
 
         <div className="product-detail__content">
           {/* Image Gallery */}
@@ -158,7 +158,7 @@ export function ProductDetail() {
               )}
 
               {/* Badges */}
-              <div className="product-gallery__badges">
+              {/* <div className="product-gallery__badges">
                 {product.highlight_in_home && (
                   <div className="product-badge product-badge--featured">
                     ✨ Set discounts available
@@ -169,7 +169,7 @@ export function ProductDetail() {
                     {discountPercentage}% OFF
                   </div>
                 )}
-              </div>
+              </div> */}
             </div>
 
             {/* Thumbnail Navigation */}

@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { CartIcon } from './CartIcon';
 
 export function Header() {
   const { user, signOut, isAdmin, isStaff } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     signOut();
@@ -19,6 +21,10 @@ export function Header() {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
+  const handleBackButton = () => {
+    navigate(-1);
+  }
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -38,6 +44,13 @@ export function Header() {
       <header className="header-luxury">
         <div className="header-luxury__container">
           {/* Mobile Menu Button */}
+          {location.pathname !== '/' && <button 
+            className="header-luxury__back-btn"
+            onClick={handleBackButton}
+            aria-label="Back button"
+          >
+            ←
+          </button>}
           <button 
             className="header-luxury__menu-toggle"
             onClick={toggleMobileMenu}
