@@ -69,7 +69,8 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         item => 
           item.product.id === action.payload.product.id &&
           item.purchaseType === action.payload.purchaseType &&
-          item.setId === action.payload.setId
+          item.setId === action.payload.setId &&
+          item.selectedColor === action.payload.selectedColor
       );
 
       let newItems: CartItem[];
@@ -284,14 +285,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (validationResult.invalidItems.length > 0) {
       toast.error(
         `${validationResult.invalidItems.length} item(s) were removed from your cart due to availability changes`,
-        { duration: 4000 }
-      );
-    }
-
-    // Show notifications for updated items
-    if (validationResult.updatedItems.length > 0) {
-      toast.success(
-        `${validationResult.updatedItems.length} item(s) in your cart were updated`,
         { duration: 4000 }
       );
     }

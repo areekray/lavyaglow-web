@@ -17,10 +17,12 @@ export const ColorChips = ({ colors, showLabel = false }: { colors: string, show
             <div 
               className="color-chip__swatch"
               style={{
-                height: 20,
-                width: 20,
+                height: 32,
+                width: 32,
                 minWidth: 20,
                 backgroundColor,
+                borderRadius: 4,
+                border: '1px solid #f1f1f1'
                 // background: colorHexMap[color]?.includes('gradient') ? colorHexMap[color] : undefined
               }}
             />

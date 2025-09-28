@@ -142,8 +142,12 @@
   position: relative;
   &__icon {
     position: absolute;
-    left: $spacing-md;
-    max-height: calc(100% - 2rem);
+    left: .8rem;
+    top: 50%;
+    transform: translateY(-50%); // ✅ centers inside input
+    pointer-events: none; // prevents blocking clicks inside input
+    height: 30px;
+    width: 30px;
   }
   &__label {
     color: $luxury-text;
@@ -718,6 +722,7 @@
   font-size: $font-size-base;
   cursor: pointer;
   transition: all $transition-normal;
+  height: 56px;
   width: 56px;
   padding: 10px;
   

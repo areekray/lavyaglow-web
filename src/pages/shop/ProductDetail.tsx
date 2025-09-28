@@ -299,13 +299,54 @@ export function ProductDetail() {
             />
           </div>
         </div>
+        {product.description && (
+              <div className="product-info__description mobile-view">
+                <h3>About this candle</h3>
+                <p>{product.description}</p>
+              </div>
+            )}
 
+            {/* Characteristics */}
+            {product.characteristics && Object.keys(product.characteristics).length > 0 && (
+              <div className="product-info__characteristics mobile-view">
+                <h3>Product Details</h3>
+                <dl className="characteristics-list">
+                  {/* {product.characteristics.colors && (
+                    <>
+                      <dt>🎨 Colors</dt>
+                      <dd>
+                        <ColorChips colors={product.characteristics.colors} showLabel={true} />
+                      </dd>
+                    </>
+                  )} */}
+                  {product.characteristics.scent && (
+                    <>
+                      <dt>🌸 Scent</dt>
+                      <dd>{product.characteristics.scent}</dd>
+                    </>
+                  )}
+                  {product.characteristics.burn_time && (
+                    <>
+                      <dt>⏰ Burn Time</dt>
+                      <dd>{product.characteristics.burn_time}</dd>
+                    </>
+                  )}
+                  {product.characteristics.dimensions && (
+                    <>
+                      <dt>📏 Dimensions</dt>
+                      <dd>{product.characteristics.dimensions}</dd>
+                    </>
+                  )}
+                </dl>
+              </div>
+            )}
         {/* Back Button */}
         <div className="product-detail__actions">
           <Button onClick={() => navigate(-1)} variant="secondary">
             ← Back to Products
           </Button>
         </div>
+        
       </div>
     </div>
   );

@@ -270,6 +270,12 @@
     @include respond-to-max(sm) {
       display: none;
     }
+    &.mobile-view {
+      display: none;
+      @include respond-to-max(sm) {
+        display: block;
+      }
+    }
     margin-bottom: $spacing-2xl;
 
     
