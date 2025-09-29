@@ -123,6 +123,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  const signInWithGoogle = async () => {
+    try {
+      setLoading(true);
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
+        }
+      });
+
+      if (error) {
+        setLoading(false);
+        return { data: null, error };
+      }
+
+      // Don't set loading to false here - onAuthStateChange will handle it
+      return { data, error: null };
+    } catch (error: any) {
+      setLoading(false);
+      return { data: null, error };
+    }
+  };
+
   // Helper function to fetch user profile
   const fetchUserProfile = async (authUser: any): Promise<User | null> => {
     try {
@@ -245,6 +272,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       loading,
       signIn,
       signUp,
+      signInWithGoogle,
       signOut,
       updateProfile,
       isAdmin: user?.isAdmin || false,

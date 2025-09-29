@@ -18,6 +18,7 @@
 @use 'components/image-with-placeholder' as *;
 @use 'components/pwa-update-modal' as *;
 @use 'components/filter-drawer' as *;
+@use 'components/auth-modal' as *;
 
 // Pages
 @use 'pages/home' as *;

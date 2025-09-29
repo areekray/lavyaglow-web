@@ -13,10 +13,25 @@ import {
   XMarkIcon
 } from '@heroicons/react/24/outline';
 import { PercentBadgeIcon } from "@heroicons/react/16/solid";
+import { useAuth } from "@/contexts/AuthContext";
+import { useAuthModal } from "@/contexts/AuthModalContext";
 
 export function Cart() {
   const { state: cart, removeFromCart, updateQuantity, clearCart } = useCart();
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const { user } = useAuth();
+  const { openLogin } = useAuthModal();
+
+  const handleProceedToCheckout = () => {
+    if (!user) {
+      openLogin({
+        redirectPath: '/cart',
+        message: 'First order gets 5% additional discount upto 50!'
+      });
+      return;
+    }
+    toast.success("Checkout coming soon!");
+  }
 
   const handleQuantityChange = async (itemId: string, newQuantity: number) => {
     if (newQuantity < 0) return;
@@ -333,7 +348,7 @@ export function Cart() {
                   variant="primary"
                   size="lg"
                   fullWidth
-                  onClick={() => toast.success("Checkout coming soon!")}
+                  onClick={handleProceedToCheckout}
                 >
                   Proceed to Checkout
                 </Button>

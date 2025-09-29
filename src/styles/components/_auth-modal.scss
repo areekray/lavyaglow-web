@@ -1,0 +1,496 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.auth-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.auth-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  
+  // Desktop: Wider modal (600px max)
+  width: 90%;
+  max-width: 600px; // Increased from 500px
+  max-height: 90vh;
+  
+  // Mobile: Full width with small margins
+  @include respond-to(sm) {
+    width: calc(100vw - 2rem); // Full width minus 1rem margin on each side
+    max-width: none;
+    max-height: 95vh;
+    left: 50%;
+    right: auto;
+  }
+  
+  // Tablet: Medium width
+  @include respond-to(md) {
+    width: 85%;
+    max-width: 550px;
+  }
+  
+  // Large desktop: Even wider
+  @include respond-to(lg) {
+    width: 80%;
+    max-width: 650px;
+  }
+  
+  background: linear-gradient(145deg, $dark-secondary 0%, lighten($dark-secondary, 3%) 100%);
+  border-radius: $border-radius-2xl;
+  border: 1px solid rgba($primary-color, 0.2);
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba($primary-color, 0.1),
+    inset 0 1px 0 rgba($primary-color, 0.1);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  &.open {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  // Mobile: Adjust border radius for full width
+  @include respond-to(sm) {
+    border-radius: $border-radius-xl; // Slightly smaller radius on mobile
+  }
+  
+  // Premium gradient border effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-color 0%, lighten($primary-color, 15%) 100%);
+  }
+  
+  &__close {
+    position: absolute;
+    top: $spacing-lg;
+    right: $spacing-lg;
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: rgba($dark-tertiary, 0.5);
+    border: 1px solid rgba($dark-tertiary, 0.8);
+    border-radius: $border-radius-full;
+    color: $luxury-text-secondary;
+    cursor: pointer;
+    transition: all $transition-normal;
+    z-index: 1;
+    
+    &:hover {
+      background: rgba($primary-color, 0.1);
+      border-color: rgba($primary-color, 0.3);
+      color: $primary-color;
+      transform: scale(1.05);
+    }
+    
+    @include respond-to(sm) {
+      top: $spacing-md;
+      right: $spacing-md;
+      width: 36px;
+      height: 36px;
+    }
+  }
+  
+  &__header {
+    text-align: center;
+    padding: $spacing-3xl $spacing-3xl $spacing-xl; // Increased horizontal padding
+    border-bottom: 1px solid rgba($dark-tertiary, 0.3);
+    
+    @include respond-to(md) {
+      padding: $spacing-3xl $spacing-2xl $spacing-xl;
+    }
+    
+    @include respond-to(sm) {
+      padding: $spacing-2xl $spacing-lg $spacing-lg;
+    }
+    
+    .brand-logo {
+      @include flex-center;
+      gap: $spacing-sm;
+      margin-bottom: $spacing-lg;
+      
+      .brand-icon {
+        font-size: $font-size-2xl;
+        filter: drop-shadow(0 0 10px rgba($primary-color, 0.5));
+        
+        @include respond-to(sm) {
+          font-size: $font-size-xl;
+        }
+      }
+      
+      .brand-name {
+        color: $primary-color;
+        font-family: $font-family-heading;
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        letter-spacing: 1px;
+        
+        @include respond-to(sm) {
+          font-size: $font-size-lg;
+        }
+      }
+    }
+  }
+  
+  &__title {
+    color: $luxury-text;
+    font-family: $font-family-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-sm;
+    letter-spacing: 0.5px;
+    
+    @include respond-to(sm) {
+      font-size: $font-size-xl;
+    }
+  }
+  
+  &__subtitle {
+    color: $luxury-text-secondary;
+    font-size: $font-size-base;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
+    
+    @include respond-to(sm) {
+      font-size: $font-size-sm;
+    }
+  }
+  
+  &__message {
+    background: rgba($primary-color, 0.1);
+    border: 1px solid rgba($primary-color, 0.2);
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+    color: $primary-color;
+    font-size: $font-size-sm;
+    margin-top: $spacing-md;
+    
+    @include respond-to(sm) {
+      font-size: $font-size-xs;
+      padding: $spacing-sm;
+    }
+  }
+  
+  &__content {
+    padding: $spacing-xl $spacing-3xl; // Increased horizontal padding
+    max-height: 60vh;
+    overflow-y: auto;
+    
+    @include respond-to(md) {
+      padding: $spacing-xl $spacing-2xl;
+    }
+    
+    @include respond-to(sm) {
+      padding: $spacing-lg;
+      max-height: 50vh;
+    }
+    
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba($dark-tertiary, 0.3);
+      border-radius: $border-radius-full;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba($primary-color, 0.5);
+      border-radius: $border-radius-full;
+      
+      &:hover {
+        background: rgba($primary-color, 0.7);
+      }
+    }
+  }
+  
+  &__footer {
+    padding: $spacing-xl $spacing-3xl $spacing-2xl; // Increased horizontal padding
+    border-top: 1px solid rgba($dark-tertiary, 0.3);
+    text-align: center;
+    
+    @include respond-to(md) {
+      padding: $spacing-xl $spacing-2xl;
+    }
+    
+    @include respond-to(sm) {
+      padding: $spacing-lg;
+    }
+    
+    p {
+      color: $luxury-text-secondary;
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-md;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      @include respond-to(sm) {
+        font-size: $font-size-xs;
+      }
+    }
+    
+    .demo-accounts {
+      background: rgba($dark-tertiary, 0.3);
+      border-radius: $border-radius-lg;
+      padding: $spacing-md;
+      margin-top: $spacing-lg;
+      
+      @include respond-to(sm) {
+        padding: $spacing-sm;
+        margin-top: $spacing-md;
+      }
+      
+      p {
+        font-size: $font-size-xs;
+        margin-bottom: $spacing-xs;
+        
+        @include respond-to(sm) {
+          font-size: 0.6rem;
+        }
+        
+        &:first-child {
+          color: $luxury-text;
+          font-weight: $font-weight-semibold;
+          margin-bottom: $spacing-sm;
+        }
+      }
+    }
+  }
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  
+  // Two-column layout on wider screens for register form
+  .register-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-lg;
+    
+    @include respond-to(md) {
+      grid-template-columns: 1fr; // Single column on tablets
+    }
+    
+    @include respond-to(sm) {
+      grid-template-columns: 1fr; // Single column on mobile
+      gap: $spacing-md;
+    }
+  }
+  
+  @include respond-to(sm) {
+    gap: $spacing-md;
+  }
+}
+
+.auth-submit-btn {
+  margin-top: $spacing-lg;
+  background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
+  color: $dark-secondary;
+  
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, lighten($primary-color, 5%) 0%, lighten($primary-color, 15%) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba($primary-color, 0.3);
+    color: $dark-secondary;
+  }
+  
+  @include respond-to(sm) {
+    margin-top: $spacing-md;
+  }
+}
+
+.auth-switch-btn {
+  background: none;
+  border: none;
+  color: $primary-color;
+  font-weight: $font-weight-semibold;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: all $transition-normal;
+  
+  &:hover {
+    color: lighten($primary-color, 10%);
+    text-decoration-thickness: 2px;
+  }
+}
+
+.password-field {
+  position: relative;
+  
+  .password-toggle {
+    position: absolute;
+    right: $spacing-md;
+    top: 44%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: $luxury-text-secondary;
+    cursor: pointer;
+    transition: all $transition-normal;
+    @include flex-center;
+    width: 24px;
+    height: 24px;
+    margin-top: 10px; // Account for label height
+    
+    &:hover {
+      color: $primary-color;
+    }
+    
+    @include respond-to(sm) {
+      right: $spacing-sm;
+    }
+  }
+}
+
+// Special mobile adjustments for very small screens
+@media (max-width: 360px) {
+  .auth-modal {
+    width: calc(100vw - 1rem);
+    
+    &__header {
+      padding: $spacing-lg $spacing-md $spacing-md;
+    }
+    
+    &__content {
+      padding: $spacing-md;
+    }
+    
+    &__footer {
+      padding: $spacing-md;
+    }
+  }
+}
+
+// Landscape mobile optimization
+@media (max-height: 600px) and (orientation: landscape) {
+  .auth-modal {
+    max-height: 95vh;
+    
+    &__content {
+      max-height: 40vh;
+    }
+    
+    &__header {
+      padding: $spacing-lg $spacing-2xl $spacing-md;
+    }
+  }
+}
+
+// Animation enhancements
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .auth-modal,
+  .auth-modal-overlay {
+    animation: none;
+    transition: opacity 0.2s ease;
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .auth-modal {
+    border-width: 2px;
+  }
+}
+
+.google-auth-section {
+  margin-bottom: $spacing-xl;
+}
+
+.google-signin-btn {
+  @include flex-center;
+  gap: $spacing-md;
+  background: white;
+  color: #333;
+  border: 2px solid #dadce0;
+  font-weight: $font-weight-medium;
+  transition: all $transition-normal;
+  
+  &:hover:not(:disabled) {
+    background: #f8f9fa;
+    border-color: #dadce0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.auth-divider {
+  @include flex-center;
+  margin: $spacing-xl 0;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba($luxury-text, 0.2);
+  }
+  
+  span {
+    background: $dark-secondary;
+    padding: 0 $spacing-lg;
+    color: $luxury-text-secondary;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}

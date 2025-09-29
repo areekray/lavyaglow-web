@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { CartIcon } from './CartIcon';
+import { useAuthModal } from '@/contexts/AuthModalContext';
 
 export function Header() {
   const { user, signOut, isAdmin, isStaff } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { openLogin } = useAuthModal();
 
   const handleSignOut = () => {
     signOut();
@@ -109,7 +111,7 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <Link to="/auth/login" className="header-luxury__link">Account</Link>
+              <button className="header-luxury__link header-luxury__link--button" onClick={() => openLogin()}>Account</button>
             )}
             
             <CartIcon />
@@ -179,9 +181,9 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <Link to="/auth/login" className="header-luxury__mobile-link" onClick={handleLinkClick}>
+              <button className="header-luxury__mobile-link header-luxury__mobile-link--button" onClick={() => openLogin()}>
                 Account
-              </Link>
+              </button>
             )}
           </div>
         </nav>
