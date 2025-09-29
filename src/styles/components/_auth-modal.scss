@@ -205,12 +205,12 @@
     max-height: 60vh;
     overflow-y: auto;
     
-    @include respond-to(md) {
+    @include respond-to-max(md) {
       padding: $spacing-xl $spacing-2xl;
     }
     
-    @include respond-to(sm) {
-      padding: $spacing-lg;
+    @include respond-to-max(xs) {
+      padding: 2rem;
       max-height: 50vh;
     }
     

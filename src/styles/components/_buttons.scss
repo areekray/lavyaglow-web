@@ -52,6 +52,16 @@
   &--lg {
     padding: $spacing-lg $spacing-2xl;
     font-size: $font-size-lg;
+
+    @include respond-to-max(sm) {
+      padding: $spacing-md $spacing-lg;
+      font-size: $font-size-sm;
+    }
+
+    @include respond-to-max(sm) {
+      padding: $spacing-md $spacing-lg;
+      font-size: $font-size-xs;
+    }
   }
   
   &--full {

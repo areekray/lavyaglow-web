@@ -19,6 +19,9 @@
 @use 'components/pwa-update-modal' as *;
 @use 'components/filter-drawer' as *;
 @use 'components/auth-modal' as *;
+@use 'components/address-autocomplete' as *;
+@use 'components/delivery-address' as *;
+@use 'components/checkout-stepper' as *;
 
 // Pages
 @use 'pages/home' as *;
@@ -26,6 +29,7 @@
 @use 'pages/products' as *;
 @use 'pages/product-detail' as *;
 @use 'pages/cart' as *;
+@use 'pages/checkout' as *;
 
 // Import Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');

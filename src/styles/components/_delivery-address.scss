@@ -1,0 +1,228 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+// Saved Addresses
+.saved-addresses-section {
+  margin-bottom: $spacing-2xl;
+  
+  .toggle-saved-btn {
+    @include flex-center;
+    justify-content: space-between;
+    width: 100%;
+    background: rgba($dark-tertiary, 0.5);
+    border: 2px solid rgba($primary-color, 0.2);
+    color: $luxury-text;
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
+    cursor: pointer;
+    transition: all $transition-normal;
+    
+    &:hover {
+      background: rgba($primary-color, 0.1);
+      border-color: rgba($primary-color, 0.4);
+    }
+    
+    .toggle-arrow {
+      transition: transform $transition-normal;
+      
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+.saved-addresses-list {
+  margin-top: $spacing-lg;
+  display: grid;
+  gap: $spacing-md;
+}
+
+.saved-address-card {
+  @include flex-between;
+  background: $dark-tertiary;
+  border: 2px solid transparent;
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  cursor: pointer;
+  transition: all $transition-normal;
+  
+  &:hover, &.selected {
+    border-color: $primary-color;
+    background: rgba($primary-color, 0.05);
+    transform: translateY(-2px);
+  }
+  
+  .address-info {
+    flex: 1;
+    
+    h4 {
+      color: $luxury-text;
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $spacing-xs;
+      @include flex-center;
+      justify-content: flex-start;
+      gap: $spacing-sm;
+    }
+    
+    .default-badge {
+      background: $primary-color;
+      color: $dark-bg;
+      font-size: $font-size-xs;
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $border-radius-sm;
+      font-weight: $font-weight-bold;
+    }
+    
+    .company {
+      color: $primary-color;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacing-xs;
+    }
+    
+    .address-line,
+    .apartment,
+    .location,
+    .phone {
+      color: $luxury-text-secondary;
+      font-size: $font-size-sm;
+      margin-bottom: $spacing-xs;
+      line-height: 1.4;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    
+    .apartment {
+      font-style: italic;
+    }
+    
+    .location {
+      font-weight: $font-weight-medium;
+    }
+  }
+  
+  .address-actions {
+    .select-text {
+      color: $primary-color;
+      font-size: $font-size-xs;
+      font-weight: $font-weight-semibold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+// Billing specific styles
+.billing-toggle {
+  margin-bottom: $spacing-2xl;
+}
+
+.different-address-notice {
+  @include flex-center;
+  gap: $spacing-md;
+  background: rgba(#f59e0b, 0.1);
+  border: 1px solid rgba(#f59e0b, 0.2);
+  border-radius: $border-radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-xl;
+  
+  .notice-icon {
+    font-size: $font-size-xl;
+    color: #f59e0b;
+    flex-shrink: 0;
+  }
+  
+  .notice-text {
+    h4 {
+      color: #f59e0b;
+      font-size: $font-size-base;
+      margin-bottom: $spacing-xs;
+    }
+    
+    p {
+      color: $luxury-text-secondary;
+      font-size: $font-size-sm;
+    }
+  }
+}
+
+.same-address-confirmation {
+  margin-top: $spacing-xl;
+  
+  .confirmation-card {
+    @include flex-center;
+    gap: $spacing-lg;
+    background: rgba($success-color, 0.1);
+    border: 1px solid rgba($success-color, 0.2);
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    
+    .confirmation-icon {
+      font-size: $font-size-2xl;
+      color: $success-color;
+      flex-shrink: 0;
+    }
+    
+    .confirmation-content {
+      h4 {
+        color: $success-color;
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-sm;
+      }
+      
+      p {
+        color: $luxury-text-secondary;
+        margin-bottom: $spacing-md;
+      }
+      
+      .address-preview {
+        background: $dark-tertiary;
+        border-radius: $border-radius-md;
+        padding: $spacing-md;
+        font-size: $font-size-sm;
+        line-height: 1.5;
+        
+        strong {
+          color: $luxury-text;
+          display: block;
+          margin-bottom: $spacing-xs;
+        }
+        
+        div {
+          color: $luxury-text-secondary;
+          margin-bottom: $spacing-xs;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.billing-form-fields {
+  margin-top: $spacing-xl;
+}
+
+.saved-addresses-toggle {
+  background: rgba($primary-color, 0.1);
+  border: 1px solid rgba($primary-color, 0.3);
+  color: $primary-color;
+  padding: $spacing-md $spacing-lg;
+  border-radius: $border-radius-lg;
+  cursor: pointer;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  margin-bottom: $spacing-lg;
+  width: 100%;
+  transition: all $transition-normal;
+  
+  &:hover {
+    background: rgba($primary-color, 0.15);
+  }
+}

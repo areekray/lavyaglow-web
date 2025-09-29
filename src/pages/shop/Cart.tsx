@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 // import { priceOptimizer } from "@/utils/priceOptimizer";
 import { Button } from "@/components/ui/Button";
@@ -21,7 +21,7 @@ export function Cart() {
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
   const { user } = useAuth();
   const { openLogin } = useAuthModal();
-
+  const navigate = useNavigate();
   const handleProceedToCheckout = () => {
     if (!user) {
       openLogin({
@@ -30,7 +30,7 @@ export function Cart() {
       });
       return;
     }
-    toast.success("Checkout coming soon!");
+    navigate('/checkout')
   }
 
   const handleQuantityChange = async (itemId: string, newQuantity: number) => {

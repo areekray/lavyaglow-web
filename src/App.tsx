@@ -20,6 +20,7 @@ import { ProductDetail } from './pages/shop/ProductDetail';
 import { ScrollToTop } from './components/layout/ScrollToTop';
 import { usePWAUpdate } from './hooks/usePWAUpdate';
 import { PWAUpdateModal } from './components/ui/PWAUpdateModal';
+import { Checkout } from './pages/checkout/Checkout';
 
 function App() {
   const { 
@@ -43,6 +44,7 @@ function App() {
                   <Route path="products" element={<Products />} />
                   <Route path="products/:id" element={<ProductDetail />} />
                   <Route path="cart" element={<Cart />} />
+                  <Route path="checkout" element={<Checkout />} />
                   <Route 
                     path="profile" 
                     element={
