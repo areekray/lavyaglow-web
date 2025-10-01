@@ -122,6 +122,31 @@ export default defineConfig({
           {
             urlPattern: ({ url }) => {
               return url.hostname.includes('supabase.co') && 
+                     url.pathname.includes('/storage/v1/object/public/carousel-images/');
+            },
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'lavyaglow-carousel-images',
+              expiration: {
+                maxEntries: 200, // Cache up to 200 product images
+                maxAgeSeconds: 365 * 24 * 60 * 60, // 1 year cache
+                purgeOnQuotaError: true // Auto cleanup when storage full
+              },
+              cacheableResponse: {
+                statuses: [0, 200, 206] // Cache successful responses
+              },
+              plugins: [
+                {
+                  cachedResponseWillBeUsed: async ({ cachedResponse }) => {
+                    return cachedResponse;
+                  }
+                }
+              ]
+            }
+          },
+          {
+            urlPattern: ({ url }) => {
+              return url.hostname.includes('supabase.co') && 
                      url.pathname.includes('/rest/v1/') &&
                      !url.pathname.includes('/storage/'); // Exclude storage URLs
             },
