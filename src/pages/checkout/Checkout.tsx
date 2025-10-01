@@ -343,69 +343,6 @@ export function Checkout() {
               </form>
             </FormProvider>
           </div>
-
-          <div className="checkout__sidebar">
-            {/* Order Summary */}
-            <div className="order-summary" style={{ marginBottom: 0 }}>
-              {/* <h3>Order Summary</h3>
-              
-              <div className="order-summary__items">
-                {cartState.items.map((item) => (
-                  <div key={item.id} className="order-summary__item">
-                    <img 
-                      src={item.product.images?.[0] || '/default-candle.jpg'} 
-                      alt={item.product.name} 
-                    />
-                    <div className="item-details">
-                      <h4>{item.product.name}</h4>
-                      <p className="item-meta">
-                        {item.purchaseType === 'set' ? `Set of ${item.breakdown.breakdown[0]?.setSize}` : 'Individual'} × {item.quantity}
-                      </p>
-                      {item.selectedColor && (
-                        <p className="item-color">Color: {item.selectedColor}</p>
-                      )}
-                    </div>
-                    <div className="item-pricing">
-                      <span className="item-price">₹{item.breakdown.totalPrice.toLocaleString()}</span>
-                      {item.breakdown.savings > 0 && (
-                        <span className="item-savings">Save ₹{item.breakdown.savings.toLocaleString()}</span>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div> */}
-              
-              <div className="order-summary__totals" style={{ paddingTop: 0, marginBottom: 0 }}>
-                <div className="total-row">
-                  <span>Items ({cartState.totalItems})</span>
-                  <span>₹{(cartState.totalPrice + cartState.totalSavings).toLocaleString()}</span>
-                </div>
-                {cartState.totalSavings > 0 && (
-                  <div className="total-row savings">
-                    <span>You Save</span>
-                    <span>-₹{cartState.totalSavings.toLocaleString()}</span>
-                  </div>
-                )}
-                <div className="total-row shipping">
-                  <span>Shipping</span>
-                  <span className="free">FREE</span>
-                </div>
-                <div className="total-row final">
-                  <strong>Total</strong>
-                  <strong>₹{cartState.totalPrice.toLocaleString()}</strong>
-                </div>
-              </div>
-            </div>
-            
-            {/* Security Badge */}
-            {/* <div className="security-badge">
-              <div className="security-icon">🔒</div>
-              <div className="security-text">
-                <h4>Secure Checkout</h4>
-                <p>Your information is protected with industry-standard encryption</p>
-              </div>
-            </div> */}
-          </div>
         </div>
       </div>
     </div>

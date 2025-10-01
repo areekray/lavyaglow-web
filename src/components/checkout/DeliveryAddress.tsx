@@ -251,7 +251,7 @@ export function DeliveryAddress() {
         {/* Address with LocationIQ Autocomplete */}
         <div className="form-row">
           <AddressAutocomplete
-            label="Street Address *"
+            label="Address"
             value={deliveryData.address || ''}
             onChange={(value) => setValue('delivery.address', value)}
             onAddressSelect={handleAddressSelect}

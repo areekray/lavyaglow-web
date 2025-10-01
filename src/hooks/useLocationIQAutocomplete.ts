@@ -12,15 +12,50 @@ interface LocationIQPlace {
   display_name: string;
   display_place: string;
   display_address: string;
-  address: {
+    address: {
+    // Common fields
+    name?: string;
     house_number?: string;
+    house_name?: string;
     road?: string;
+    street?: string;
+    neighbourhood?: string;
     suburb?: string;
+    village?: string;
+    town?: string;
     city?: string;
+    municipality?: string;
+    county?: string;
+    district?: string;
+    state_district?: string;
     state?: string;
+    region?: string;
     postcode?: string;
     country?: string;
     country_code?: string;
+
+    // Additional OSM-specific fields
+    hamlet?: string;
+    locality?: string;
+    borough?: string;
+    city_district?: string;
+    province?: string;
+    island?: string;
+    archipelago?: string;
+    continent?: string;
+
+    // Landmarks / POIs
+    building?: string;
+    amenity?: string;
+    shop?: string;
+    office?: string;
+    leisure?: string;
+    tourism?: string;
+
+    // Extras sometimes seen
+    postcode_ext?: string;
+    ISO3166_2_lvl4?: string;
+    ISO3166_2_lvl6?: string;
   };
 }
 
@@ -151,13 +186,53 @@ export function useLocationIQAutocomplete() {
 
   const parseLocationIQAddress = useCallback((place: LocationIQPlace): AddressComponents => {
     const { address } = place;
-    
+    const {
+    name,
+    house_number,
+    road,
+    street,
+    neighbourhood,
+    suburb,
+    hamlet,
+    village,
+    town,
+    borough,
+    locality,
+    building,
+    amenity,
+    shop,
+    office,
+    leisure,
+    tourism,
+    // excluded: city, county, state, country, postcode
+  } = address;
+
+  // Collect non-empty fields
+  const parts = [
+    house_number,
+    building,
+    name,
+    road || street,
+    neighbourhood,
+    suburb,
+    hamlet,
+    locality,
+    borough,
+    village,
+    town,
+    amenity,
+    shop,
+    office,
+    leisure,
+    tourism,
+  ].filter(Boolean);
+
     return {
-      fullAddress: `${address.house_number || ''} ${address.road || ''}`.trim() || place.display_place,
-      city: address.city || address.suburb || '',
-      state: address.state || '',
-      zipCode: address.postcode || '',
-      country: address.country || 'India'
+      fullAddress: parts.length > 0 ? parts.join(", ") : place.display_place,
+      city: address.county || address.city || "",
+      state: address.state || "",
+      zipCode: address.postcode || "",
+      country: address.country || "India",
     };
   }, []);
 

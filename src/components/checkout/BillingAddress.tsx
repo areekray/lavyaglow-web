@@ -155,8 +155,8 @@ export function BillingAddress() {
           />
           <span className="checkmark large"></span>
           <span className="checkbox-text">
-            <strong>Same as delivery address</strong>
-            <small>Use the same address for billing and delivery</small>
+            <div>{billingData.sameAsDelivery ? 'Same as delivery address' : 'Enter different address for Billing'}</div>
+            <small>If checked the same address will be used for billing and delivery</small>
           </span>
         </label>
       </div>
@@ -165,13 +165,13 @@ export function BillingAddress() {
       {!billingData.sameAsDelivery && (
         <div className="billing-form">
           {/* Different Address Notice */}
-          <div className="different-address-notice">
+          {/* <div className="different-address-notice">
             <div className="notice-icon">ℹ️</div>
             <div className="notice-text">
               <h4>Using a different billing address</h4>
               <p>Make sure this matches your payment method's registered address</p>
             </div>
-          </div>
+          </div> */}
 
           {/* Saved Addresses for Billing */}
           {savedAddresses.length > 0 && (
@@ -256,7 +256,7 @@ export function BillingAddress() {
             {/* Apartment */}
             <div className="form-row">
               <Input
-                label="Apartment, Suite, Floor, etc. (Optional)"
+                label="Apartment, House Number, Floor, etc. (Optional)"
                 {...register('billing.apartment')}
                 placeholder="Apt 4B, Floor 2, Near Metro Station..."
               />
@@ -317,7 +317,7 @@ export function BillingAddress() {
       )}
 
       {/* Same Address Confirmation */}
-      {billingData.sameAsDelivery && (
+      {/* {billingData.sameAsDelivery && (
         <div className="same-address-confirmation">
           <div className="confirmation-card">
             <div className="confirmation-icon">✅</div>
@@ -334,7 +334,7 @@ export function BillingAddress() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

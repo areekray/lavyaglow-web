@@ -41,6 +41,61 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: ({ url }) => {
+              return url.hostname === 'api.locationiq.com' && 
+                     url.pathname.startsWith('/v1/');
+            },
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'lavyaglow-locationiq-api',
+              expiration: {
+                maxEntries: 500, // Cache up to 500 unique address queries
+                maxAgeSeconds: 24 * 60 * 60, // 24 hours (respects LocationIQ policy)
+                purgeOnQuotaError: true
+              },
+              cacheableResponse: {
+                statuses: [200] // Only cache successful responses
+              },
+              plugins: [
+                // Custom plugin for intelligent caching
+                {
+                  cacheWillUpdate: async ({ response }) => {
+                    // Only cache if response is successful and has data
+                    if (response.status === 200) {
+                      const clone = response.clone();
+                      try {
+                        const data = await clone.json();
+                        // Don't cache empty responses
+                        if (Array.isArray(data) ? data.length > 0 : !!data) {
+                          return response;
+                        }
+                      } catch {
+                        // If JSON parsing fails, don't cache
+                        return null;
+                      }
+                    }
+                    return null;
+                  },
+                  cachedResponseWillBeUsed: async ({ cachedResponse, request }) => {
+                    if (cachedResponse) {
+                      // Add cache headers for debugging
+                      const response = cachedResponse.clone();
+                      response.headers.set('X-Cache', 'HIT');
+                      response.headers.set('X-Cache-Date', new Date().toISOString());
+                      console.log('🎯 LavyaGlow: Serving LocationIQ from cache:', request.url);
+                      return response;
+                    }
+                    return null;
+                  },
+                  requestWillFetch: async ({ request }) => {
+                    console.log('🌐 LavyaGlow: Fetching LocationIQ from network:', request.url);
+                    return request;
+                  }
+                }
+              ]
+            }
+          },
+          {
+            urlPattern: ({ url }) => {
               return url.hostname.includes('supabase.co') && 
                      url.pathname.includes('/storage/v1/object/public/product-images/');
             },

@@ -34,6 +34,8 @@ export function AddressAutocomplete({
   const inputRef = useRef<HTMLInputElement>(null);
   const suggestionsRef = useRef<HTMLDivElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const [addressSelected, setAddressSelected] = useState(false);
   
   const { 
     suggestions, 
@@ -62,7 +64,9 @@ export function AddressAutocomplete({
     // Debounced search
     searchTimeoutRef.current = setTimeout(async () => {
       setHasSearched(true);
-      await searchAddresses(value);
+      if (!addressSelected) {
+        await searchAddresses(value);
+      }
     }, 300);
 
     // Cleanup timeout on dependency change
@@ -119,6 +123,7 @@ export function AddressAutocomplete({
 
   const handleInputFocus = () => {
     // Show suggestions if we have them
+    setAddressSelected(false);
     if (suggestions.length > 0 && hasSearched) {
       setShowSuggestions(true);
     }
@@ -132,6 +137,7 @@ export function AddressAutocomplete({
   };
 
   const handleSuggestionSelect = (place: any) => {
+    setAddressSelected(true);
     const addressComponents = parseLocationIQAddress(place);
     onChange(addressComponents.fullAddress);
     onAddressSelect(addressComponents);
@@ -148,7 +154,7 @@ export function AddressAutocomplete({
   };
 
   const getHintText = () => {
-    if (!value) return "Type at least 3 characters for suggestions";
+    if (!value || addressSelected) return "Type at least 3 characters for suggestions";
     if (value.length < 3) return "Keep typing...";
     if (loading) return "Searching...";
     if (apiError) return `⚠️ ${apiError}`;
