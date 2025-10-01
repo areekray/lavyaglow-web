@@ -167,7 +167,7 @@ export function DeliveryAddress() {
             className="toggle-saved-btn"
             loading={loadingAddresses}
           >
-            <MapPinIcon className="w-5 h-5" />
+            <MapPinIcon className="w-5 h-5 map-icon" />
             Choose from saved addresses ({savedAddresses.length})
             <span className={`toggle-arrow ${showSavedAddresses ? 'open' : ''}`}>▼</span>
           </Button>

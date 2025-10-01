@@ -95,7 +95,7 @@ export function Header() {
                   </Link>
                 )}
                 
-                <Link to="/profile" className="header-luxury__link">Account</Link>
+                <Link to="/profile" className="header-luxury__link">Profile</Link>
                 
                 {(isAdmin || isStaff) && (
                   <span className="header-luxury__role-badge">
@@ -111,7 +111,7 @@ export function Header() {
                 </button>
               </>
             ) : (
-              <button className="header-luxury__link header-luxury__link--button" onClick={() => openLogin()}>Account</button>
+              <button className="header-luxury__link header-luxury__link--button" onClick={() => openLogin()}>Profile</button>
             )}
             
             <CartIcon />
@@ -164,7 +164,7 @@ export function Header() {
                 )}
                 
                 <Link to="/profile" className="header-luxury__mobile-link" onClick={handleLinkClick}>
-                  Account
+                  Profile
                 </Link>
                 
                 {(isAdmin || isStaff) && (
@@ -182,7 +182,7 @@ export function Header() {
               </>
             ) : (
               <button className="header-luxury__mobile-link header-luxury__mobile-link--button" onClick={() => openLogin()}>
-                Account
+                Profile
               </button>
             )}
           </div>

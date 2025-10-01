@@ -36,7 +36,7 @@
     padding: $spacing-sm;
     z-index: $z-modal + 2;
     
-    @include respond-to-max(md) {
+    @include respond-to-max(lg) {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -93,7 +93,7 @@
     @include flex-center;
     gap: $spacing-xl;
     
-    @include respond-to-max(md) {
+    @include respond-to-max(lg) {
       display: none;
     }
     
@@ -159,7 +159,7 @@
     left: 50%;
     transform: translateX(-50%);
     
-    @include respond-to-max(md) {
+    @include respond-to-max(lg) {
       position: static;
       transform: none;
       flex: 1;
@@ -181,7 +181,7 @@
       height: 200px;
     }
     
-    @include respond-to-max(md) {
+    @include respond-to-max(lg) {
       width: 120px;
       height: 120px;
     }
@@ -197,7 +197,7 @@
     display: none;
     z-index: $z-modal + 2;
     
-    @include respond-to-max(md) {
+    @include respond-to-max(lg) {
       display: flex;
       align-items: center;
     }

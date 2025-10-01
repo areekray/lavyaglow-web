@@ -21,6 +21,7 @@ import { ScrollToTop } from './components/layout/ScrollToTop';
 import { usePWAUpdate } from './hooks/usePWAUpdate';
 import { PWAUpdateModal } from './components/ui/PWAUpdateModal';
 import { Checkout } from './pages/checkout/Checkout';
+import { OrderDetails } from './pages/order/OrderDetails';
 
 function App() {
   const { 
@@ -53,6 +54,7 @@ function App() {
                       </ProtectedRoute>
                     } 
                   />
+                  <Route path="/orders/:orderId" element={<OrderDetails />} />
                   <Route 
                     path="admin" 
                     element={

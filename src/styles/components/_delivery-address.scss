@@ -12,10 +12,14 @@
     background: rgba($dark-tertiary, 0.5);
     border: 2px solid rgba($primary-color, 0.2);
     color: $luxury-text;
-    padding: $spacing-lg;
+    padding: $spacing-md;
+    font-size: $font-size-sm;
     border-radius: $border-radius-lg;
     cursor: pointer;
     transition: all $transition-normal;
+    .map-icon {
+      width: 40px;
+    }
     
     &:hover {
       background: rgba($primary-color, 0.1);

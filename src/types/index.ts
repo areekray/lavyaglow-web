@@ -85,10 +85,12 @@ export interface Order {
   shipping_address: Address;
   payment_status: 'pending' | 'completed' | 'failed' | 'refunded';
   payment_method?: string;
-  tracking_number?: string;
   notes?: string;
   created_at: string;
   updated_at: string;
+  tracking_number?: string;
+  courier_partner?: string;
+  tracking_url?: string;
 }
 
 export interface OrderItem {
@@ -136,4 +138,59 @@ export interface CartContextType {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
+}
+
+// types/index.ts - Add these fields to your existing Order interface
+
+export interface Order {
+  id: string;
+  user_id: string;
+  order_number: string;
+  items: OrderItem[];
+  total_amount: number;
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  shipping_address: Address;
+  payment_status: 'pending' | 'completed' | 'failed' | 'refunded';
+  payment_method?: string;
+  tracking_number?: string;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+  
+  // ADD THESE NEW FIELDS FOR ADMIN (to match database schema):
+  user_email?: string;
+  user_phone?: string;
+  delivery_name?: string;
+  delivery_address?: string; 
+  delivery_city?: string;
+  delivery_state?: string;
+  delivery_phone?: string;
+  subtotal?: number;
+  total_savings?: number;
+  shipping_cost?: number;
+  special_request?: string;
+  gift_message?: string;
+  order_status?: string; // alias for status
+  razorpay_order_id?: string;
+  razorpay_payment_id?: string;
+  confirmed_at?: string;
+  paid_at?: string;
+}
+
+// ADD this new interface for database order items
+export interface DatabaseOrderItem {
+  id: string;
+  order_id: string;
+  product_id: string;
+  product_name: string;
+  product_sku?: string;
+  product_image_url?: string;
+  purchase_type: string;
+  quantity: number;
+  unit_price: number;
+  total_price: number;
+  savings: number;
+  selected_color?: string;
+  selected_scent?: string;
+  set_size?: number;
 }
