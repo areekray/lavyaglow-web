@@ -6,9 +6,10 @@ import { useAuth } from '@/contexts/AuthContext'; // UNCOMMENT THIS
 import { Button } from '@/components/ui/Button';
 import type { CheckoutFormData } from '@/pages/checkout/Checkout';
 import toast from 'react-hot-toast';
+import RazorpayWidget from '../layout/RazorpayWidget';
 
 export function Payment() {
-  const { getValues, watch } = useFormContext<CheckoutFormData>();
+  const { getValues } = useFormContext<CheckoutFormData>();
   const { initializePayment, loading, paymentStatus } = useRazorpay();
   const { state: cartState } = useCart();
   const { user } = useAuth(); // UNCOMMENT THIS - needed for user validation
@@ -17,7 +18,7 @@ export function Payment() {
   const [giftMessage, setGiftMessage] = useState('');
   const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-  const formData = watch();
+  // const formData = watch();
 
   const handlePayNow = async () => {
     // ADD USER CHECK
@@ -59,17 +60,41 @@ export function Payment() {
     }
   };
 
+  console.log('import.meta.env.VITE_RAZORPAY_KEY_ID', import.meta.env.VITE_RAZORPAY_KEY_ID)
+
   return (
     <div className="payment">
       <div className="section-header">
-        <h2>💰 Complete Your Order</h2>
-        <p>Review your order and make secure payment</p>
+        <h2>Complete Your Order</h2>
+        {/* <p>Review your order and make secure payment</p> */}
       </div>
 
       <div className="payment-container">
         {/* Order Summary */}
         <div className="payment-summary">
-          <h3>📦 Order Summary</h3>
+
+          <div className="summary-totals">
+            
+            <div className="total-row final">
+              <strong>Total Amount</strong>
+              <strong>₹{cartState.totalPrice.toLocaleString()}</strong>
+            </div>
+            <div className="total-row">
+              <span>Items ({cartState.totalItems})</span>
+              <span>₹{(cartState.totalPrice + cartState.totalSavings).toLocaleString()}</span>
+            </div>
+            {cartState.totalSavings > 0 && (
+              <div className="total-row savings">
+                <span>💚 You Save</span>
+                <span>-₹{cartState.totalSavings.toLocaleString()}</span>
+              </div>
+            )}
+            <div className="total-row">
+              <span>Shipping</span>
+              <span className="free">FREE</span>
+            </div>
+          </div>
+          
           
           <div className="summary-items">
             {cartState.items.map((item) => (
@@ -88,7 +113,7 @@ export function Payment() {
                     } × {item.quantity}
                   </p>
                   {item.selectedColor && (
-                    <p className="item-color">Color: {item.selectedColor}</p>
+                    <p className="item-meta">Color: {item.selectedColor}</p>
                   )}
                 </div>
                 <div className="item-price">
@@ -100,33 +125,10 @@ export function Payment() {
               </div>
             ))}
           </div>
-
-          <div className="summary-totals">
-            <div className="total-row">
-              <span>Items ({cartState.totalItems})</span>
-              <span>₹{(cartState.totalPrice + cartState.totalSavings).toLocaleString()}</span>
-            </div>
-            {cartState.totalSavings > 0 && (
-              <div className="total-row savings">
-                <span>💚 You Save</span>
-                <span>-₹{cartState.totalSavings.toLocaleString()}</span>
-              </div>
-            )}
-            <div className="total-row">
-              <span>Shipping</span>
-              <span className="free">FREE 🚚</span>
-            </div>
-            <div className="total-row final">
-              <strong>Total Amount</strong>
-              <strong>₹{cartState.totalPrice.toLocaleString()}</strong>
-            </div>
-          </div>
         </div>
 
         {/* Special Requests */}
-        <div className="special-requests">
-          <h3>📝 Special Requests</h3>
-          
+        <div className="special-requests">          
           <div className="request-field">
             <label>Special Instructions (Optional)</label>
             <textarea
@@ -152,35 +154,18 @@ export function Payment() {
           </div>
         </div>
 
-        {/* Payment Methods */}
-        <div className="payment-methods">
-          <h3>💳 Secure Payment</h3>
-          
-          <div className="payment-badges">
-            <span className="payment-badge">💳 Cards</span>
-            <span className="payment-badge">📱 UPI</span>
-            <span className="payment-badge">🏦 Banking</span>
-            <span className="payment-badge">💰 Wallets</span>
-          </div>
-          
-          <p className="payment-note">
-            All major payment methods accepted via Razorpay
-          </p>
-        </div>
-
+        <RazorpayWidget paymentMode={true} />
         {/* Delivery Address Preview */}
-        <div className="address-preview">
-          <h3>📍 Delivery Address</h3>
+        {/* <div className="address-preview">
           <div className="address-card">
             <strong>{formData.delivery?.fullName}</strong>
             {formData.delivery?.company && <div>{formData.delivery.company}</div>}
-            <div>{formData.delivery?.address}</div>
+            <div>{formData.delivery?.address + ' ' + formData.delivery?.apartment}</div>
             {formData.delivery?.apartment && <div>{formData.delivery.apartment}</div>}
             <div>{formData.delivery?.city}, {formData.delivery?.state} {formData.delivery?.zipCode}</div>
             <div>📱 {formData.delivery?.phone}</div>
           </div>
-        </div>
-
+        </div> */}
         {/* Terms and Conditions */}
         <div className="terms-section">
           <label className="terms-checkbox">
@@ -207,7 +192,7 @@ export function Payment() {
             disabled={!acceptedTerms || !user || paymentStatus === 'processing'} // ADD USER CHECK
             size="lg"
             fullWidth
-            className="pay-now-btn"
+            className="btn btn--primary btn--lg btn--full"
           >
             {loading ? (
               <>
@@ -216,20 +201,14 @@ export function Payment() {
               </>
             ) : !user ? ( // ADD USER STATE CHECK
               <>
-                🔒 Please Sign In
+                Please Sign In
               </>
             ) : (
               <>
-                🔒 Pay ₹{cartState.totalPrice.toLocaleString()}
+                Pay ₹{cartState.totalPrice.toLocaleString()}
               </>
             )}
           </Button>
-
-          <div className="security-badges">
-            <div className="badge">🔒 256-bit SSL Encryption</div>
-            <div className="badge">✅ PCI DSS Compliant</div>
-            <div className="badge">🛡️ Razorpay Secured</div>
-          </div>
         </div>
 
         {/* Payment Status */}

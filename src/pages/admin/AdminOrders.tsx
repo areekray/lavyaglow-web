@@ -1183,7 +1183,7 @@ function SimplifiedCreateOrderModal({
                   </div>
 
                   <div className="form-group">
-                    <label>Total: ₹{(itemForm.unitPrice * itemForm.quantity).toFixed(2)}</label>
+                    <label>Total: ₹{(itemForm.unitPrice * itemForm.quantity).toFixed(0)}</label>
                     <Button 
                       onClick={addItemToOrder}
                       disabled={!itemForm.productName.trim() || itemForm.quantity <= 0 || itemForm.unitPrice <= 0}

@@ -205,14 +205,15 @@ export function ProductDetail() {
               <div className="product-info__pricing">
                 {discountPercentage > 0 ? (
                   <>
-                    <span className="product-info__price-actual">₹{product.actual_price.toFixed(2)}</span>
-                    <span className="product-info__price-discounted">₹{product.discounted_price.toFixed(2)}</span>
+                    <span className="product-info__price-actual">₹{product.actual_price.toFixed(0)}</span>
+                    <span className="product-info__price-discounted">₹{product.discounted_price.toFixed(0)}</span>
                     <span className="product-info__discount">({discountPercentage}% off)</span>
                   </>
                 ) : (
-                  <span className="product-info__price-single">₹{product.discounted_price.toFixed(2)}</span>
+                  <span className="product-info__price-single">₹{product.discounted_price.toFixed(0)}</span>
                 )}
               </div>
+              <small className="text-muted">*Includes shipping cost</small>
             </div>
 
             {/* Description */}
@@ -273,12 +274,12 @@ export function ProductDetail() {
                         <div className="set-item__info">
                           <strong>Set of {set.set_quantity}</strong>
                           <span className="set-item__savings">
-                            Save ₹{(set.actual_price - set.discounted_price).toFixed(2)}
+                            Save ₹{(set.actual_price - set.discounted_price).toFixed(0)}
                           </span>
                         </div>
                         <div className="set-item__pricing">
-                          <span className="set-item__price-actual">₹{set.actual_price.toFixed(2)}</span>
-                          <span className="set-item__price-discounted">₹{set.discounted_price.toFixed(2)}</span>
+                          <span className="set-item__price-actual">₹{set.actual_price.toFixed(0)}</span>
+                          <span className="set-item__price-discounted">₹{set.discounted_price.toFixed(0)}</span>
                           {setDiscount > 0 && (
                             <span className="set-item__discount">({setDiscount}% off)</span>
                           )}
@@ -297,7 +298,30 @@ export function ProductDetail() {
               product={product} 
               onAddToCart={handleAddToCart}
             />
+            <div className="bulk-info">
+              <h4>📦 You can order in bulk!</h4>
+              <small>We offer discounted pricing for large-volume purchases and can discuss custom requirements.</small>
+              <div className="contact-links">
+                <a
+                  className='btn btn--luxury btn--lg'
+                  href="https://wa.me/+919036758208"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                    <img src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/WhatsApp.svg" alt='Instagram' />
+                    Whatsapp
+                </a>
+                <a
+                  className='btn btn--luxury btn--lg'
+                  href="https://instagram.com/lavyaglow"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                    <img src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/Instagram_logo.svg" alt='Instagram' />
+                    Instagram
+                </a>
+              </div>
+            </div>
           </div>
+          
         </div>
         {product.description && (
               <div className="product-info__description mobile-view">

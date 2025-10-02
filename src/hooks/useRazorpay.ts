@@ -27,7 +27,6 @@ export function useRazorpay() {
     }
 
     if (cartState.items.length === 0) {
-      toast.error('Your cart is empty');
       return { success: false, error: 'Empty cart' };
     }
 

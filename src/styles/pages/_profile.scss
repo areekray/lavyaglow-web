@@ -22,7 +22,7 @@
   
   &__header {
     text-align: center;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     
     h1 {
       font-family: $font-family-heading;
@@ -44,7 +44,7 @@
   &__tabs {
     display: flex;
     gap: $spacing-md;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     background: $dark-secondary;
     padding: $spacing-md;
     border-radius: $border-radius-xl;
@@ -114,7 +114,7 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: $spacing-2xl;
+      margin-bottom: $spacing-xl;
       
       @include respond-to-max(sm) {
         flex-direction: column;
@@ -301,7 +301,7 @@
   
   &__number {
     font-family: monospace;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
     color: $primary-color;
   }
@@ -379,7 +379,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   
@@ -499,7 +499,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   
   &--home {
@@ -524,7 +524,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
 }
 
 .address-action {
@@ -612,7 +612,7 @@
   }
   
   &__header {
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     
     .back-button {
       @include flex-center;
@@ -652,7 +652,7 @@
       font-family: monospace;
       font-size: $font-size-xl;
       color: $primary-color;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
     }
   }
   
@@ -749,7 +749,7 @@
     .status-value {
       display: block;
       font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
     }
   }
 }
@@ -868,7 +868,7 @@
     .item-price {
       color: $luxury-text;
       font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       margin-bottom: $spacing-xs;
     }
     
@@ -882,7 +882,7 @@
 .address-details {
   .address-name {
     color: $luxury-text;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
     margin-bottom: $spacing-md;
   }
@@ -922,7 +922,7 @@
     
     &.total {
       font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       color: $primary-color;
       padding-top: $spacing-md;
       border-top: 2px solid rgba($primary-color, 0.2);

@@ -49,13 +49,14 @@
     grid-template-columns: auto auto 1fr;
     gap: $spacing-sm;
     align-items: end;
-    margin-bottom: $spacing-3xl;
+    margin-bottom: $spacing-2xl;
     padding: $spacing-xl;
     background-color: $dark-secondary;
     border-radius: $border-radius-xl;
     
-    @include respond-to-max(md) {
-      margin-bottom: $spacing-xl;
+    @include respond-to-max(sm) {
+      margin-bottom: $spacing-lg;
+      padding: $spacing-lg;
     }
   }
   
@@ -238,7 +239,7 @@
     padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-sm;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     overflow: hidden;
@@ -254,11 +255,11 @@
   &__stock-badge {
     position: absolute;
     top: $spacing-md;
-    right: $spacing-md;
+    left: $spacing-md;
     padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-sm;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     text-transform: uppercase;
     
     &.stock-status--in-stock,
@@ -321,7 +322,7 @@
     font-family: $font-family-heading;
     font-size: $font-size-2xl;
     color: $primary-color;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     margin-bottom: $spacing-sm;
   }
   
@@ -399,7 +400,7 @@
     font-family: $font-family-heading;
     font-size: $font-size-2xl;
     color: $primary-color;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
   }
   
   .product-card__discount-percentage {
@@ -423,7 +424,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transform: rotate(-10deg);
@@ -573,7 +574,7 @@
     .pricing-preview__discounted {
       color: $primary-color;
       font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
     }
     
     .pricing-preview__discount {
@@ -738,6 +739,8 @@
   
   &__icon {
     font-size: $font-size-lg;
+    height: 32px;
+    width: 32px;
   }
   
   &__text {

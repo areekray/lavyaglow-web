@@ -56,9 +56,9 @@
   }
   
   &__title {
-    font-family: $font-family-heading;
+    font-family: $font-family-special;
     font-size: clamp(1.5rem, 5vw, 2.5rem);
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     color: $luxury-text;
     line-height: 1.1;
     margin-bottom: $spacing-lg;
@@ -97,7 +97,7 @@
   }
   
   &__description {
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     
     p {
       font-size: clamp(1rem, 1.5vw, 1.25rem);
@@ -114,7 +114,7 @@
     display: flex;
     justify-content: center;
     gap: $spacing-lg;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     flex-wrap: wrap;
     
     @include respond-to(sm) {
@@ -184,7 +184,7 @@
   }
   
   &__title {
-    font-family: $font-family-heading;
+    font-family: $font-family-special;
     font-size: $font-size-4xl;
     color: $luxury-text;
     margin-bottom: $spacing-md;
@@ -329,7 +329,7 @@
     padding: $spacing-xl;
     
     h4 {
-      font-family: $font-family-heading;
+      font-family: $font-family-special;
       font-size: $font-size-xl;
       color: $luxury-text;
       margin-bottom: $spacing-lg;

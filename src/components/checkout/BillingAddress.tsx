@@ -142,7 +142,7 @@ export function BillingAddress() {
   return (
     <div className="billing-address">
       <div className="section-header">
-        <h2>💳 Billing Address</h2>
+        <h2>Billing Address</h2>
         {/* <p>Where should we send your invoice and receipt?</p> */}
       </div>
 

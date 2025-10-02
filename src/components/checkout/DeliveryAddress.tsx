@@ -145,15 +145,15 @@ export function DeliveryAddress() {
   return (
     <div className="delivery-address">
       <div className="section-header">
-        <h2>🚚 Delivery Address</h2>
+        <h2>Delivery Address</h2>
       </div>
 
       {/* Customer Info Summary */}
       <div className="customer-summary">
         <div className="customer-info">
           <h3>Order for: {customerInfo.name}</h3>
-          <p>📧 {customerInfo.email}</p>
-          {customerInfo.phone && <p>📱 {customerInfo.phone}</p>}
+          <p>{customerInfo.email}</p>
+          {customerInfo.phone && <p>{customerInfo.phone}</p>}
         </div>
       </div>
 
@@ -218,7 +218,7 @@ export function DeliveryAddress() {
                 onClick={handleUseAccountInfo}
               >
                 <UserIcon className="w-4 h-4" />
-                Use account name
+                Use my name
               </button>
             )}
           </div>
@@ -328,7 +328,7 @@ export function DeliveryAddress() {
                 onClick={() => setValue('delivery.phone', user.phone as string)}
               >
                 <PhoneIcon className="w-4 h-4" />
-                Use account phone
+                Use my phone
               </button>
             )}
           </div>

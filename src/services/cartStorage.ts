@@ -10,6 +10,7 @@ export interface StoredCartItem {
   setId?: string;
   breakdown: any; // We'll validate this on load
   addedAt: string;
+  selectedColor?: string;
   lastValidated?: string;
 }
 
@@ -66,6 +67,7 @@ class CartStorageService {
       setId: item.setId,
       breakdown: item.breakdown,
       addedAt: item.addedAt,
+      selectedColor: item.selectedColor,
       lastValidated: new Date().toISOString()
     }));
 
@@ -156,7 +158,7 @@ class CartStorageService {
             setId: storedItem.setId,
             breakdown: storedItem.breakdown,
             addedAt: storedItem.addedAt,
-            selectedColor: ''
+            selectedColor: storedItem.selectedColor || ''
           };
           validItems.push(cartItem);
           continue;
@@ -219,7 +221,7 @@ class CartStorageService {
 
         const storedPrice = storedItem.breakdown.totalPrice / storedItem.quantity;
         if (Math.abs(currentPrice - storedPrice) > 0.01) {
-          changes.push(`Price updated from ₹${storedPrice.toFixed(2)} to ₹${currentPrice.toFixed(2)}`);
+          changes.push(`Price updated from ₹${storedPrice.toFixed(0)} to ₹${currentPrice.toFixed(0)}`);
         }
 
         const cartItem: CartItem = {

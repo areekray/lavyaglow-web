@@ -15,6 +15,7 @@ import {
 import { PercentBadgeIcon } from "@heroicons/react/16/solid";
 import { useAuth } from "@/contexts/AuthContext";
 import { useAuthModal } from "@/contexts/AuthModalContext";
+import RazorpayWidget from "@/components/layout/RazorpayWidget";
 
 export function Cart() {
   const { state: cart, removeFromCart, updateQuantity, clearCart } = useCart();
@@ -162,7 +163,7 @@ export function Cart() {
         <div className="cart-content">
           <div className="savings-highlight">
             <PercentBadgeIcon />
-              You're saving <span>{formatCurrency(cart.totalSavings)}</span> with
+              You're saving {formatCurrency(cart.totalSavings)} with
               our smart pricing!
           </div>
           {/* Cart Items */}
@@ -350,14 +351,19 @@ export function Cart() {
                   fullWidth
                   onClick={handleProceedToCheckout}
                 >
-                  Proceed to Checkout
+                  <span>Proceed to Checkout</span>{" "}
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10H16M16 10L12 6M16 10L12 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </Button>
 
-                <Link to="/products">
-                  <Button variant="secondary" size="md" fullWidth>
+                <Link to="/products" style={{ marginBottom: '1rem' }}>
+                  <Button className="btn btn--luxury btn--lg" fullWidth>
                     Continue Shopping
                   </Button>
                 </Link>
+                
+                <RazorpayWidget paymentMode={false} />
               </div>
 
               {/* Bulk Order Info */}

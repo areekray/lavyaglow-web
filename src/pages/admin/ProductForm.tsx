@@ -400,10 +400,10 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
                 {discountPercentage > 0 ? (
                   <>
                     <span className="pricing-preview__actual">
-                      ₹{watchActualPrice?.toFixed(2)}
+                      ₹{watchActualPrice?.toFixed(0)}
                     </span>
                     <span className="pricing-preview__discounted">
-                      ₹{watchDiscountedPrice?.toFixed(2)}
+                      ₹{watchDiscountedPrice?.toFixed(0)}
                     </span>
                     <span className="pricing-preview__discount">
                       ({discountPercentage}% off)
@@ -411,7 +411,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
                   </>
                 ) : (
                   <span className="pricing-preview__single">
-                    ₹{watchDiscountedPrice?.toFixed(2)}
+                    ₹{watchDiscountedPrice?.toFixed(0)}
                   </span>
                 )}
               </div>

@@ -7,7 +7,7 @@
   border: 2px solid $dark-tertiary;
 
   @include respond-to-max(sm) {
-    padding-top: $spacing-sm;
+    padding-top: 0;
   }
   
   &__header {
@@ -29,15 +29,9 @@
   
   &__unavailable {
     text-align: center;
-    padding: $spacing-2xl;
-    color: $luxury-text-muted;
-    
-    .bulk-contact {
-      margin-top: $spacing-xl;
-      padding: $spacing-lg;
-      background: rgba($primary-color, 0.1);
-      border-radius: $border-radius-md;
-    }
+    padding: $spacing-sm;
+    font-size: $font-size-sm;
+    color: $luxury-text;
   }
 }
 
@@ -122,7 +116,7 @@
 }
 
 .purchase-section {
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   @include respond-to-max(sm) {
     margin-bottom: $spacing-lg;
   }
@@ -165,7 +159,7 @@
       border-radius: $border-radius-md;
       cursor: pointer;
       font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       transition: all $transition-normal;
       
       &:hover:not(:disabled) {
@@ -224,7 +218,7 @@
     padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-sm;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     display: inline-block;
     margin-bottom: $spacing-sm;
   }
@@ -250,12 +244,11 @@
 }
 
 .bulk-info {
-  background: rgba(#3b82f6, 0.1);
-  border: 1px solid rgba(#3b82f6, 0.3);
-  border-radius: $border-radius-md;
   padding: $spacing-lg;
   margin-top: $spacing-lg;
-  
+  background: #2c1810;
+  border-radius: $border-radius-md;
+  border: 2px solid #3d2317;
   h4 {
     margin-bottom: $spacing-sm;
   }
@@ -280,23 +273,10 @@
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
     transition: all $transition-normal;
-    
-    &[href*="whatsapp"] {
-      background: #25d366;
-      color: white;
-      
-      &:hover {
-        background: #128c7e;
-      }
-    }
-    
-    &[href*="instagram"] {
-      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-      color: white;
-      
-      &:hover {
-        opacity: 0.9;
-      }
+    img {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
     }
   }
 }
@@ -329,7 +309,7 @@
     
     &.total {
       font-size: $font-size-xl;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       color: $primary-color;
       border-top: 1px solid $dark-tertiary;
       padding-top: $spacing-md;
@@ -363,18 +343,10 @@
       }
     }
   }
-
-  .add-to-cart {
-    @include respond-to-max(sm) {
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-sm;
-    }
-  }
   
   .button-price {
     margin-left: $spacing-sm;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
   }
 }
 
@@ -392,7 +364,7 @@
   
   &.total {
     font-size: $font-size-xl;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     color: $primary-color;
     border-top: 1px solid $dark-tertiary;
     padding-top: $spacing-md;
@@ -436,7 +408,7 @@
     padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-sm;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     display: inline-block;
     margin-bottom: $spacing-sm;
   }

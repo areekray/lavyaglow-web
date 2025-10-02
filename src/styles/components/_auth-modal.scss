@@ -151,7 +151,7 @@
         color: $primary-color;
         font-family: $font-family-heading;
         font-size: $font-size-xl;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         letter-spacing: 1px;
         
         @include respond-to(sm) {
@@ -165,7 +165,7 @@
     color: $luxury-text;
     font-family: $font-family-heading;
     font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     margin-bottom: $spacing-sm;
     letter-spacing: 0.5px;
     

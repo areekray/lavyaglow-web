@@ -41,9 +41,10 @@ export const ProductCard = ({
   return (
     <article
       className="product-card"
+      style={{position: "relative"}}
       onClick={() => navigate(`/products/${product.id}`)}
     >
-      <div className="product-card__image-container">
+      <div className="product-card__image-container" style={!stockStatus.available ? { opacity: 0.5 } : {}}>
         <ImageWithPlaceholder
           src={product.images[0] || "/default-candle.jpg"}
           alt={product.name}
@@ -71,15 +72,16 @@ export const ProductCard = ({
               % off in sets
             </div>
           )}
-
-        {!stockStatus.available && (
-          <div className={`product-card__stock-badge ${stockStatus.className}`}>
-            {"✗ Out of Stock"}
-          </div>
-        )}
       </div>
-
-      <div className="product-card__content" style={smallVariant ? { padding: '0.75rem' } : {}}>
+      {!stockStatus.available && (
+        <div className={`product-card__stock-badge ${stockStatus.className}`}>
+          {"⚠️ Sold Out"}
+        </div>
+      )}
+      <div className="product-card__content" style={{
+        ...(smallVariant ? { padding: "0.75rem" } : {}),
+        ...(!stockStatus.available ? { opacity: 0.5 } : {}),
+      }}>
         <h3 className="product-card__title" style={smallVariant ? { fontSize: '1rem' } : {}}>{product.name}</h3>
         <p className="product-card__category" style={smallVariant ? { fontSize: '0.75rem' } : {}}>{product.category}</p>
 
@@ -100,7 +102,7 @@ export const ProductCard = ({
               </>
             ) : (
               <span className="product-card__price-single">
-                ₹{product.discounted_price?.toFixed(2)}
+                ₹{product.discounted_price?.toFixed(0)}
               </span>
             )}
           </div>
@@ -117,8 +119,8 @@ export const ProductCard = ({
                     <div key={priceSet.id} className="product-card__set-item">
                       <span className="set-quantity">Set of {priceSet.set_quantity}:</span>
                       <div className="set-pricing">
-                        <span className="set-price-actual">₹{priceSet.actual_price?.toFixed(2)}</span>
-                        <span className="set-price-discounted">₹{priceSet.discounted_price?.toFixed(2)}</span>
+                        <span className="set-price-actual">₹{priceSet.actual_price?.toFixed(0)}</span>
+                        <span className="set-price-discounted">₹{priceSet.discounted_price?.toFixed(0)}</span>
                         {setDiscount > 0 && (
                           <span className="set-discount">({setDiscount}% off)</span>
                         )}

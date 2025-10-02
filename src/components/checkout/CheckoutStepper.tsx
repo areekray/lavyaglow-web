@@ -19,7 +19,7 @@ export function CheckoutStepper({
   onStepClick 
 }: CheckoutStepperProps) {
   return (
-    <div className="checkout-stepper">
+    <div className="checkout-stepper" id='checkout-stepper'>
       <div className="stepper-progress-bar">
         <div 
           className="stepper-progress-fill"

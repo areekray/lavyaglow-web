@@ -72,10 +72,10 @@ export function PWAUpdateModal({
                 </p>
                 
                 <ul className="update-features">
-                  <li>🚀 Faster loading times</li>
-                  <li>🎨 Enhanced shopping experience</li>
-                  <li>🕯️ New candle collections</li>
-                  <li>🔧 Bug fixes and improvements</li>
+                  <li>Faster loading times</li>
+                  <li>Enhanced shopping experience</li>
+                  <li>New candle collections</li>
+                  <li>Bug fixes and improvements</li>
                 </ul>
 
                 <div className="update-note">

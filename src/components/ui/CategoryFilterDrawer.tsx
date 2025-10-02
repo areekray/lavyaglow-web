@@ -88,7 +88,7 @@ export function CategoryFilterDrawer({
             onClick={() => handleCategoryClick('')}
           >
             <div className="category-option__content">
-              <span className="category-option__icon">🏠</span>
+              {/* <span className="category-option__icon">🏠</span> */}
               <span className="category-option__text">All Categories</span>
             </div>
             {selectedCategory === '' && (
@@ -108,9 +108,9 @@ export function CategoryFilterDrawer({
               onClick={() => handleCategoryClick(category)}
             >
               <div className="category-option__content">
-                <span className="category-option__icon">
+                {/* <span className="category-option__icon">
                   {getCategoryIcon(category)}
-                </span>
+                </span> */}
                 <span className="category-option__text">{category}</span>
               </div>
               {selectedCategory === category && (
@@ -144,20 +144,20 @@ export function CategoryFilterDrawer({
 }
 
 // Helper function to get category icons
-function getCategoryIcon(category: string): string {
-  const iconMap: { [key: string]: string } = {
-    'luxury': '✨',
-    'premium': '👑',
-    'classic': '🕯️',
-    'seasonal': '🌿',
-    'gift': '🎁',
-    'aromatherapy': '🧘',
-    'decor': '🏺',
-    'wedding': '💒',
-    'birthday': '🎂',
-    'default': '🕯️'
-  };
+// function getCategoryIcon(category: string): string {
+//   const iconMap: { [key: string]: string } = {
+//     'luxury': '✨',
+//     'premium': '👑',
+//     'classic': '🕯️',
+//     'seasonal': '🌿',
+//     'gift': '🎁',
+//     'aromatherapy': '🧘',
+//     'decor': '🏺',
+//     'wedding': '💒',
+//     'birthday': '🎂',
+//     'default': '🕯️'
+//   };
   
-  const lowerCategory = category.toLowerCase();
-  return iconMap[lowerCategory] || iconMap['default'];
-}
+//   const lowerCategory = category.toLowerCase();
+//   return iconMap[lowerCategory] || iconMap['default'];
+// }

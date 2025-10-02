@@ -189,7 +189,7 @@ export const priceOptimizer = {
     if (breakdown.savings <= 0) return '';
     
     const percentage = this.getTotalDiscountPercentage(breakdown);
-    return 'You save ₹' + breakdown.savings.toFixed(2) + ' (' + percentage + '% discount)';
+    return 'You save ₹' + breakdown.savings.toFixed(0) + ' (' + percentage + '% discount)';
   },
 
   // Test function to verify calculations

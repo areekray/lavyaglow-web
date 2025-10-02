@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 const HERO_IMAGES = [
   {
-    url: "https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/carousel-images/image5.png",
+    url: "https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/carousel-images/image5.PNG",
     alt: "Luxury handcrafted candles collection",
     focus: "center center"
   },

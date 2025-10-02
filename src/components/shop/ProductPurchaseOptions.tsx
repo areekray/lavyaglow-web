@@ -176,13 +176,13 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
 
   return (
     <div className="purchase-options">
-      {!stockStatus.available && (
+      {/* {!stockStatus.available && (
         <div className="purchase-options__header">
           <div className={`stock-status out-of-stock'}`}>
-            {stockStatus.text}
+            {stockStatus.text === 'Out of Stock' ? 'Sold out' : stockStatus.text}
           </div>
         </div>
-      )}
+      )} */}
 
       {product.characteristics?.colors && (
         <ColorSelector
@@ -195,28 +195,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
       )}
       {!stockStatus.available ? (
         <div className="purchase-options__unavailable">
-          <p>This product is currently out of stock.</p>
-          {product.can_do_bulk && (
-            <div className="bulk-contact">
-              <p>For bulk orders, contact us:</p>
-              <div className="contact-links">
-                <a
-                  href="https://wa.me/+919036758208"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📱 WhatsApp
-                </a>
-                <a
-                  href="https://instagram.com/lavyaglow"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📷 Instagram
-                </a>
-              </div>
-            </div>
-          )}
+          <span>This product is sold out, will come back in stock in few days.</span>
         </div>
       ) : (
         <>
@@ -398,15 +377,15 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                   </div>
                   <div className="price-line original">
                     <span>Regular Price:</span>
-                    <span>₹{breakdown.originalPrice.toFixed(2)}</span>
+                    <span>₹{breakdown.originalPrice.toFixed(0)}</span>
                   </div>
                   <div className="price-line total">
                     <span>Your Price:</span>
-                    <span>₹{breakdown.totalPrice.toFixed(2)}</span>
+                    <span>₹{breakdown.totalPrice.toFixed(0)}</span>
                   </div>
                   <div className="price-line savings">
                     <span>You Save:</span>
-                    <span>₹{breakdown.savings.toFixed(2)}</span>
+                    <span>₹{breakdown.savings.toFixed(0)}</span>
                   </div>
                   {/* Total Discount Percentage */}
                   <div className="price-line total-discount">
@@ -427,7 +406,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                           {item.type === "set"
                             ? `Set of ${item.setSize}`
                             : "Individual"}
-                          = ₹{item.totalPrice.toFixed(2)}
+                          = ₹{item.totalPrice.toFixed(0)}
                         </li>
                       ))}
                     </ul>
@@ -444,36 +423,17 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                   className="add-to-cart"
                 >
                   {isAddingToCart ? "Adding to Cart..." : `Add to Cart`}
-                  {/* <span className="button-price">₹{breakdown.totalPrice.toFixed(2)}</span> */}
+                  {/* <span className="button-price">₹{breakdown.totalPrice.toFixed(0)}</span> */}
                 </Button>
               </div>
             )}
 
           {/* Bulk Order Message */}
-          {product.can_do_bulk && (
-            <div className="bulk-info">
-              <h4>📦 Bulk Orders Available</h4>
-              <small>For large quantities or custom requirements:</small>
-              <div className="contact-links">
-                <a
-                  href="https://wa.me/+919038644125"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📱 WhatsApp
-                </a>
-                <a
-                  href="https://instagram.com/lavyaglow"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  📷 Instagram
-                </a>
-              </div>
-            </div>
-          )}
+          {/* {true && (
+          )} */}
         </>
       )}
+      
     </div>
   );
 }

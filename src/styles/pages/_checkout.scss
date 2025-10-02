@@ -33,7 +33,7 @@
   
   &__layout {
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr;
     gap: $spacing-3xl;
     align-items: start;
     
@@ -50,11 +50,11 @@
     border: 1px solid rgba($primary-color, 0.1);
     
     @include respond-to-max(md) {
-      padding: $spacing-2xl;
+      padding: $spacing-lg;
     }
     
     @include respond-to-max(sm) {
-      padding: $spacing-xl;
+      padding: $spacing-lg;
       border-radius: $border-radius-lg;
     }
   }
@@ -75,14 +75,23 @@
   
   &__actions {
     @include flex-between;
+    flex-direction: row;
     margin-top: $spacing-3xl;
     padding-top: $spacing-2xl;
     border-top: 1px solid rgba($dark-tertiary, 0.5);
     gap: $spacing-lg;
     
     @include respond-to-max(sm) {
-      flex-direction: column;
       gap: $spacing-md;
+    }
+
+    &.last-step {
+      margin-top: $spacing-lg;
+      padding-top: 0;
+      
+      @include respond-to-max(sm) {
+        margin-top: $spacing-md;
+      }
     }
   }
   
@@ -136,16 +145,16 @@
   }
   
   &__submit-btn {
-    background: linear-gradient(135deg, $success-color 0%, lighten($success-color, 10%) 100%);
+    background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
     border: none;
     color: white;
     font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
-    box-shadow: 0 4px 12px rgba($success-color, 0.3);
+    font-weight: $font-weight-semibold;
+    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
     
     &:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba($success-color, 0.4);
+      box-shadow: 0 8px 25px rgba($primary-color, 0.4);
     }
     
     .btn-spinner {
@@ -230,13 +239,13 @@
       .item-price {
         display: block;
         color: $luxury-text;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         font-size: $font-size-sm;
       }
       
       .item-savings {
         display: block;
-        color: $success-color;
+        color: $primary-color;
         font-size: $font-size-xs;
         margin-top: $spacing-xs;
       }
@@ -253,24 +262,24 @@
       font-size: $font-size-sm;
       
       &.savings {
-        color: $success-color;
+        color: $primary-color;
         font-weight: $font-weight-semibold;
       }
       
       &.shipping {
         .free {
-          color: $success-color;
+          color: $primary-color;
           font-weight: $font-weight-semibold;
         }
       }
       
       &.final {
         font-size: $font-size-lg;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         color: $primary-color;
-        padding-top: $spacing-sm;
-        border-top: 2px solid rgba($primary-color, 0.2);
-        margin-bottom: 0;
+        padding-bottom: $spacing-sm;
+        margin-bottom: $spacing-sm;
+        border-bottom: 1px solid rgba($primary-color, 0.2);
       }
       
       &:last-child {
@@ -284,21 +293,21 @@
 .security-badge {
   @include flex-center;
   gap: $spacing-md;
-  background: rgba($success-color, 0.1);
-  border: 1px solid rgba($success-color, 0.2);
+  background: rgba($primary-color, 0.1);
+  border: 1px solid rgba($primary-color, 0.2);
   border-radius: $border-radius-lg;
   padding: $spacing-lg;
   
   .security-icon {
     font-size: $font-size-2xl;
-    color: $success-color;
+    color: $primary-color;
   }
   
   .security-text {
     h4 {
-      color: $success-color;
+      color: $primary-color;
       font-size: $font-size-sm;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       margin-bottom: $spacing-xs;
     }
     
@@ -312,7 +321,7 @@
 
 // Form Components
 .section-header {
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   
   h2 {
     color: $luxury-text;
@@ -360,7 +369,7 @@
   border: 1px solid rgba($primary-color, 0.15);
   border-radius: $border-radius-lg;
   padding: $spacing-lg;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   
   .customer-info {
     h3 {
@@ -546,7 +555,7 @@
     padding: $spacing-lg 0;
     
     &__header {
-      margin-bottom: $spacing-2xl;
+      margin-bottom: $spacing-xl;
     }
   }
   
@@ -571,7 +580,7 @@
 
 .payment {
   .section-header {
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     
     h2 {
       color: $luxury-text;
@@ -606,16 +615,11 @@
     font-family: $font-family-heading;
   }
   
-  .summary-items {
-    margin-bottom: $spacing-lg;
-  }
-  
   .summary-item {
     @include flex-center;
     gap: $spacing-md;
     padding: $spacing-md 0;
     border-bottom: 1px solid rgba($dark-secondary, 0.5);
-    
     &:last-child {
       border-bottom: none;
     }
@@ -634,10 +638,10 @@
       
       h4 {
         color: $luxury-text;
-        font-size: $font-size-sm;
+        font-size: $font-size-xs;
         font-weight: $font-weight-semibold;
         margin-bottom: $spacing-xs;
-        line-height: 1.3;
+        line-height: 1;
       }
       
       .item-meta {
@@ -660,7 +664,7 @@
       .current-price {
         display: block;
         color: $luxury-text;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         font-size: $font-size-sm;
       }
       
@@ -674,32 +678,36 @@
     }
   }
   
-  .summary-totals {
-    border-top: 1px solid rgba($dark-secondary, 0.5);
-    padding-top: $spacing-lg;
-    
+  .summary-totals {    
     .total-row {
       @include flex-between;
       margin-bottom: $spacing-sm;
       font-size: $font-size-sm;
       
       &.savings {
-        color: $success-color;
+        color: $primary-color;
         font-weight: $font-weight-semibold;
       }
       
       .free {
-        color: $success-color;
+        color: $primary-color;
         font-weight: $font-weight-semibold;
       }
       
       &.final {
-        font-size: $font-size-lg;
-        font-weight: $font-weight-bold;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
         color: $primary-color;
-        padding-top: $spacing-md;
-        border-top: 2px solid rgba($primary-color, 0.2);
-        margin-bottom: 0;
+        padding-bottom: $spacing-md;
+        margin-bottom: $spacing-md;
+        border-bottom: 1px solid rgba($primary-color, 0.2);
+      }
+      @include respond-to-max(xs) {
+        font-size: $font-size-xs;
+        
+        &.final {
+          font-size: $font-size-sm;
+        }
       }
     }
   }
@@ -927,19 +935,20 @@
   .pay-now-btn {
     @include flex-center;
     gap: $spacing-sm;
-    background: linear-gradient(135deg, $success-color 0%, lighten($success-color, 10%) 100%);
     border: none;
-    color: white;
     font-size: $font-size-lg;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     padding: $spacing-lg $spacing-xl;
     border-radius: $border-radius-xl;
-    box-shadow: 0 4px 12px rgba($success-color, 0.3);
     transition: all $transition-normal;
+    
+    background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
+    color: $dark-bg;
+    box-shadow: 0 4px 12px rgba($primary-color, 0.3);
     
     &:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba($success-color, 0.4);
+      box-shadow: 0 8px 25px rgba($primary-color, 0.4);
     }
     
     &:disabled {
@@ -971,13 +980,13 @@
     }
     
     .badge {
-      background: rgba($success-color, 0.1);
-      color: $success-color;
+      background: rgba($primary-color, 0.1);
+      color: $primary-color;
       padding: $spacing-xs $spacing-sm;
       border-radius: $border-radius-md;
       font-size: $font-size-xs;
       font-weight: $font-weight-medium;
-      border: 1px solid rgba($success-color, 0.2);
+      border: 1px solid rgba($primary-color, 0.2);
     }
   }
 }
@@ -991,9 +1000,9 @@
   margin-top: $spacing-lg;
   
   &.success {
-    background: rgba($success-color, 0.1);
-    color: $success-color;
-    border: 1px solid rgba($success-color, 0.2);
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+    border: 1px solid rgba($primary-color, 0.2);
   }
   
   &.error {
@@ -1027,19 +1036,19 @@
     padding: $spacing-lg;
   }
   
-  .summary-item {
-    flex-direction: column;
-    text-align: center;
-    gap: $spacing-sm;
+  // .summary-item {
+  //   flex-direction: column;
+  //   text-align: center;
+  //   gap: $spacing-sm;
     
-    .item-details {
-      text-align: center;
-    }
+  //   .item-details {
+  //     text-align: center;
+  //   }
     
-    .item-price {
-      text-align: center;
-    }
-  }
+  //   .item-price {
+  //     text-align: center;
+  //   }
+  // }
   
   .payment-method {
     flex-direction: column;

@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-231de4a8'], (function (workbox) { 'use strict';
+define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
 
   self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -82,7 +82,7 @@ define(['./workbox-231de4a8'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.86o55jqfao8"
+    "revision": "0.s5i8lk62848"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -91,9 +91,79 @@ define(['./workbox-231de4a8'], (function (workbox) { 'use strict';
   workbox.registerRoute(({
     url
   }) => {
+    return url.hostname === "api.locationiq.com" && url.pathname.startsWith("/v1/");
+  }, new workbox.StaleWhileRevalidate({
+    "cacheName": "lavyaglow-locationiq-api",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 500,
+      maxAgeSeconds: 86400,
+      purgeOnQuotaError: true
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [200]
+    }), {
+      cacheWillUpdate: async ({
+        response
+      }) => {
+        if (response.status === 200) {
+          const clone = response.clone();
+          try {
+            const data = await clone.json();
+            if (Array.isArray(data) ? data.length > 0 : !!data) {
+              return response;
+            }
+          } catch (_unused) {
+            return null;
+          }
+        }
+        return null;
+      },
+      cachedResponseWillBeUsed: async ({
+        cachedResponse,
+        request
+      }) => {
+        if (cachedResponse) {
+          const response = cachedResponse.clone();
+          response.headers.set("X-Cache", "HIT");
+          response.headers.set("X-Cache-Date", new Date().toISOString());
+          console.log("\u{1F3AF} LavyaGlow: Serving LocationIQ from cache:", request.url);
+          return response;
+        }
+        return null;
+      },
+      requestWillFetch: async ({
+        request
+      }) => {
+        console.log("\u{1F310} LavyaGlow: Fetching LocationIQ from network:", request.url);
+        return request;
+      }
+    }]
+  }), 'GET');
+  workbox.registerRoute(({
+    url
+  }) => {
     return url.hostname.includes("supabase.co") && url.pathname.includes("/storage/v1/object/public/product-images/");
   }, new workbox.CacheFirst({
     "cacheName": "lavyaglow-product-images",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 200,
+      maxAgeSeconds: 31536000,
+      purgeOnQuotaError: true
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200, 206]
+    }), {
+      cachedResponseWillBeUsed: async ({
+        cachedResponse
+      }) => {
+        return cachedResponse;
+      }
+    }]
+  }), 'GET');
+  workbox.registerRoute(({
+    url
+  }) => {
+    return url.hostname.includes("supabase.co") && url.pathname.includes("/storage/v1/object/public/carousel-images/");
+  }, new workbox.CacheFirst({
+    "cacheName": "lavyaglow-carousel-images",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 200,
       maxAgeSeconds: 31536000,

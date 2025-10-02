@@ -11,7 +11,7 @@ export function OAuthCallback() {
     // Small delay to ensure auth state is updated
     const timer = setTimeout(() => {
       if (user) {
-        toast.success(`Welcome to LavyaGlow, ${user.full_name || user.email}! 🕯️`);
+        toast.success(`Welcome to LavyaGlow, ${user.full_name || user.email}!`);
         navigate('/', { replace: true });
       }
     }, 1000);

@@ -25,9 +25,10 @@ $warning-color: #ca8a04;
 $warning-light: #fef3c7;
 
 // Typography
-$font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-$font-family-heading: 'Proza Libre', Georgia, serif;
+$font-family-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-family-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 $font-family-accent: 'Dancing Script', cursive;
+$font-family-special: 'Proza Libre', Georgia, serif;
 
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
@@ -44,7 +45,6 @@ $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-semibold: 600;
-$font-weight-bold: 700;
 
 // Spacing
 $spacing-xs: 0.25rem;

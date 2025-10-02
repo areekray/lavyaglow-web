@@ -61,7 +61,7 @@
     color: $luxury-text-muted;
     font-size: $font-size-base;
     line-height: 1.6;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
   }
   
   &__actions {
@@ -80,7 +80,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   padding-bottom: $spacing-lg;
   border-bottom: 2px solid $dark-secondary;
   @include respond-to-max(sm) {
@@ -163,6 +163,8 @@
       padding: 0.5rem 1rem;
       // color: #10b981;
       height: 48px;
+      line-height: 1;
+      font-size: $font-size-sm;
       svg {
         color: #067044;
         height: 30px;
@@ -329,7 +331,7 @@
         padding: $spacing-xs $spacing-sm;
         border-radius: $border-radius-sm;
         font-size: $font-size-xs;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         margin-bottom: $spacing-xs;
       }
       
@@ -367,7 +369,7 @@
         border-radius: $border-radius-md;
         cursor: pointer;
         font-size: $font-size-base;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         transition: all $transition-normal;
         
         &:hover:not(:disabled) {
@@ -500,7 +502,7 @@
           
           .free-shipping {
             color: #22c55e;
-            font-weight: $font-weight-bold;
+            font-weight: $font-weight-semibold;
           }
         }
         
@@ -510,7 +512,7 @@
           padding-top: $spacing-md;
           color: $primary-color;
           font-size: $font-size-xl;
-          font-weight: $font-weight-bold;
+          font-weight: $font-weight-semibold;
         }
       }
       
@@ -524,7 +526,7 @@
         
         span {
           color: #10b981;
-          font-weight: $font-weight-bold;
+          font-weight: $font-weight-semibold;
           font-size: $font-size-base;
         }
       }
@@ -553,61 +555,7 @@
     
     .checkout-price {
       margin-left: $spacing-sm;
-      font-weight: $font-weight-bold;
-    }
-  }
-}
-
-.bulk-order-info {
-  background: rgba(#3b82f6, 0.1);
-  border: 1px solid rgba(#3b82f6, 0.3);
-  border-radius: $border-radius-md;
-  padding: $spacing-lg;
-  margin-top: $spacing-xl;
-  
-  h4 {
-    color: #3b82f6;
-    margin-bottom: $spacing-sm;
-    font-size: $font-size-base;
-  }
-  
-  p {
-    color: $luxury-text-muted;
-    font-size: $font-size-sm;
-    margin-bottom: $spacing-md;
-  }
-  
-  .contact-links {
-    display: flex;
-    gap: $spacing-md;
-    
-    a {
-      display: inline-flex;
-      align-items: center;
-      padding: $spacing-xs $spacing-sm;
-      border-radius: $border-radius-sm;
-      text-decoration: none;
-      font-size: $font-size-xs;
-      font-weight: $font-weight-medium;
-      transition: all $transition-normal;
-      
-      &[href*="whatsapp"] {
-        background: #25d366;
-        color: white;
-        
-        &:hover {
-          background: #128c7e;
-        }
-      }
-      
-      &[href*="instagram"] {
-        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-        color: white;
-        
-        &:hover {
-          opacity: 0.9;
-        }
-      }
+      font-weight: $font-weight-semibold;
     }
   }
 }
@@ -634,7 +582,7 @@
     width: 20px;
     height: 20px;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     @include flex-center;
   }
   

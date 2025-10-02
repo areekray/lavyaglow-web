@@ -3,7 +3,7 @@
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-family-heading;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   line-height: 1.2;
   margin-bottom: $spacing-md;
   color: $luxury-text;
@@ -44,6 +44,10 @@ p {
   margin-bottom: $spacing-md;
   color: $luxury-text-secondary;
   line-height: 1.6;
+}
+
+strong {
+  font-weight: 600;
 }
 
 // Utility classes

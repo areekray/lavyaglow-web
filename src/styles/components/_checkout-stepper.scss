@@ -5,7 +5,7 @@
   margin-bottom: $spacing-3xl;
   
   @include respond-to-max(sm) {
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
   }
 }
 
@@ -121,7 +121,7 @@
   border: 2px solid $dark-secondary;
   color: $luxury-text-secondary;
   font-size: $font-size-sm;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   transition: all $transition-normal;
   flex-shrink: 0;
   

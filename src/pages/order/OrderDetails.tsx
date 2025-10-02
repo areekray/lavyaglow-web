@@ -1,11 +1,10 @@
 // pages/OrderDetails.tsx - Detailed order view
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/services/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/Button';
 import {
-  ArrowLeftIcon,
   ClipboardDocumentListIcon,
   TruckIcon,
   CalendarIcon,
@@ -16,6 +15,7 @@ import {
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
 import type { Order, DatabaseOrderItem } from '@/types';
+import OrderConfirmed from '@/components/layout/OrderConfirmation';
 
 interface DetailedOrder extends Order {
   order_items?: DatabaseOrderItem[];
@@ -30,10 +30,11 @@ export function OrderDetails() {
   const { user } = useAuth();
   const [order, setOrder] = useState<DetailedOrder | null>(null);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+  const confirmed = searchParams.get("confirmed");
 
   const fetchOrderDetails = async () => {
     if (!orderId || !user) return;
-
     try {
       setLoading(true);
 
@@ -184,21 +185,13 @@ export function OrderDetails() {
     <div className="order-details">
       <div className="order-details__container">
         {/* Header */}
-        <div className="order-details__header">
-          <button 
-            onClick={() => navigate('/profile')}
-            className="back-button"
-          >
-            <ArrowLeftIcon className="back-icon" />
-            Back to Profile
-          </button>
-          
+        <div className="order-details__header">          
           <div className="order-details__title">
             <h1>Order Details</h1>
             <div className="order-number">#{order.order_number}</div>
           </div>
         </div>
-
+        {confirmed &&  <OrderConfirmed />}
         <div className="order-details__content">
           {/* Order Status */}
           <div className="order-section order-section--highlight">

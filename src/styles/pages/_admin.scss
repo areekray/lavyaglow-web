@@ -44,7 +44,7 @@
   background-color: $dark-tertiary;
   border-radius: $border-radius-lg;
   padding: $spacing-xs;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   
   &__button {
     flex: 1;
@@ -89,7 +89,7 @@
   &__header {
     @include flex-between;
     align-items: flex-start;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     flex-wrap: wrap;
     gap: $spacing-lg;
     
@@ -180,7 +180,7 @@
     }
     
     p {
-      margin-bottom: $spacing-2xl;
+      margin-bottom: $spacing-xl;
     }
   }
 }
@@ -370,7 +370,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   
@@ -587,7 +587,7 @@
   
   p {
     color: $luxury-text-secondary;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
   }
   
   &__features {
@@ -626,7 +626,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: $spacing-lg;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
 }
 
 .admin-stat-card {
@@ -663,7 +663,7 @@
   background-color: $dark-tertiary;
   border-radius: $border-radius-lg;
   padding: $spacing-xs;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   
   @include respond-to-max(sm) {
     flex-direction: column;
@@ -707,7 +707,7 @@
 .admin-search {
   display: flex;
   gap: $spacing-md;
-  margin-bottom: $spacing-2xl;
+  margin-bottom: $spacing-xl;
   
   @include respond-to-max(sm) {
     flex-direction: column;
@@ -782,7 +782,7 @@
     background: linear-gradient(135deg, $primary-color, $primary-light);
     @include flex-center;
     color: $dark-bg;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
   }
   
@@ -846,7 +846,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   
@@ -1013,7 +1013,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   
   &--in-stock {
     background-color: rgba(#22c55e, 0.9);
@@ -1037,7 +1037,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
 }
 
 // Stats section
@@ -1115,7 +1115,7 @@
     align-items: center;
     justify-content: center;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all $transition-normal;
     
@@ -1133,7 +1133,7 @@
     color: $dark-bg;
     padding: $spacing-xs $spacing-sm;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     border-radius: $border-radius-sm;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1337,7 +1337,7 @@
     background-color: $primary-color;
     color: $secondary-color;
     font-size: $font-size-xs;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     padding: $spacing-xs $spacing-sm;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1415,7 +1415,7 @@
   &__header {
     @include flex-between;
     align-items: flex-start;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     flex-wrap: wrap;
     gap: $spacing-lg;
     
@@ -1494,7 +1494,7 @@
     grid-template-columns: 2fr 1fr 1fr;
     gap: $spacing-lg;
     align-items: end;
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     padding: $spacing-xl;
     background-color: $dark-secondary;
     border-radius: $border-radius-xl;
@@ -1651,7 +1651,7 @@
 .amount-info {
   .total-amount {
     color: $luxury-text;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     font-size: $font-size-base;
   }
   
@@ -1685,7 +1685,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border: none;
@@ -1970,7 +1970,7 @@
   
   .item-total {
     color: $luxury-text;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
     margin-bottom: $spacing-xs;
   }
@@ -2001,7 +2001,7 @@
     
     &.final {
       font-size: $font-size-lg;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       color: $primary-color;
       padding-top: $spacing-md;
       border-top: 2px solid rgba($primary-color, 0.2);
@@ -2013,7 +2013,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   
@@ -2049,7 +2049,7 @@
   .tracking-details {
     .tracking-number {
       font-family: monospace;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       color: $luxury-text;
       margin-bottom: $spacing-xs;
     }
@@ -2371,7 +2371,7 @@
       
       .price {
         color: $luxury-text;
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         font-size: $font-size-lg;
       }
       
@@ -2418,7 +2418,7 @@
       }
       
       &.total {
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semibold;
         font-size: $font-size-lg;
         color: $primary-color;
         padding-top: $spacing-md;

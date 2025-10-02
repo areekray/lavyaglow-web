@@ -4,30 +4,30 @@ interface CategoryChipProps {
 }
 
 export function CategoryChip({ category, onRemove }: CategoryChipProps) {
-  const getCategoryIcon = (category: string): string => {
-    const iconMap: { [key: string]: string } = {
-      'luxury': '✨',
-      'premium': '👑',
-      'classic': '🕯️',
-      'seasonal': '🌿',
-      'gift': '🎁',
-      'aromatherapy': '🧘',
-      'decor': '🏺',
-      'wedding': '💒',
-      'birthday': '🎂',
-      'default': '🕯️'
-    };
+  // const getCategoryIcon = (category: string): string => {
+  //   const iconMap: { [key: string]: string } = {
+  //     'luxury': '✨',
+  //     'premium': '👑',
+  //     'classic': '🕯️',
+  //     'seasonal': '🌿',
+  //     'gift': '🎁',
+  //     'aromatherapy': '🧘',
+  //     'decor': '🏺',
+  //     'wedding': '💒',
+  //     'birthday': '🎂',
+  //     'default': '🕯️'
+  //   };
     
-    const lowerCategory = category.toLowerCase();
-    return iconMap[lowerCategory] || iconMap['default'];
-  };
+  //   const lowerCategory = category.toLowerCase();
+  //   return iconMap[lowerCategory] || iconMap['default'];
+  // };
 
   return (
     <div className="category-chip">
       <div className="category-chip__content">
-        <span className="category-chip__icon">
+        {/* <span className="category-chip__icon">
           {getCategoryIcon(category)}
-        </span>
+        </span> */}
         <span className="category-chip__text">{category}</span>
       </div>
       <button

@@ -99,11 +99,11 @@
     border: 2px solid $primary-color;
     color: $primary-color;
     font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all $transition-normal;
     @include flex-center;
-    
+    padding-bottom: 6px;
     &:hover {
       background: $primary-color;
       color: $dark-bg;
@@ -175,7 +175,7 @@
   padding: $spacing-xs $spacing-sm;
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   
@@ -194,7 +194,7 @@
 // Product Info
 .product-info {
   &__header {
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
     @include respond-to-max(sm) {
       margin-bottom: $spacing-lg;
     }
@@ -215,7 +215,7 @@
     font-family: $font-family-heading;
     font-size: $font-size-4xl;
     color: $luxury-text;
-    margin: $spacing-sm 0 $spacing-lg;
+    margin: $spacing-sm 0 $spacing-sm;
     line-height: 1.2;
     font-weight: $font-weight-medium;
     
@@ -276,7 +276,7 @@
         display: block;
       }
     }
-    margin-bottom: $spacing-2xl;
+    margin-bottom: $spacing-xl;
 
     
     @include respond-to-max(sm) {

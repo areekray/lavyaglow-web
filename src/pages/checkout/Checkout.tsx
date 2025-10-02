@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -85,10 +85,7 @@ export function Checkout() {
   // Redirect to login if not authenticated
   useEffect(() => {
     if (!user) {
-      openLogin({
-        redirectPath: '/checkout',
-        message: 'Please sign in to complete your order'
-      });
+      navigate('/cart');
     }
   }, [user, openLogin]);
 
@@ -96,7 +93,6 @@ export function Checkout() {
   useEffect(() => {
     if (!cartState.items.length) {
       navigate('/cart');
-      toast.error('Your cart is empty');
     }
   }, [cartState.items, navigate]);
 
@@ -140,6 +136,10 @@ export function Checkout() {
     if (isValid) {
       setCompletedSteps(prev => [...prev.filter(step => step !== currentStep), currentStep]);
       setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
+      const stepper = document.getElementById('checkout-stepper');
+      if (stepper) {
+        stepper.scrollIntoView({ behavior: "smooth" });
+      }
     } else {
       toast.error('Please fill in all required fields correctly');
     }
@@ -147,6 +147,10 @@ export function Checkout() {
 
   const handleBack = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
+    const stepper = document.getElementById('checkout-stepper');
+    if (stepper) {
+      stepper.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleStepClick = (stepIndex: number) => {
@@ -257,12 +261,10 @@ export function Checkout() {
 
       // Clear cart and redirect
       clearCart();
-      toast.success('🎉 Order placed successfully! We\'ll contact you for payment details.');
-      navigate(`/order-confirmation/${order.id}`);
+      navigate(`/orders/${order.id}?confirmed=true`);
       
     } catch (error: any) {
-      console.error('Order submission error:', error);
-      toast.error(error.message || 'Failed to place order. Please try again.');
+      toast.error('Failed to place order. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -300,12 +302,12 @@ export function Checkout() {
                 {currentStep === 1 && <BillingAddress />}
                 {currentStep === 2 && <Payment />}
 
-                <div className="checkout__actions">
+                <div className={`checkout__actions${currentStep === 2 ? ' last-step' : ''}`}>
                   {currentStep > 0 && (
                     <button
                       type="button"
                       onClick={handleBack}
-                      className="checkout__back-btn"
+                      className="btn btn--luxury btn--lg"
                       disabled={isSubmitting}
                     >
                       ← Back
@@ -316,28 +318,29 @@ export function Checkout() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="checkout__next-btn"
+                      className="btn btn--primary btn--lg"
                       disabled={isSubmitting}
                     >
                       Continue →
                     </button>
                   ) : (
-                    <button
-                      type="submit"
-                      className="checkout__submit-btn"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="btn-spinner" />
-                          Placing Order...
-                        </>
-                      ) : (
-                        <>
-                          Place Order 🕯️ ₹{cartState.totalPrice.toLocaleString()}
-                        </>
-                      )}
-                    </button>
+                    // <button
+                    //   type="submit"
+                    //   className="checkout__submit-btn"
+                    //   disabled={isSubmitting}
+                    // >
+                    //   {isSubmitting ? (
+                    //     <>
+                    //       <div className="btn-spinner" />
+                    //       Placing Order...
+                    //     </>
+                    //   ) : (
+                    //     <>
+                    //       Place Order 🕯️ ₹{cartState.totalPrice.toLocaleString()}
+                    //     </>
+                    //   )}
+                    // </button>
+                    <Fragment />
                   )}
                 </div>
               </form>
