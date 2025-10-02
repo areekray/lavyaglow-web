@@ -288,12 +288,9 @@ export function useRazorpay() {
 
       if (data.verified) {
         setPaymentStatus('success');
-        clearCart(); // Only clear cart on successful payment
-        toast.success(`🎉 Payment successful! Order ${order.order_number} confirmed.`, {
-          duration: 5000
-        });
+        clearCart();
         
-        navigate(`/order-confirmation/${order.id}`);
+        navigate(`/orders/${order.id}?confirmed=true`);
       } else {
         throw new Error('Payment verification failed');
       }

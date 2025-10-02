@@ -85,7 +85,7 @@ export function Payment() {
             </div>
             {cartState.totalSavings > 0 && (
               <div className="total-row savings">
-                <span>💚 You Save</span>
+                <span>You Save</span>
                 <span>-₹{cartState.totalSavings.toLocaleString()}</span>
               </div>
             )}
