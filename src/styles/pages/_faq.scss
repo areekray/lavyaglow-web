@@ -1,0 +1,129 @@
+// styles/pages/faq.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.faq-page {
+  min-height: 100vh;
+  background-color: $secondary-color;
+  padding: $spacing-2xl 0;
+
+  @include respond-to-max(sm) { padding: $spacing-lg 0; }
+
+  &__container {
+    width: min(1200px, 92vw);
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  &__hero { padding-top: $spacing-xl; }
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    @include respond-to-max(sm) { margin-bottom: $spacing-xl; }
+  }
+
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    color: $luxury-text;
+    margin-bottom: $spacing-sm;
+
+    @include respond-to-max(md) { font-size: $font-size-3xl; }
+    @include respond-to-max(sm) { font-size: $font-size-2xl; }
+  }
+
+  &__subtitle {
+    color: $luxury-text-secondary;
+    font-size: $font-size-lg;
+    max-width: 800px;
+    margin: 0 auto;
+
+    @include respond-to-max(sm) { font-size: $font-size-base; }
+  }
+
+  /* Sections */
+  &__section {
+    padding: $spacing-xl 0;
+    @include respond-to-max(sm) { padding: $spacing-lg 0; }
+  }
+
+  /* Grid */
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-xl;
+
+    @include respond-to-max(lg) { grid-template-columns: 1fr; }
+    @include respond-to-max(sm) { grid-template-columns: 1fr; gap: $spacing-lg; }
+  }
+
+  /* Card */
+  &__card {
+    @include card;
+    background-color: $dark-bg;
+    border-radius: $border-radius-xl;
+    padding: $spacing-lg;
+
+    @include respond-to-max(sm) { padding: $spacing-md; }
+  }
+
+  /* Q/A typography */
+  &__q {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    color: $luxury-text;
+    margin: 0 0 $spacing-xs 0;
+
+    @include respond-to-max(sm) { font-size: $font-size-lg; }
+  }
+
+  &__a {
+    color: $luxury-text;
+    font-size: $font-size-base;
+    line-height: 1.7;
+  }
+
+  /* Actions (for bulk orders Q) */
+  &__actions {
+    margin-top: $spacing-md;
+    display: flex;
+    gap: $spacing-md;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    background-color: $primary-color;
+    color: $dark-bg;
+    border: none;
+    border-radius: $border-radius-md;
+    padding: $spacing-sm $spacing-lg;
+    font-weight: $font-weight-semibold;
+    text-decoration: none;
+    display: inline-block;
+    transition: all $transition-normal;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    }
+
+    &--ghost {
+      background-color: $dark-tertiary;
+      color: $luxury-text;
+      border: 2px solid $dark-secondary;
+    }
+  }
+
+  /* Help note */
+  &__note-wrap { padding-top: $spacing-md; }
+  &__note {
+    background-color: $dark-tertiary;
+    border: 1px solid $dark-secondary;
+    border-radius: $border-radius-lg;
+    padding: $spacing-md $spacing-lg;
+    color: $luxury-text;
+    text-align: center;
+    line-height: 1.7;
+  }
+}

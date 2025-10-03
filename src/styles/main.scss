@@ -22,6 +22,7 @@
 @use 'components/address-autocomplete' as *;
 @use 'components/delivery-address' as *;
 @use 'components/checkout-stepper' as *;
+@use 'components/pwa-modal' as *;
 
 // Pages
 @use 'pages/home' as *;
@@ -31,6 +32,9 @@
 @use 'pages/cart' as *;
 @use 'pages/checkout' as *;
 @use 'pages/profile' as *;
+@use 'pages/about' as *;
+@use 'pages/contact' as *;
+@use 'pages/faq' as *;
 
 // Import Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
@@ -333,4 +337,53 @@
   span:last-child {
     color: $luxury-text-muted;
   }
+}
+
+.img-preview__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 16px;
+}
+
+.img-preview__content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.img-preview__image {
+  display: block;
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  object-fit: contain;
+}
+
+.img-preview__close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(30,30,30,0.9);
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.img-preview__close:hover {
+  background: rgba(30,30,30,1);
 }

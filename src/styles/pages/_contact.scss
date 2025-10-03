@@ -1,0 +1,126 @@
+// styles/pages/contact.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.contact-page {
+  min-height: 100vh;
+  background-color: $secondary-color;
+  padding: $spacing-2xl 0;
+
+  @include respond-to-max(sm) { padding: $spacing-lg 0; }
+
+  &__container {
+    width: min(1200px, 92vw);
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  &__hero { padding-top: $spacing-xl; }
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    @include respond-to-max(sm) { margin-bottom: $spacing-xl; }
+  }
+
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    color: $luxury-text;
+    margin-bottom: $spacing-sm;
+
+    @include respond-to-max(md) { font-size: $font-size-3xl; }
+    @include respond-to-max(sm) { font-size: $font-size-2xl; }
+  }
+
+  &__subtitle {
+    color: $luxury-text-secondary;
+    font-size: $font-size-lg;
+    max-width: 800px;
+    margin: 0 auto;
+
+    @include respond-to-max(sm) { font-size: $font-size-base; }
+  }
+
+  /* Sections */
+  &__section {
+    padding: $spacing-xl 0;
+    @include respond-to-max(sm) { padding: $spacing-lg 0; }
+  }
+
+  /* Primary links row */
+  &__links {
+    display: flex;
+    gap: $spacing-lg;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    @include respond-to-max(sm) {
+      gap: $spacing-md;
+    }
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-sm;
+    text-decoration: none;
+  }
+
+  &__icon {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+  }
+
+  /* Info grid */
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-xl;
+
+    @include respond-to-max(lg) { grid-template-columns: 1fr; }
+    @include respond-to-max(sm) { grid-template-columns: 1fr; gap: $spacing-lg; }
+  }
+
+  &__card {
+    @include card;
+    background-color: $dark-bg;
+    border-radius: $border-radius-xl;
+    padding: $spacing-lg;
+
+    @include respond-to-max(sm) { padding: $spacing-md; }
+  }
+
+  &__h2 {
+    font-family: $font-family-heading;
+    font-size: $font-size-xl;
+    color: $luxury-text;
+    margin: 0 0 $spacing-xs 0;
+
+    @include respond-to-max(sm) { font-size: $font-size-lg; }
+  }
+
+  &__p {
+    color: $luxury-text;
+    font-size: $font-size-base;
+    line-height: 1.7;
+  }
+
+  &__muted {
+    color: $luxury-text-muted;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+  }
+
+  /* Note / help */
+  &__note-wrap { padding-top: $spacing-md; }
+  &__note {
+    background-color: $dark-tertiary;
+    border: 1px solid $dark-secondary;
+    border-radius: $border-radius-lg;
+    padding: $spacing-md $spacing-lg;
+    color: $luxury-text;
+    text-align: center;
+    line-height: 1.7;
+  }
+}

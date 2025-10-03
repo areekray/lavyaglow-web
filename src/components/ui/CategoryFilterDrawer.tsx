@@ -142,22 +142,3 @@ export function CategoryFilterDrawer({
     document.body
   );
 }
-
-// Helper function to get category icons
-// function getCategoryIcon(category: string): string {
-//   const iconMap: { [key: string]: string } = {
-//     'luxury': '✨',
-//     'premium': '👑',
-//     'classic': '🕯️',
-//     'seasonal': '🌿',
-//     'gift': '🎁',
-//     'aromatherapy': '🧘',
-//     'decor': '🏺',
-//     'wedding': '💒',
-//     'birthday': '🎂',
-//     'default': '🕯️'
-//   };
-  
-//   const lowerCategory = category.toLowerCase();
-//   return iconMap[lowerCategory] || iconMap['default'];
-// }

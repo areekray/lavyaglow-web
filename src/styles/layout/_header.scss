@@ -43,9 +43,18 @@
     }
   }
 
-  &__back-btn {
+  &__header-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $primary-color;
+      font-size: $font-size-lg;
+      padding: $spacing-sm;
+  }
+
+  &__mobile-btn {
     display: none;
-    @include respond-to-max(sm) {
+    @include respond-to-max(lg) {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -182,8 +191,8 @@
     }
     
     @include respond-to-max(lg) {
-      width: 120px;
-      height: 120px;
+      width: 150px;
+      height: 150px;
     }
     
     // @include respond-to-max(sm) {

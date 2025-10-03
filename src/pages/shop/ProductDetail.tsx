@@ -6,6 +6,7 @@ import { ProductPurchaseOptions } from '@/components/shop/ProductPurchaseOptions
 import type { PriceBreakdown } from '@/utils/priceOptimizer';
 import { Button } from '@/components/ui/Button';
 import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
+import { ImagePreviewer } from '@/components/layout/ImagePreviewer';
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +15,7 @@ export function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [previewSrc, setPreviewSrc] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -135,6 +137,7 @@ export function ProductDetail() {
                 priority={false}
                 className="product-gallery__image"
                 fallback="/default-candle-fallback.jpg"
+                onClick={() => setPreviewSrc(product.images[currentImageIndex] || '/default-candle.jpg')}
               />
               
               {/* Image Navigation */}
@@ -213,7 +216,7 @@ export function ProductDetail() {
                   <span className="product-info__price-single">₹{product.discounted_price.toFixed(0)}</span>
                 )}
               </div>
-              <small className="text-muted">*Includes shipping cost</small>
+              <small className="text-muted">*No additional shipping cost</small>
             </div>
 
             {/* Description */}
@@ -304,7 +307,7 @@ export function ProductDetail() {
               <div className="contact-links">
                 <a
                   className='btn btn--luxury btn--lg'
-                  href="https://wa.me/+919036758208"
+                  href="https://wa.me/+919036758208?text=Hi%20LavyaGlow%20Team%20(from%20App)"
                   target="_blank"
                   rel="noopener noreferrer">
                     <img src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/WhatsApp.svg" alt='Instagram' />
@@ -370,7 +373,7 @@ export function ProductDetail() {
             ← Back to Products
           </Button>
         </div>
-        
+        <ImagePreviewer src={previewSrc} onClose={() => setPreviewSrc(null)} />
       </div>
     </div>
   );

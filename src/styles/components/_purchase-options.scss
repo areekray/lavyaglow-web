@@ -1,5 +1,6 @@
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
+
 .purchase-options {
   background: $dark-secondary;
   border-radius: $border-radius-xl;

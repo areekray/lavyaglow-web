@@ -82,7 +82,7 @@ define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.s5i8lk62848"
+    "revision": "0.sb3bf5choeo"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -164,6 +164,26 @@ define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
     return url.hostname.includes("supabase.co") && url.pathname.includes("/storage/v1/object/public/carousel-images/");
   }, new workbox.CacheFirst({
     "cacheName": "lavyaglow-carousel-images",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 200,
+      maxAgeSeconds: 31536000,
+      purgeOnQuotaError: true
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200, 206]
+    }), {
+      cachedResponseWillBeUsed: async ({
+        cachedResponse
+      }) => {
+        return cachedResponse;
+      }
+    }]
+  }), 'GET');
+  workbox.registerRoute(({
+    url
+  }) => {
+    return url.hostname.includes("supabase.co") && url.pathname.includes("/storage/v1/object/public/misc/");
+  }, new workbox.CacheFirst({
+    "cacheName": "lavyaglow-misc-images",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 200,
       maxAgeSeconds: 31536000,

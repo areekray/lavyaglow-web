@@ -85,14 +85,14 @@ export function Home() {
           </div>
         </div>
 
-        {/* <div className="hero-luxury__scroll-indicator">
+        <div className="hero-luxury__scroll-indicator">
           <div className="scroll-arrow">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path d="M7 13L12 18L17 13M7 6L12 11L17 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <span>Scroll to explore</span>
-        </div> */}
+        </div>
       </section>
 
 
@@ -125,7 +125,34 @@ export function Home() {
           </div>
         </div>
       </section>
+      <section className="partners-luxury" aria-label="Our trusted partners">
+  <div className="partners-luxury__container">
+    <div className="partners-luxury__header">
+      <h3 className="partners-luxury__title">Our trusted partners</h3>
+      <p className="partners-luxury__subtitle">Shipping and payments you can rely on</p>
+    </div>
 
+    {/* Marquee viewport */}
+    <div className="partners-luxury__marquee">
+      {/* Track repeated twice for seamless loop */}
+      <div className="partners-luxury__track">
+        {/* Row 1 */}
+        <div className="partners-luxury__item" title="DTDC"></div>
+        <div className="partners-luxury__item partners--bluedart" title="Blue Dart"></div>
+        <div className="partners-luxury__item partners--porter" title="Porter"></div>
+        <div className="partners-luxury__item partners--delhivery" title="Delhivery"></div>
+        <div className="partners-luxury__item partners--razorpay" title="Razorpay"></div>
+
+        {/* Repeat for infinite scroll */}
+        <div className="partners-luxury__item" title="DTDC"></div>
+        <div className="partners-luxury__item partners--bluedart" title="Blue Dart"></div>
+        <div className="partners-luxury__item partners--porter" title="Porter"></div>
+        <div className="partners-luxury__item partners--delhivery" title="Delhivery"></div>
+        <div className="partners-luxury__item partners--razorpay" title="Razorpay"></div>
+      </div>
+    </div>
+  </div>
+</section>
       <section className="values-luxury">
         <div className="values-luxury__container">
           <div className="values-luxury__grid">

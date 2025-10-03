@@ -11,6 +11,7 @@ interface ImageWithPlaceholderProps {
   fallback?: string;
   onLoad?: () => void;
   onError?: () => void;
+  onClick?: () => void;
 }
 
 export function ImageWithPlaceholder({
@@ -23,7 +24,8 @@ export function ImageWithPlaceholder({
   placeholder = 'shimmer',
   fallback,
   onLoad,
-  onError
+  onError,
+  onClick
 }: ImageWithPlaceholderProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -113,6 +115,7 @@ export function ImageWithPlaceholder({
     <div 
       className={`image-with-placeholder ${className}`}
       style={containerStyle}
+      onClick={() => onClick ? onClick() : null}
     >
       {loading && renderPlaceholder()}
       

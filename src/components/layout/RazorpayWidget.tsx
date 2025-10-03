@@ -1,4 +1,4 @@
-import { ArrowRightCircleIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+import { ArrowRightCircleIcon } from "@heroicons/react/24/outline";
 import {
   ShieldCheckIcon,
   CreditCardIcon,
@@ -31,12 +31,12 @@ export default function RazorpayWidget({ paymentMode }: {paymentMode : boolean})
         <ShieldCheckIcon style={{ width: "40px", height: "40px", color: "#0f9d58" }} />
         <div style={{ marginLeft: "0.5rem" }}>
           <img style={{ width: "150px" }} src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/Razorpay_logo.svg" alt="Razor Pay" />
-          <div style={{ fontSize: "0.9rem", fontWeight: 500, color: "#2563eb" }}>TRUSTED BUSINESS</div>
+          <div style={{ fontSize: "0.9rem", fontWeight: 500, color: "#2563eb" }}>{paymentMode ? 'TRUSTED BUSINESS' : 'SECURED PAYMENTS'}</div>
         </div>
       </div>
 
       {/* Payment Methods */}
-      <div
+      {paymentMode && (<div
         className="payment-grid"
         style={{
           display: "grid",
@@ -72,7 +72,7 @@ export default function RazorpayWidget({ paymentMode }: {paymentMode : boolean})
           <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#111827" }}>Wallets</div>
           <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>MobiKwik, Airtel, etc</div>
         </div>
-      </div>
+      </div>)}
 
       {/* COD note */}
       {paymentMode && <div
@@ -105,7 +105,7 @@ export default function RazorpayWidget({ paymentMode }: {paymentMode : boolean})
         <span style={{ fontSize: "0.8rem", color: "#374151" }}>After click Pay button, you will be redirected to Razorpay Secure to complete your purchase securely.</span>
       </div>}
 
-      {!paymentMode && <div
+      {/* {!paymentMode && <div
         style={{
           width: "100%",
           display: "flex",
@@ -118,7 +118,7 @@ export default function RazorpayWidget({ paymentMode }: {paymentMode : boolean})
       >
         <LockClosedIcon style={{ width: "18px", height: "18px", minWidth: "18px", color: "#050505ff" }} />
         <span style={{ fontSize: "0.8rem", color: "#374151" }}>Payments secured by Razorpay.</span>
-      </div>}
+      </div>} */}
       {/* Responsive tweaks */}
       <style>
         {`

@@ -40,6 +40,7 @@ export const productService = {
           *,
           price_sets:product_price_sets(*)
         `)
+        .eq('is_deleted', false)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -62,6 +63,7 @@ export const productService = {
         `)
         .eq('highlight_in_home', true)
         .eq('in_stock', true)
+        .eq('is_deleted', false)
         .order('created_at', { ascending: false })
         .limit(4);
 
@@ -111,6 +113,7 @@ export const productService = {
         `)
         .eq('category', category)
         .eq('in_stock', true)
+        .eq('is_deleted', false)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -192,7 +195,7 @@ export const productService = {
     try {
       const { error } = await supabase
         .from('products')
-        .delete()
+        .update({ is_deleted: true, updated_at: new Date().toISOString() })
         .eq('id', id);
 
       if (error) throw error;
@@ -208,6 +211,7 @@ export const productService = {
       const { count, error } = await supabase
         .from('products')
         .select('*', { count: 'exact', head: true })
+        .eq('is_deleted', false)
         .eq('highlight_in_home', true);
 
       if (error) throw error;

@@ -1,0 +1,122 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+/* Full-screen fixed overlay */
+.pwa-modal__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100; /* above headers/drawers */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+
+  background: rgb(22 22 22 / 40%);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+/* Card */
+.pwa-modal__content {
+  width: min(720px, 96vw);
+  max-height: min(92vh, 800px);
+  background: $secondary-color;
+  color: #f5f5f5;
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0,0,0,.55);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header */
+.pwa-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 16px 8px 16px;
+}
+
+.pwa-modal__title-wrap { display: flex; gap: 12px; align-items: center; }
+.pwa-modal__title-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: rgba(232,227,216,0.12);
+  display: grid; place-items: center;
+  svg { width: 22px; height: 22px; color: #e8e3d8; }
+}
+
+.pwa-modal__titles { display: flex; flex-direction: column; gap: 4px; }
+.pwa-modal__title { margin: 0; font-size: 20px; font-weight: 800; letter-spacing: .2px; }
+.pwa-modal__sub { margin: 0; color: #c9c9c9; font-size: 14px; }
+
+.pwa-modal__close {
+  width: 36px; height: 36px; border: none; border-radius: 10px;
+  background: rgba(255,255,255,.08); color: #fff; cursor: pointer;
+  display: grid; place-items: center; margin-left: 8px; flex-shrink: 0;
+  svg { width: 18px; height: 18px; }
+}
+
+/* Body scroll area */
+.pwa-modal__body {
+  padding: 8px 16px 16px;
+  overflow: auto; /* internal scroll only */
+  display: grid;
+  gap: 14px;
+}
+
+/* Benefits */
+.pwa-modal__benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.benefit {
+  display: flex; gap: 10px; align-items: center;
+  padding: 10px 12px; border-radius: 12px; 
+  background: $dark-bg;
+}
+.benefit__icon { width: 20px; height: 20px; color: #e8e3d8; }
+.benefit__text { display: flex; flex-direction: column; gap: 2px; }
+.benefit__title { font-weight: 700; font-size: 14px; }
+.benefit__desc { color: #c9c9c9; font-size: 13px; }
+
+/* Steps card */
+.install-card {
+  border-radius: 14px; background: rgba(255,255,255,.04); padding: 14px;
+}
+.install-card__head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-weight: 700;
+  svg { width: 18px; height: 18px; color: #e8e3d8; }
+}
+.install-card__badge {
+  margin-left: auto; padding: 4px 8px; font-size: 11px; border-radius: 999px;
+  background: rgba(232,227,216,.12); color: #e8e3d8;
+}
+.install-card__steps {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;
+}
+.install-card__steps li {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 10px; border-radius: 10px;
+  background: $dark-bg;
+}
+.step__num {
+  width: 22px; height: 22px; border-radius: 999px; background: #e8e3d8; color: #1a1a1a;
+  display: grid; place-items: center; font-size: 12px; font-weight: 800; flex-shrink: 0;
+}
+.step__text { font-size: 14px; color: #efefef; }
+
+/* CTA */
+.install-card__cta {
+  margin-top: 12px; width: 100%;
+  display: inline-flex; gap: 8px; align-items: center; justify-content: center;
+  padding: 12px 14px; border: none; border-radius: 12px; background: #e8e3d8; color: #1a1a1a;
+  font-weight: 800; cursor: pointer;
+}
+.install-card__cta .cta__icon { width: 18px; height: 18px; }
+
+/* Responsive: widen benefits on desktop */
+@media (min-width: 720px) {
+  .pwa-modal__benefits { grid-template-columns: repeat(3, 1fr); }
+}

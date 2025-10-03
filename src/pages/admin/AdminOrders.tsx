@@ -93,6 +93,7 @@ export function AdminOrders() {
           )
         `)
         .eq('in_stock', true)
+        .eq('is_deleted', false)
         .order('name');
 
       if (error) throw error;

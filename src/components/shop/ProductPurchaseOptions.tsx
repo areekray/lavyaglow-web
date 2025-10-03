@@ -7,6 +7,7 @@ import Input from '@/components/ui/Input';
 import toast from 'react-hot-toast';
 import { ColorSelector } from '../features/ColorSelector';
 import { stringToArray } from '@/constants/productOptions';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductPurchaseOptionsProps {
   product: Product;
@@ -21,8 +22,9 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
   const [breakdown, setBreakdown] = useState<PriceBreakdown | null>(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
-
-  const { addToCart } = useCart();
+  const [addedToCart, setAddedToCart] = useState<boolean>(false);
+  const { addToCart, state: cart } = useCart();
+  const navigate = useNavigate();
 
   // FIXED: Calculate optimal pricing with correct actual_price usage
   useEffect(() => {
@@ -131,7 +133,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
         breakdown,
         selectedColor: selectedColor as string
       });
-
+      setAddedToCart(true);
       // Success message
       const itemDescription = purchaseMode === 'set' 
         ? `${setsCount} set${setsCount > 1 ? 's' : ''} (${breakdown.totalPieces} pieces)`
@@ -420,11 +422,24 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
                   fullWidth
                   disabled={!breakdown.totalPieces || isAddingToCart}
                   loading={isAddingToCart}
-                  className="add-to-cart"
+                  className="btn btn--primary btn--lg btn--full"
                 >
                   {isAddingToCart ? "Adding to Cart..." : `Add to Cart`}
                   {/* <span className="button-price">₹{breakdown.totalPrice.toFixed(0)}</span> */}
                 </Button>
+
+                {addedToCart && cart.totalItems > 0 && (
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                    className="btn btn--primary btn--md btn--full btn btn--luxury btn--lg"
+                    style={{ marginTop: '1rem' }}
+                    onClick={() => navigate('/cart')}
+                  >
+                    Go to Cart ({cart.totalItems})
+                  </Button>
+                )}
               </div>
             )}
 
