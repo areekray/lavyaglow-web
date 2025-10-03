@@ -131,7 +131,7 @@ export function Products() {
           {loading ? (
             <div className="products-page__loading">
               <div className="loading__spinner"></div>
-              <p>Loading our beautiful candles...</p>
+              <p style={{textAlign: 'center'}}>Loading our beautiful candles...</p>
             </div>
           ) : error ? (
             <div className="products-page__error">
