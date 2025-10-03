@@ -45,7 +45,7 @@ export function PWAUpdateModal({
           <div className="pwa-update-modal__header">
             <div className="pwa-update-modal__icon">
               {isUpdating ? (
-                <div className="update-spinner">🔄</div>
+                <div className="loading__spinner" style={{ width: 20, height: 20, marginBottom: 0 }}></div>
               ) : (
                 <div className="update-icon">✨</div>
               )}
@@ -106,22 +106,6 @@ export function PWAUpdateModal({
                 disabled={isUpdating}
               >
                 <span>Update Now</span>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path 
-                    d="M8 2V8L12 12" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                  />
-                  <circle 
-                    cx="8" 
-                    cy="8" 
-                    r="6" 
-                    stroke="currentColor" 
-                    strokeWidth="2"
-                  />
-                </svg>
               </button>
             </div>
           )}

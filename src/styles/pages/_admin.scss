@@ -1788,8 +1788,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba($dark-bg, 0.8);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.75);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
   @include flex-center;
   z-index: 1000;
   padding: $spacing-lg;

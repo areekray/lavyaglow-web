@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 
 const LOCATIONIQ_API_KEY = 'pk.e1455c910f5bfa49d2868056d986d430';
 const LOCATIONIQ_BASE_URL = 'https://api.locationiq.com/v1';
@@ -71,6 +71,9 @@ export function useLocationIQAutocomplete() {
   const [suggestions, setSuggestions] = useState<LocationIQPlace[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const suggestionsRef = useRef<LocationIQPlace[]>([]);
+  useEffect(() => { suggestionsRef.current = suggestions; }, [suggestions]);
   
   // Store refs for cleanup
   const currentRequestRef = useRef<AbortController | null>(null);
@@ -79,19 +82,16 @@ export function useLocationIQAutocomplete() {
 
   // Cleanup function
   const cleanup = useCallback(() => {
-    // Cancel current request
     if (currentRequestRef.current) {
       currentRequestRef.current.abort();
       currentRequestRef.current = null;
     }
-
-    // Clear debounce timer
     if (debounceTimerRef.current) {
       clearTimeout(debounceTimerRef.current);
       debounceTimerRef.current = null;
     }
-
-    setLoading(false);
+    // avoid spurious renders: only setLoading if truly loading
+    setLoading(prev => (prev ? false : prev));
   }, []);
 
   // Cleanup on unmount
@@ -103,76 +103,56 @@ export function useLocationIQAutocomplete() {
 
   const searchAddresses = useCallback((query: string): Promise<LocationIQPlace[]> => {
     return new Promise((resolve) => {
-      // Clear previous timer and request
       cleanup();
-      
-      // Reset error
       setError(null);
 
-      // Don't search if query is too short or same as last query
       if (!query || query.length < 3) {
         setSuggestions([]);
         resolve([]);
         return;
       }
 
-      // Don't search if it's the same query
+      // serve from ref, no state dep
       if (query === lastQueryRef.current) {
-        resolve(suggestions);
+        resolve(suggestionsRef.current);
         return;
       }
 
-      // Set loading state
       setLoading(true);
 
-      // Debounced search
       debounceTimerRef.current = setTimeout(async () => {
         try {
-          // Create new abort controller
           const abortController = new AbortController();
           currentRequestRef.current = abortController;
-          
-          // Store current query
           lastQueryRef.current = query;
 
           const response = await fetch(
             `${LOCATIONIQ_BASE_URL}/autocomplete?` +
-            new URLSearchParams({
-              key: LOCATIONIQ_API_KEY,
-              q: query,
-              limit: '5',
-              countrycodes: 'in',
-              format: 'json',
-              addressdetails: '1',
-              normalizecity: '1',
-              accept_language: 'en'
-            }),
-            { 
-              signal: abortController.signal,
-              headers: {
-                'Accept': 'application/json',
-              }
-            }
+              new URLSearchParams({
+                key: LOCATIONIQ_API_KEY,
+                q: query,
+                limit: '5',
+                countrycodes: 'in',
+                format: 'json',
+                addressdetails: '1',
+                normalizecity: '1',
+                accept_language: 'en',
+              }),
+            { signal: abortController.signal, headers: { Accept: 'application/json' } }
           );
 
-          if (!response.ok) {
-            throw new Error(`LocationIQ API error: ${response.status}`);
-          }
+          if (!response.ok) throw new Error(`LocationIQ API error: ${response.status}`);
 
           const data: LocationIQPlace[] = await response.json();
-          
-          // Only update if request wasn't aborted
+
           if (!abortController.signal.aborted) {
             setSuggestions(data);
             setLoading(false);
             resolve(data);
           }
-          
         } catch (err: any) {
           if (!currentRequestRef.current?.signal.aborted) {
-            const errorMessage = err.name === 'AbortError' ? 'Request cancelled' : err.message;
-            console.error('LocationIQ search error:', errorMessage);
-            setError('Search failed. Please try again.');
+            setError(err?.name === 'AbortError' ? 'Request cancelled' : 'Search failed. Please try again.');
             setLoading(false);
             setSuggestions([]);
             resolve([]);
@@ -180,9 +160,9 @@ export function useLocationIQAutocomplete() {
         } finally {
           currentRequestRef.current = null;
         }
-      }, 500); // Increased debounce delay
+      }, 500);
     });
-  }, [cleanup, suggestions]);
+  }, [cleanup]);
 
   const parseLocationIQAddress = useCallback((place: LocationIQPlace): AddressComponents => {
     const { address } = place;
@@ -287,13 +267,8 @@ export function useLocationIQAutocomplete() {
     lastQueryRef.current = '';
   }, [cleanup]);
 
-  return {
-    suggestions,
-    loading,
-    error,
-    searchAddresses,
-    parseLocationIQAddress,
-    validatePinCode,
-    clearSuggestions
-  };
+  return useMemo(() => ({
+    suggestions, loading, error,
+    searchAddresses, parseLocationIQAddress, clearSuggestions, validatePinCode
+  }), [suggestions, loading, error, searchAddresses, parseLocationIQAddress, clearSuggestions, ]);
 }

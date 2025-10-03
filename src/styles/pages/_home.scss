@@ -19,6 +19,10 @@
     z-index: 3;
     text-align: center;
     padding: $spacing-4xl $spacing-xl 2*$spacing-4xl;
+
+    @include respond-to-max(xs) {
+      padding-top: 2rem;
+    }
   }
   
   &__content {
@@ -452,5 +456,5 @@
 /* Keyframes for right-to-left loop */
 @keyframes partners-scroll {
   0%   { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - #{$spacing-xl / 2})); }
+  100% { transform: translateX(calc(-50% - #{1rem})); }
 }

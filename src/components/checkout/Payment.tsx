@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button';
 import type { CheckoutFormData } from '@/pages/checkout/Checkout';
 import toast from 'react-hot-toast';
 import RazorpayWidget from '../layout/RazorpayWidget';
+import { Link } from 'react-router-dom';
 
 export function Payment() {
   const { getValues } = useFormContext<CheckoutFormData>();
@@ -177,9 +178,9 @@ export function Payment() {
             <span className="checkmark"></span>
             <span className="terms-text">
               I agree to the{' '}
-              <a href="/terms" target="_blank" className="terms-link">Terms of Service</a>
+              <Link to="/terms" target="_blank" className="terms-link">Terms of Service</Link>
               {' '}and{' '}
-              <a href="/privacy" target="_blank" className="terms-link">Privacy Policy</a>
+              <Link to="/privacy" target="_blank" className="terms-link">Privacy Policy</Link>
             </span>
           </label>
         </div>

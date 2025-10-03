@@ -44,7 +44,7 @@ export function Profile() {
   const navigate = useNavigate();
   const { user, updateProfile, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'addresses'>('profile');
-  
+
   // Profile state
   const [profileData, setProfileData] = useState({
     full_name: user?.full_name || '',
@@ -288,6 +288,15 @@ export function Profile() {
     { id: 'addresses', label: 'Addresses', icon: MapPinIcon }
   ];
 
+  const signOutAsync = async () => {
+    try {
+      await signOut();
+      navigate('/');
+    } catch (error) {
+      console.log('Signed out');
+    }
+  }
+
   return (
     <div className="profile">
       <div className="profile__container">
@@ -373,7 +382,7 @@ export function Profile() {
                   </Button>
                   
                   <Button
-                    onClick={signOut}
+                    onClick={signOutAsync}
                     variant="secondary"
                     className="profile__logout-btn"
                   >

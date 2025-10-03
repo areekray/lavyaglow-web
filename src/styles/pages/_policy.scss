@@ -1,0 +1,64 @@
+// styles/pages/policy.scss
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.policy-page {
+  min-height: 100vh;
+  background-color: $secondary-color;
+  padding: $spacing-2xl 0;
+
+  @include respond-to-max(sm) { padding: $spacing-lg 0; }
+
+  &__container {
+    width: min(1000px, 92vw);
+    margin: 0 auto;
+  }
+
+  &__hero { padding-top: $spacing-xl; }
+
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-3xl;
+    color: $luxury-text;
+    margin: 0 0 $spacing-xs 0;
+    @include respond-to-max(sm) { font-size: $font-size-2xl; }
+  }
+
+  &__subtitle {
+    color: $luxury-text-secondary;
+    font-size: $font-size-base;
+    max-width: 820px;
+  }
+
+  &__section { padding: $spacing-xl 0; }
+
+  &__content {
+    @include card;
+    background-color: $dark-bg;
+    border-radius: $border-radius-xl;
+    padding: $spacing-xl;
+
+    @include respond-to-max(sm) { padding: $spacing-lg; }
+
+    h2 {
+      font-family: $font-family-heading;
+      font-size: $font-size-xl;
+      color: $luxury-text;
+      margin: $spacing-md 0 $spacing-xs 0;
+      @include respond-to-max(sm) { font-size: $font-size-lg; }
+    }
+
+    p {
+      color: $luxury-text;
+      line-height: 1.75;
+      font-size: $font-size-base;
+      margin: 0 0 $spacing-sm 0;
+    }
+
+    .policy-page__list {
+      margin: 0 0 $spacing-sm 1.25rem;
+      color: $luxury-text;
+      li { margin: 0 0 $spacing-xs 0; }
+    }
+  }
+}

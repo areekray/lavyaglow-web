@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/Button';
 import {
   ClipboardDocumentListIcon,
   TruckIcon,
-  CalendarIcon,
   MapPinIcon,
   CurrencyRupeeIcon,
   ShoppingBagIcon,
@@ -16,6 +15,7 @@ import {
 import toast from 'react-hot-toast';
 import type { Order, DatabaseOrderItem } from '@/types';
 import OrderConfirmed from '@/components/layout/OrderConfirmation';
+import { AnnouncementMarquee } from '@/components/layout/AnnouncementMarquee';
 
 interface DetailedOrder extends Order {
   order_items?: DatabaseOrderItem[];
@@ -182,6 +182,8 @@ export function OrderDetails() {
   };
 
   return (
+    <>
+    {(order.status !== "cancelled" && order.status !== "delivered" && order.status !== "shipped" )&& <AnnouncementMarquee />}
     <div className="order-details">
       <div className="order-details__container">
         {/* Header */}
@@ -264,7 +266,7 @@ export function OrderDetails() {
             )}
 
             {/* Estimated Delivery */}
-            {order.estimated_delivery_date && (
+            {/* {order.payment_status === 'completed' && (order.status === "confirmed" || order.status === "processing") && (
               <div className="delivery-estimate">
                 <CalendarIcon className="delivery-icon" />
                 <span>
@@ -274,7 +276,7 @@ export function OrderDetails() {
                   </strong>
                 </span>
               </div>
-            )}
+            )} */}
           </div>
 
           {/* Order Items */}
@@ -434,5 +436,6 @@ export function OrderDetails() {
         </div>
       </div>
     </div>
+    </>
   );
 }

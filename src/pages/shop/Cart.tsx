@@ -174,8 +174,6 @@ export function Cart() {
               const totalItemOriginal = item.breakdown.originalPrice;
               const isUpdatingThis = isUpdating === item.id;
 
-              console.log("Areek Item", item);
-
               return (
                 <div key={item.id} className="cart-item">
                   <div className="cart-item__image">

@@ -83,8 +83,6 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
   const watchInStock = !!watch("in_stock");
   const watchHighlightInHome = !!watch("highlight_in_home");
 
-  console.log("Areek", typeof watchActualPrice, watchActualPrice);
-
   // Calculate discount percentage
   const discountPercentage = productService.calculateDiscountPercentage(
     watchActualPrice,

@@ -36,6 +36,8 @@ export function AddressAutocomplete({
   const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [addressSelected, setAddressSelected] = useState(false);
+  const shortClearedRef = useRef(false);
+  const lastQueriedRef = useRef<string>('');
   
   const { 
     suggestions, 
@@ -48,39 +50,41 @@ export function AddressAutocomplete({
 
   // Handle search with proper debouncing
   useEffect(() => {
-    // Clear previous timeout
-    if (searchTimeoutRef.current) {
-      clearTimeout(searchTimeoutRef.current);
-    }
+    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
 
-    // Don't search if value is empty or too short
     if (!value || value.length < 3) {
-      setShowSuggestions(false);
-      setHasSearched(false);
-      clearSuggestions();
+      if (!shortClearedRef.current) {
+        setShowSuggestions(false);
+        setHasSearched(false);
+        clearSuggestions();          // do not add to deps
+        lastQueriedRef.current = '';
+        shortClearedRef.current = true;
+      }
       return;
     }
 
-    // Debounced search
+    shortClearedRef.current = false;
+
     searchTimeoutRef.current = setTimeout(async () => {
-      setHasSearched(true);
-      if (!addressSelected) {
-        await searchAddresses(value);
+      if (addressSelected) return;
+      if (lastQueriedRef.current === value) {
+        setHasSearched(true);
+        return;
       }
+      lastQueriedRef.current = value;
+      setHasSearched(true);
+      await searchAddresses(value);  // now stable identity from hook
     }, 300);
 
-    // Cleanup timeout on dependency change
     return () => {
-      if (searchTimeoutRef.current) {
-        clearTimeout(searchTimeoutRef.current);
-      }
+      if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
     };
-  }, [value, searchAddresses, clearSuggestions]);
+  }, [value, addressSelected, searchAddresses]);
 
   // Show suggestions when we have results
   useEffect(() => {
     if (hasSearched && suggestions.length > 0) {
-      setShowSuggestions(true);
+      setShowSuggestions(prev => (prev ? prev : true));
     }
   }, [suggestions, hasSearched]);
 
@@ -113,11 +117,14 @@ export function AddressAutocomplete({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue);
-    
-    // Reset search state when input changes
+    setAddressSelected(false);
+
     if (newValue.length < 3) {
       setHasSearched(false);
       setShowSuggestions(false);
+      clearSuggestions();
+      shortClearedRef.current = true;
+      lastQueriedRef.current = '';
     }
   };
 

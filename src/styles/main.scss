@@ -35,6 +35,7 @@
 @use 'pages/about' as *;
 @use 'pages/contact' as *;
 @use 'pages/faq' as *;
+@use 'pages/policy' as *;
 
 // Import Google Fonts
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap');
@@ -343,6 +344,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -386,4 +388,64 @@
 
 .img-preview__close:hover {
   background: rgba(30,30,30,1);
+}
+
+.announce-marquee {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(232, 227, 216, 0.7803921569), rgba(255, 255, 255, 0.4901960784));
+  color: $dark-bg;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+
+  /* keep it above content but below sticky header if needed */
+  position: relative;
+  z-index: 10;
+
+  &__viewport {
+    /* Constrain height; align with header spacing scale */
+    height: 25px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+
+    /* mask fade on edges */
+    mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+
+  &__track {
+    display: inline-flex;
+    align-items: center;
+    gap: 50rem; /* small gap between pills */
+    padding-left: 6vw; /* start a bit in from left */
+    animation: announce-scroll 28s linear infinite;
+    @include respond-to-max(sm) {
+      gap: 20rem;
+    }
+    @include respond-to-max(xs) {
+      gap: 8rem;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &__item {
+    flex: 0 0 auto;
+    /* subtle pill */
+    background: $primary-light;
+    border: 1px solid rgba(0,0,0,0.08);
+    color: $dark-bg;
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    line-height: 1;
+    white-space: nowrap;
+    font-size: 9px;
+    font-weight: $font-weight-medium;
+  }
+}
+
+/* Scroll left to right (reverse direction of partners) */
+@keyframes announce-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - #{1rem})); }
 }

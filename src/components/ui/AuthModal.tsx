@@ -361,9 +361,7 @@ export function AuthModal() {
               </Button>
             </form>
           )}
-        </div>
-
-        {/* Footer */}
+          
         <div className="auth-modal__footer">
           {mode === 'login' ? (
             <p>
@@ -388,16 +386,9 @@ export function AuthModal() {
               </button>
             </p>
           )}
-          
-          {/* Demo accounts info */}
-          {/* {mode === 'login' && (
-            <div className="demo-accounts">
-              <p>Demo Accounts:</p>
-              <p><strong>Admin:</strong> saheli.kolkata@gmail.com</p>
-              <p><strong>Staff:</strong> areek26@gmail.com</p>
-            </div>
-          )} */}
         </div>
+        </div>
+
       </div>
     </div>,
     document.body

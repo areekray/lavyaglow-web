@@ -144,7 +144,7 @@ export function InstallPwaModal({ open, onClose }: Props) {
             <div className="install-card__head">
               <ArrowDownTrayIcon />
               <span>How to install on {platform}</span>
-              <small className="install-card__badge">{browser}</small>
+              {/* <small className="install-card__badge">{browser}</small> */}
             </div>
             <ol className="install-card__steps">
               {steps.map((s, i) => (

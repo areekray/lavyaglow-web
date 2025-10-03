@@ -7,6 +7,7 @@ import type { PriceBreakdown } from '@/utils/priceOptimizer';
 import { Button } from '@/components/ui/Button';
 import { ImageWithPlaceholder } from '@/components/ui/ImageWithPlaceholder';
 import { ImagePreviewer } from '@/components/layout/ImagePreviewer';
+import { AnnouncementMarquee } from '@/components/layout/AnnouncementMarquee';
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -114,6 +115,8 @@ export function ProductDetail() {
   );
 
   return (
+    <>
+    {product.in_stock && <AnnouncementMarquee />}
     <div className="product-detail">
       <div className="container">
         {/* Breadcrumb */}
@@ -375,6 +378,6 @@ export function ProductDetail() {
         </div>
         <ImagePreviewer src={previewSrc} onClose={() => setPreviewSrc(null)} />
       </div>
-    </div>
+    </div></>
   );
 }

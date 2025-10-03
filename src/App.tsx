@@ -15,7 +15,6 @@ import { Login } from '@/pages/auth/Login';
 import { Register } from '@/pages/auth/Register';
 import { Profile } from '@/pages/auth/Profile';
 import { AdminPage } from '@/pages/admin/AdminPage';
-import '@/styles/main.scss';
 import { ProductDetail } from './pages/shop/ProductDetail';
 import { ScrollToTop } from './components/layout/ScrollToTop';
 import { usePWAUpdate } from './hooks/usePWAUpdate';
@@ -25,6 +24,9 @@ import { OrderDetails } from './pages/order/OrderDetails';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import '@/styles/main.scss';
 
 function App() {
   const { 
@@ -48,6 +50,8 @@ function App() {
                   <Route path="about" element={<About />} />
                   <Route path="contact" element={<Contact />} />
                   <Route path="faq" element={<FAQ />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/privacy" element={<Privacy />} />
                   <Route path="products" element={<Products />} />
                   <Route path="products/:id" element={<ProductDetail />} />
                   <Route path="cart" element={<Cart />} />
