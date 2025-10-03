@@ -27,7 +27,7 @@ export function Cart() {
     if (!user) {
       openLogin({
         redirectPath: '/cart',
-        message: 'Registered in user gets complimentary gifts for orders above 500'
+        message: 'Registered users get complimentary gifts for orders above 500'
       });
       return;
     }
