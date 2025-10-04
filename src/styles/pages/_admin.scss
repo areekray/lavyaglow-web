@@ -407,6 +407,9 @@
   @include flex-center;
   z-index: $z-modal;
   padding: $spacing-lg;
+  @include respond-to-max(sm) {
+    padding: 0;
+  }
 }
 
 .product-form {
@@ -417,11 +420,20 @@
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: $shadow-luxury;
+  @include respond-to-max(sm) {
+    max-height: 100vh;
+  }
 
   &__header {
     @include flex-between;
-    padding: $spacing-2xl $spacing-2xl $spacing-lg;
     border-bottom: 1px solid $dark-tertiary;
+    padding: $spacing-xl;
+    h2 {
+      margin-bottom: 0;
+    }
+    @include respond-to-max(sm) {
+      padding: $spacing-md;
+    }
   }
 
   &__title {
@@ -447,7 +459,10 @@
   }
 
   &__content {
-    padding: $spacing-2xl;
+    padding: $spacing-xl;
+    @include respond-to-max(sm) {
+      padding: $spacing-md;
+    }
   }
 
   &__section {
