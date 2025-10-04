@@ -5,7 +5,7 @@
   min-height: 100vh;
   background-color: $dark-bg;
   padding: $spacing-2xl 0;
-  
+
   @include respond-to-max(sm) {
     padding: $spacing-lg 0;
   }
@@ -13,24 +13,24 @@
   &__container {
     @include container;
   }
-  
+
   &__header {
     text-align: center;
     margin-bottom: $spacing-3xl;
-    
+
     h1 {
       font-family: $font-family-heading;
       font-size: $font-size-4xl;
       color: $luxury-text;
       margin-bottom: $spacing-sm;
     }
-    
+
     p {
       color: $luxury-text-secondary;
       font-size: $font-size-lg;
     }
   }
-  
+
   &__content {
     background-color: $dark-secondary;
     border-radius: $border-radius-xl;
@@ -45,7 +45,7 @@
   border-radius: $border-radius-lg;
   padding: $spacing-xs;
   margin-bottom: $spacing-xl;
-  
+
   &__button {
     flex: 1;
     @include flex-center;
@@ -61,22 +61,22 @@
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: all $transition-normal;
-    
+
     &:hover {
       color: $luxury-text;
       background-color: rgba($primary-color, 0.1);
     }
-    
+
     &--active {
       background-color: $primary-color;
       color: $dark-bg;
-      
+
       &:hover {
         background-color: $primary-dark;
       }
     }
   }
-  
+
   &__icon {
     font-size: $font-size-lg;
   }
@@ -84,21 +84,23 @@
 
 // Admin Products
 .admin-products {
-  padding: $spacing-2xl;
-  
+  padding: $spacing-xl;
+  @include respond-to-max(sm) {
+    padding: $spacing-md;
+  }
   &__header {
     @include flex-between;
     align-items: flex-start;
     margin-bottom: $spacing-xl;
     flex-wrap: wrap;
     gap: $spacing-lg;
-    
+
     @include respond-to-max(md) {
       flex-direction: column;
       align-items: flex-start;
     }
   }
-  
+
   &__title-section {
     h2 {
       font-family: $font-family-heading;
@@ -107,25 +109,25 @@
       margin-bottom: $spacing-xs;
     }
   }
-  
+
   &__count {
     color: $luxury-text-muted;
     font-size: $font-size-sm;
   }
-  
+
   &__actions {
     @include flex-center;
     gap: $spacing-lg;
-    
+
     @include respond-to-max(md) {
       width: 100%;
       justify-content: space-between;
     }
   }
-  
+
   &__search {
     position: relative;
-    
+
     &-input {
       width: 300px;
       padding: $spacing-md $spacing-lg;
@@ -135,50 +137,50 @@
       color: $luxury-text;
       font-size: $font-size-base;
       transition: all $transition-normal;
-      
+
       @include respond-to-max(md) {
         width: 200px;
       }
-      
+
       &:focus {
         outline: none;
         border-color: $primary-color;
         box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
       }
-      
+
       &::placeholder {
         color: $luxury-text-muted;
       }
     }
   }
-  
+
   &__loading {
     @include flex-center;
     flex-direction: column;
     padding: $spacing-4xl;
     color: $luxury-text-muted;
   }
-  
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: $spacing-xl;
-    
+
     @include respond-to-max(md) {
       grid-template-columns: 1fr;
     }
   }
-  
+
   &__empty {
     text-align: center;
     padding: $spacing-4xl;
     color: $luxury-text-muted;
-    
+
     h3 {
       color: $luxury-text;
       margin-bottom: $spacing-md;
     }
-    
+
     p {
       margin-bottom: $spacing-xl;
     }
@@ -188,7 +190,11 @@
 /* CORRECTED: Horizontal on large, vertical on mobile */
 .admin-tabs {
   display: flex;
-  flex-direction: row; /* Default: horizontal */
+  flex-direction: row;
+  /* Default: horizontal */
+  @include respond-to-max(sm) {
+    overflow-y: auto;
+  }
 }
 
 .admin-tabs__button {
@@ -198,47 +204,41 @@
 
 .admin-products__header {
   display: flex;
-  flex-direction: row; /* Default: horizontal */
+  flex-direction: row;
+  /* Default: horizontal */
   justify-content: space-between;
   align-items: center;
 }
 
 .admin-products__actions {
   display: flex;
-  flex-direction: row; /* Default: horizontal */
+  flex-direction: row;
+  /* Default: horizontal */
   gap: 16px;
 }
 
 /* Mobile styles (< 768px) */
 @media (max-width: 767px) {
-  .admin-tabs {
-    flex-direction: column !important;
-    gap: 8px !important;
-    padding: 0 !important;
-    background: transparent !important;
-  }
-  
+
   .admin-tabs__button {
-    width: 100% !important;
     justify-content: flex-start !important;
-    // background-color: #3d2317 !important;
     margin-bottom: 4px !important;
     border-radius: 8px !important;
     flex: none !important;
   }
-  
+
   .admin-products__header {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 16px !important;
   }
-  
+
   .admin-products__actions {
     flex-direction: column-reverse !important;
     align-items: stretch !important;
     gap: 12px !important;
   }
-  
+
   .admin-products__search-input {
     width: 100% !important;
   }
@@ -249,17 +249,17 @@
   .admin-tabs {
     flex-direction: row !important;
   }
-  
+
   .admin-tabs__button {
     justify-content: center !important;
   }
-  
+
   .admin-products__header {
     flex-direction: row !important;
     justify-content: space-between !important;
     align-items: center !important;
   }
-  
+
   .admin-products__actions {
     flex-direction: row !important;
   }
@@ -270,36 +270,36 @@
 .admin-product-card {
   @include card;
   overflow: hidden;
-  
+
   &__image {
     position: relative;
     width: 100%;
     aspect-ratio: 4/3;
-    
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
-  
+
   &__status {
     position: absolute;
     top: $spacing-md;
     right: $spacing-md;
   }
-  
+
   &__content {
     padding: $spacing-xl;
   }
-  
+
   &__name {
     font-family: $font-family-heading;
     font-size: $font-size-xl;
     color: $luxury-text;
     margin-bottom: $spacing-xs;
   }
-  
+
   &__category {
     color: $primary-color;
     font-size: $font-size-sm;
@@ -307,7 +307,7 @@
     letter-spacing: 0.5px;
     margin-bottom: $spacing-sm;
   }
-  
+
   &__description {
     color: $luxury-text-secondary;
     font-size: $font-size-sm;
@@ -318,38 +318,38 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
+
   &__details {
     @include flex-between;
     margin-bottom: $spacing-lg;
-    
+
     div {
       font-weight: $font-weight-semibold;
     }
   }
-  
+
   &__price {
     font-family: $font-family-heading;
     font-size: $font-size-xl;
     color: $primary-color;
   }
-  
+
   &__stock {
     color: $luxury-text;
   }
-  
+
   &__characteristics {
     display: flex;
     flex-wrap: wrap;
     gap: $spacing-xs;
     margin-bottom: $spacing-lg;
   }
-  
+
   &__actions {
     @include flex-between;
     gap: $spacing-md;
   }
-  
+
   &__delete {
     background: none;
     border: none;
@@ -359,7 +359,7 @@
     padding: $spacing-sm;
     border-radius: $border-radius-md;
     transition: all $transition-normal;
-    
+
     &:hover {
       background-color: rgba($error-color, 0.1);
     }
@@ -373,13 +373,13 @@
   font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  
+
   &--active {
     background-color: rgba($success-color, 0.2);
     color: #4ade80;
     border: 1px solid rgba(#4ade80, 0.3);
   }
-  
+
   &--inactive {
     background-color: rgba($error-color, 0.2);
     color: #f87171;
@@ -417,19 +417,19 @@
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: $shadow-luxury;
-  
+
   &__header {
     @include flex-between;
     padding: $spacing-2xl $spacing-2xl $spacing-lg;
     border-bottom: 1px solid $dark-tertiary;
   }
-  
+
   &__title {
     font-family: $font-family-heading;
     font-size: $font-size-2xl;
     color: $luxury-text;
   }
-  
+
   &__close {
     background: none;
     border: none;
@@ -439,25 +439,25 @@
     padding: $spacing-sm;
     border-radius: $border-radius-md;
     transition: all $transition-normal;
-    
+
     &:hover {
       color: $luxury-text;
       background-color: $dark-tertiary;
     }
   }
-  
+
   &__content {
     padding: $spacing-2xl;
   }
-  
+
   &__section {
     margin-bottom: $spacing-3xl;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   &__section-title {
     font-family: $font-family-heading;
     font-size: $font-size-lg;
@@ -466,17 +466,17 @@
     padding-bottom: $spacing-sm;
     border-bottom: 1px solid $dark-tertiary;
   }
-  
+
   &__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $spacing-lg;
-    
+
     @include respond-to-max(md) {
       grid-template-columns: 1fr;
     }
   }
-  
+
   &__actions {
     @include flex-between;
     gap: $spacing-lg;
@@ -498,7 +498,7 @@
 // Image Upload & Preview
 .image-upload {
   margin-bottom: $spacing-lg;
-  
+
   &__input {
     display: none;
   }
@@ -508,20 +508,20 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: $spacing-md;
-  
+
   &__item {
     position: relative;
     aspect-ratio: 1;
     border-radius: $border-radius-md;
     overflow: hidden;
   }
-  
+
   &__img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
+
   &__remove {
     position: absolute;
     top: $spacing-xs;
@@ -535,7 +535,7 @@
     @include flex-center;
     cursor: pointer;
     font-size: $font-size-xs;
-    
+
     &:hover {
       background-color: $error-color;
     }
@@ -544,25 +544,27 @@
 
 // Coming Soon Section
 .admin-section {
-  padding: $spacing-2xl;
-  
+  padding: $spacing-xl;
+  @include respond-to-max(sm) {
+    padding: $spacing-md;
+  }
+
   &__header {
-    text-align: center;
-    margin-bottom: $spacing-3xl;
-    
+    margin-bottom: $spacing-lg;
+
     h2 {
       font-family: $font-family-heading;
       font-size: $font-size-3xl;
       color: $luxury-text;
       margin-bottom: $spacing-sm;
     }
-    
+
     p {
       color: $luxury-text-secondary;
       font-size: $font-size-lg;
     }
   }
-  
+
   &__content {
     @include flex-center;
     min-height: 400px;
@@ -572,44 +574,44 @@
 .coming-soon {
   text-align: center;
   max-width: 600px;
-  
+
   &__icon {
     font-size: 4rem;
     margin-bottom: $spacing-lg;
   }
-  
+
   h3 {
     font-family: $font-family-heading;
     font-size: $font-size-2xl;
     color: $luxury-text;
     margin-bottom: $spacing-md;
   }
-  
+
   p {
     color: $luxury-text-secondary;
     margin-bottom: $spacing-xl;
   }
-  
+
   &__features {
     background-color: $dark-tertiary;
     padding: $spacing-xl;
     border-radius: $border-radius-lg;
     text-align: left;
-    
+
     h4 {
       color: $primary-color;
       margin-bottom: $spacing-md;
     }
-    
+
     ul {
       list-style: none;
-      
+
       li {
         color: $luxury-text-secondary;
         margin-bottom: $spacing-sm;
         position: relative;
         padding-left: $spacing-lg;
-        
+
         &::before {
           content: '✓';
           color: $primary-color;
@@ -634,22 +636,22 @@
   @include flex-center;
   gap: $spacing-lg;
   padding: $spacing-xl;
-  
+
   &__icon {
     font-size: $font-size-3xl;
     opacity: 0.8;
   }
-  
+
   &__info {
     text-align: center;
-    
+
     h3 {
       font-family: $font-family-heading;
       font-size: $font-size-2xl;
       color: $primary-color;
       margin-bottom: $spacing-xs;
     }
-    
+
     p {
       color: $luxury-text-muted;
       font-size: $font-size-sm;
@@ -664,12 +666,12 @@
   border-radius: $border-radius-lg;
   padding: $spacing-xs;
   margin-bottom: $spacing-xl;
-  
+
   @include respond-to-max(sm) {
     flex-direction: column;
     gap: $spacing-xs;
   }
-  
+
   &__button {
     flex: 1;
     @include flex-center;
@@ -683,22 +685,22 @@
     font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all $transition-normal;
-    
+
     &:hover {
       color: $luxury-text;
       background-color: rgba($primary-color, 0.1);
     }
-    
+
     &--active {
       background-color: $primary-color;
       color: $dark-bg;
-      
+
       &:hover {
         background-color: $primary-dark;
       }
     }
   }
-  
+
   &__icon {
     font-size: $font-size-lg;
   }
@@ -708,11 +710,11 @@
   display: flex;
   gap: $spacing-md;
   margin-bottom: $spacing-xl;
-  
+
   @include respond-to-max(sm) {
     flex-direction: column;
   }
-  
+
   &__input {
     flex: 1;
     padding: $spacing-md $spacing-lg;
@@ -722,13 +724,13 @@
     color: $luxury-text;
     font-size: $font-size-base;
     transition: all $transition-normal;
-    
+
     &:focus {
       outline: none;
       border-color: $primary-color;
       box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
     }
-    
+
     &::placeholder {
       color: $luxury-text-muted;
     }
@@ -738,14 +740,14 @@
 .user-section {
   &__header {
     margin-bottom: $spacing-xl;
-    
+
     h3 {
       font-family: $font-family-heading;
       font-size: $font-size-2xl;
       color: $luxury-text;
       margin-bottom: $spacing-xs;
     }
-    
+
     p {
       color: $luxury-text-muted;
       font-size: $font-size-base;
@@ -757,7 +759,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: $spacing-xl;
-  
+
   @include respond-to-max(md) {
     grid-template-columns: 1fr;
   }
@@ -766,7 +768,7 @@
 .user-card {
   @include card;
   overflow: hidden;
-  
+
   &__header {
     display: flex;
     align-items: center;
@@ -774,7 +776,7 @@
     padding: $spacing-xl;
     border-bottom: 1px solid $dark-tertiary;
   }
-  
+
   &__avatar {
     width: 48px;
     height: 48px;
@@ -785,12 +787,12 @@
     font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
   }
-  
+
   &__info {
     flex: 1;
     min-width: 0;
   }
-  
+
   &__name {
     font-family: $font-family-heading;
     font-size: $font-size-lg;
@@ -800,7 +802,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   &__email {
     color: $luxury-text-muted;
     font-size: $font-size-sm;
@@ -809,32 +811,32 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  
+
   &__role {
     flex-shrink: 0;
   }
-  
+
   &__details {
     padding: $spacing-xl;
   }
-  
+
   &__detail {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: $spacing-md;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+
   &__label {
     color: $luxury-text-muted;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
   }
-  
+
   &__value {
     color: $luxury-text;
     font-size: $font-size-sm;
@@ -849,19 +851,19 @@
   font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  
+
   &--customer {
     background-color: rgba(#60a5fa, 0.2);
     color: #60a5fa;
     border: 1px solid rgba(#60a5fa, 0.3);
   }
-  
+
   &--staff {
     background-color: rgba($primary-color, 0.2);
     color: $primary-color;
     border: 1px solid rgba($primary-color, 0.3);
   }
-  
+
   &--administrator {
     background-color: rgba(#4ade80, 0.2);
     color: #4ade80;
@@ -873,19 +875,19 @@
   text-align: center;
   padding: $spacing-4xl $spacing-lg;
   color: $luxury-text-muted;
-  
+
   &__icon {
     font-size: 4rem;
     margin-bottom: $spacing-lg;
   }
-  
+
   h3 {
     color: $luxury-text;
     font-family: $font-family-heading;
     font-size: $font-size-xl;
     margin-bottom: $spacing-sm;
   }
-  
+
   p {
     font-size: $font-size-base;
     margin: 0;
@@ -898,7 +900,7 @@
   padding: $spacing-xl;
   border-radius: $border-radius-lg;
   margin-bottom: $spacing-lg;
-  
+
   &__toggles {
     display: flex;
     flex-direction: column;
@@ -916,23 +918,23 @@
   border: 2px solid $dark-secondary;
   border-radius: $border-radius-md;
   transition: all $transition-normal;
-  
+
   &:hover {
     border-color: $primary-color;
   }
-  
+
   .toggle-input {
     margin-top: 2px;
-    
-    &:disabled + .toggle-text {
+
+    &:disabled+.toggle-text {
       opacity: 0.6;
       cursor: not-allowed;
     }
   }
-  
+
   .toggle-text {
     flex: 1;
-    
+
     small {
       display: block;
       color: $luxury-text-muted;
@@ -946,7 +948,7 @@
   background-color: $dark-bg;
   padding: $spacing-lg;
   border-radius: $border-radius-md;
-  
+
   h4 {
     color: $luxury-text;
     margin-bottom: $spacing-md;
@@ -958,19 +960,19 @@
   padding: $spacing-md;
   border-radius: $border-radius-md;
   font-weight: $font-weight-semibold;
-  
+
   &--out-of-stock {
     background-color: rgba(#ef4444, 0.1);
     color: #ef4444;
     border: 1px solid rgba(#ef4444, 0.3);
   }
-  
+
   &--in-stock {
     background-color: rgba(#22c55e, 0.1);
     color: #22c55e;
     border: 1px solid rgba(#22c55e, 0.3);
   }
-  
+
   &--bulk {
     background-color: rgba($primary-color, 0.1);
     color: $primary-color;
@@ -983,15 +985,15 @@
   display: block;
   font-size: $font-size-xs;
   margin-top: $spacing-xs;
-  
+
   &--active {
     color: $primary-color;
   }
-  
+
   &--warning {
     color: #f59e0b;
   }
-  
+
   &--info {
     color: $luxury-text-muted;
   }
@@ -1014,17 +1016,17 @@
   border-radius: $border-radius-sm;
   font-size: $font-size-xs;
   font-weight: $font-weight-semibold;
-  
+
   &--in-stock {
     background-color: rgba(#22c55e, 0.9);
     color: white;
   }
-  
+
   &--out-of-stock {
     background-color: rgba(#ef4444, 0.9);
     color: white;
   }
-  
+
   &--bulk-available {
     background-color: rgba($primary-color, 0.9);
     color: $dark-bg;
@@ -1045,7 +1047,7 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
-  
+
   .admin-products__highlight {
     color: $primary-color;
     font-size: $font-size-sm;
@@ -1061,11 +1063,11 @@
 // Image Upload Styles
 .image-upload {
   margin-bottom: $spacing-lg;
-  
+
   &__input {
     display: none;
   }
-  
+
   &__hint {
     color: $luxury-text-muted;
     font-size: $font-size-sm;
@@ -1081,26 +1083,26 @@
     gap: $spacing-lg;
     margin-top: $spacing-md;
   }
-  
+
   &__item {
     position: relative;
     border-radius: $border-radius-md;
     overflow: hidden;
     border: 2px solid $dark-tertiary;
     transition: all $transition-normal;
-    
+
     &:hover {
       border-color: $primary-color;
     }
   }
-  
+
   &__img {
     width: 100%;
     height: 120px;
     object-fit: cover;
     display: block;
   }
-  
+
   &__remove {
     position: absolute;
     top: $spacing-xs;
@@ -1118,13 +1120,13 @@
     font-weight: $font-weight-semibold;
     cursor: pointer;
     transition: all $transition-normal;
-    
+
     &:hover {
       background-color: #dc2626;
       transform: scale(1.1);
     }
   }
-  
+
   &__main-badge {
     position: absolute;
     bottom: $spacing-xs;
@@ -1138,7 +1140,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-  
+
   h4 {
     color: $luxury-text;
     margin-bottom: $spacing-md;
@@ -1151,7 +1153,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: $spacing-lg;
-  
+
   @include respond-to-max(md) {
     grid-template-columns: 1fr;
   }
@@ -1170,15 +1172,15 @@
   display: block;
   font-size: $font-size-xs;
   margin-top: $spacing-xs;
-  
+
   &--active {
     color: $primary-color;
   }
-  
+
   &--warning {
     color: #f59e0b;
   }
-  
+
   &--info {
     color: $luxury-text-muted;
   }
@@ -1186,7 +1188,7 @@
 
 .multi-select {
   position: relative;
-  
+
   &__label {
     display: block;
     color: $luxury-text;
@@ -1194,7 +1196,7 @@
     font-weight: $font-weight-medium;
     margin-bottom: $spacing-xs;
   }
-  
+
   &__container {
     background-color: $dark-secondary;
     border: 1px solid $dark-tertiary;
@@ -1204,39 +1206,39 @@
     cursor: pointer;
     transition: all $transition-normal;
     @include flex-between;
-    
+
     &:hover {
       border-color: rgba($primary-color, 0.5);
     }
-    
+
     &--open {
       border-color: $primary-color;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
-    
+
     &--error {
       border-color: $error-color;
     }
   }
-  
+
   &__input-area {
     flex: 1;
     min-height: 20px;
   }
-  
+
   &__placeholder {
     color: $luxury-text-secondary;
     font-size: $font-size-sm;
   }
-  
+
   &__selected-items {
     display: flex;
     flex-wrap: wrap;
     gap: $spacing-xs;
     align-items: center;
   }
-  
+
   &__selected-item {
     @include flex-center;
     gap: $spacing-xs;
@@ -1245,17 +1247,17 @@
     border-radius: $border-radius-sm;
     padding: 2px $spacing-xs;
     font-size: $font-size-xs;
-    
+
     &:hover {
       background-color: rgba($primary-color, 0.2);
     }
   }
-  
+
   &__selected-text {
     color: $luxury-text;
     font-weight: $font-weight-medium;
   }
-  
+
   &__remove-button {
     background: none;
     border: none;
@@ -1266,21 +1268,21 @@
     padding: 0;
     margin-left: 2px;
     transition: color $transition-fast;
-    
+
     &:hover {
       color: $error-color;
     }
   }
-  
+
   &__arrow {
     color: $luxury-text-secondary;
     transition: transform $transition-normal;
-    
+
     .multi-select__container--open & {
       transform: rotate(180deg);
     }
   }
-  
+
   &__dropdown {
     position: absolute;
     top: 100%;
@@ -1295,12 +1297,12 @@
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
-  
+
   &__search {
     padding: $spacing-sm;
     border-bottom: 1px solid $dark-tertiary;
   }
-  
+
   &__search-input {
     width: 100%;
     background-color: $dark-bg;
@@ -1309,30 +1311,30 @@
     padding: $spacing-xs $spacing-sm;
     color: $luxury-text;
     font-size: $font-size-sm;
-    
+
     &:focus {
       outline: none;
       border-color: $primary-color;
     }
-    
+
     &::placeholder {
       color: $luxury-text-secondary;
     }
   }
-  
+
   &__options {
     overflow-y: auto;
     max-height: inherit;
   }
-  
+
   &__group {
     border-bottom: 1px solid $dark-tertiary;
-    
+
     &:last-child {
       border-bottom: none;
     }
   }
-  
+
   &__group-label {
     background-color: $primary-color;
     color: $secondary-color;
@@ -1345,7 +1347,7 @@
     top: 0;
     z-index: 1;
   }
-  
+
   &__option {
     @include flex-center;
     gap: $spacing-sm;
@@ -1353,22 +1355,22 @@
     cursor: pointer;
     transition: background-color $transition-fast;
     border-bottom: 1px solid transparent;
-    
+
     &:hover {
       background-color: rgba($primary-color, 0.1);
     }
-    
+
     &--selected {
       background-color: rgba($primary-color, 0.15);
       border-bottom-color: rgba($primary-color, 0.3);
     }
   }
-  
+
   &__checkbox {
     accent-color: $primary-color;
     cursor: pointer;
   }
-  
+
   &__color-indicator {
     width: 16px;
     height: 16px;
@@ -1376,13 +1378,13 @@
     border: 1px solid rgba($luxury-text, 0.3);
     flex-shrink: 0;
   }
-  
+
   &__option-text {
     color: $luxury-text;
     font-size: $font-size-sm;
     flex: 1;
   }
-  
+
   &__error {
     color: $error-color;
     font-size: $font-size-xs;
@@ -1397,7 +1399,7 @@
       max-height: 80px;
       overflow-y: auto;
     }
-    
+
     &__dropdown {
       max-height: 250px;
     }
@@ -1406,58 +1408,55 @@
 
 // Admin Orders Styles
 .admin-orders {
-  padding: $spacing-2xl;
-  
+  padding: $spacing-xl;
   @include respond-to-max(sm) {
-    padding: $spacing-lg;
+    padding: $spacing-md;
   }
-  
+
   &__header {
     @include flex-between;
     align-items: flex-start;
     margin-bottom: $spacing-xl;
     flex-wrap: wrap;
     gap: $spacing-lg;
-    
+
     @include respond-to-max(md) {
       flex-direction: column;
       align-items: stretch;
     }
   }
-  
+
   &__title-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h2 {
       font-family: $font-family-heading;
       font-size: $font-size-3xl;
       color: $luxury-text;
       margin-bottom: $spacing-xs;
-      
+
       @include respond-to-max(sm) {
         font-size: $font-size-2xl;
       }
     }
   }
-  
+
   &__count {
     color: $luxury-text-muted;
     font-size: $font-size-sm;
   }
-  
+
   &__actions {
     @include flex-center;
     gap: $spacing-lg;
-    
+
     @include respond-to-max(md) {
       width: 100%;
       justify-content: space-between;
     }
-    
-    @include respond-to-max(sm) {
-      flex-direction: column;
-      gap: $spacing-md;
-    }
   }
-  
+
   &__export-btn,
   &__add-btn {
     @include flex-center;
@@ -1466,75 +1465,70 @@
     border-radius: $border-radius-lg;
     font-weight: $font-weight-semibold;
     transition: all $transition-normal;
-    
+
     @include respond-to-max(sm) {
       width: 100%;
       justify-content: center;
     }
   }
-  
+
   &__export-btn {
     background: transparent;
     border: 2px solid $primary-color;
     color: $primary-color;
-    
+
     &:hover:not(:disabled) {
       background: $primary-color;
       color: $dark-bg;
     }
-    
+
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
   }
-  
+
   &__filters {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     gap: $spacing-lg;
     align-items: end;
-    margin-bottom: $spacing-xl;
-    padding: $spacing-xl;
+    margin-bottom: $spacing-lg;
     background-color: $dark-secondary;
     border-radius: $border-radius-xl;
-    
+
     @include respond-to-max(lg) {
       grid-template-columns: 1fr;
       gap: $spacing-md;
     }
-    
-    @include respond-to-max(sm) {
-      padding: $spacing-lg;
-    }
   }
-  
+
   &__table-container {
     background: $dark-secondary;
     border-radius: $border-radius-xl;
     overflow: hidden;
-    
+
     @include respond-to-max(lg) {
       overflow-x: auto;
     }
   }
-  
+
   &__table {
     width: 100%;
     border-collapse: collapse;
-    
+
     th,
     td {
       padding: $spacing-lg;
       text-align: left;
       border-bottom: 1px solid $dark-tertiary;
-      
+
       @include respond-to-max(sm) {
         padding: $spacing-md;
         font-size: $font-size-sm;
       }
     }
-    
+
     th {
       background-color: $dark-tertiary;
       color: $luxury-text;
@@ -1543,33 +1537,33 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    
+
     td {
       color: $luxury-text-secondary;
     }
-    
+
     tr:hover td {
       background-color: rgba($primary-color, 0.05);
     }
   }
-  
+
   &__empty {
     text-align: center;
     padding: $spacing-4xl;
     color: $luxury-text-muted;
-    
+
     h3 {
       color: $luxury-text;
       margin-bottom: $spacing-md;
     }
   }
-  
+
   &__loading {
     @include flex-center;
     flex-direction: column;
     padding: $spacing-4xl;
     color: $luxury-text-muted;
-    
+
     .loading__spinner {
       width: 50px;
       height: 50px;
@@ -1580,18 +1574,18 @@
       animation: spin 1s linear infinite;
     }
   }
-  
+
   &__unauthorized {
     @include flex-center;
     flex-direction: column;
     padding: $spacing-4xl;
     text-align: center;
-    
+
     h2 {
       color: $luxury-text;
       margin-bottom: $spacing-md;
     }
-    
+
     p {
       color: $luxury-text-muted;
     }
@@ -1606,7 +1600,7 @@
   font-weight: $font-weight-semibold;
   cursor: pointer;
   text-decoration: none;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -1617,7 +1611,7 @@
     color: $luxury-text;
     font-weight: $font-weight-medium;
   }
-  
+
   small {
     color: $luxury-text-muted;
     font-size: $font-size-xs;
@@ -1630,13 +1624,13 @@
     font-weight: $font-weight-medium;
     margin-bottom: $spacing-xs;
   }
-  
+
   .customer-email {
     color: $luxury-text-muted;
     font-size: $font-size-xs;
     margin-bottom: $spacing-xs;
   }
-  
+
   .customer-location {
     color: $luxury-text-secondary;
     font-size: $font-size-xs;
@@ -1654,7 +1648,7 @@
     font-weight: $font-weight-semibold;
     font-size: $font-size-base;
   }
-  
+
   .savings {
     color: $success-color;
     font-size: $font-size-xs;
@@ -1671,7 +1665,7 @@
     color: $luxury-text;
     font-size: $font-size-xs;
     font-weight: $font-weight-medium;
-    
+
     &:focus {
       outline: none;
       border-color: $primary-color;
@@ -1689,49 +1683,49 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border: none;
-  
+
   // Order status colors
   &--pending {
     background: rgba(#f59e0b, 0.2);
     color: #f59e0b;
   }
-  
+
   &--confirmed {
     background: rgba(#10b981, 0.2);
     color: #10b981;
   }
-  
+
   &--processing {
     background: rgba(#3b82f6, 0.2);
     color: #3b82f6;
   }
-  
+
   &--shipped {
     background: rgba(#8b5cf6, 0.2);
     color: #8b5cf6;
   }
-  
+
   &--delivered {
     background: rgba(#22c55e, 0.2);
     color: #22c55e;
   }
-  
+
   &--cancelled {
     background: rgba(#ef4444, 0.2);
     color: #ef4444;
   }
-  
+
   &--refunded {
     background: rgba(#6b7280, 0.2);
     color: #6b7280;
   }
-  
+
   // Payment status colors
   &--completed {
     background: rgba(#22c55e, 0.2);
     color: #22c55e;
   }
-  
+
   &--failed {
     background: rgba(#ef4444, 0.2);
     color: #ef4444;
@@ -1751,29 +1745,29 @@
   border-radius: $border-radius-md;
   cursor: pointer;
   transition: all $transition-normal;
-  
+
   svg {
     width: 16px;
     height: 16px;
   }
-  
+
   &--view {
     background: rgba($primary-color, 0.1);
     color: $primary-color;
-    
+
     &:hover {
       background: rgba($primary-color, 0.2);
     }
   }
-  
+
   &--delete {
     background: rgba(#ef4444, 0.1);
     color: #ef4444;
-    
+
     &:hover:not(:disabled) {
       background: rgba(#ef4444, 0.2);
     }
-    
+
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -1792,7 +1786,7 @@
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   @include flex-center;
-  z-index: 1000;
+  z-index: 10000;
   padding: $spacing-lg;
 }
 
@@ -1805,11 +1799,11 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  
+
   &--large {
     max-width: 900px;
   }
-  
+
   @include respond-to-max(sm) {
     max-width: 100%;
     max-height: 95vh;
@@ -1821,13 +1815,13 @@
   align-items: center;
   padding: $spacing-xl;
   border-bottom: 1px solid $dark-tertiary;
-  
+
   h2 {
     color: $luxury-text;
     font-family: $font-family-heading;
     margin: 0;
   }
-  
+
   .modal-close {
     @include flex-center;
     width: 32px;
@@ -1838,12 +1832,12 @@
     cursor: pointer;
     border-radius: $border-radius-md;
     transition: all $transition-normal;
-    
+
     &:hover {
       background: rgba($primary-color, 0.1);
       color: $primary-color;
     }
-    
+
     svg {
       width: 20px;
       height: 20px;
@@ -1862,7 +1856,7 @@
   gap: $spacing-lg;
   padding: $spacing-xl;
   border-top: 1px solid $dark-tertiary;
-  
+
   @include respond-to-max(sm) {
     flex-direction: column-reverse;
   }
@@ -1890,7 +1884,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: $spacing-lg;
-  
+
   @include respond-to-max(sm) {
     grid-template-columns: 1fr;
     gap: $spacing-md;
@@ -1901,13 +1895,13 @@
   display: flex;
   flex-direction: column;
   gap: $spacing-xs;
-  
+
   label {
     color: $luxury-text-muted;
     font-size: $font-size-sm;
     font-weight: $font-weight-medium;
   }
-  
+
   span {
     color: $luxury-text;
     font-size: $font-size-base;
@@ -1935,7 +1929,7 @@
   background: $dark-tertiary;
   border-radius: $border-radius-md;
   gap: $spacing-lg;
-  
+
   @include respond-to-max(sm) {
     flex-direction: column;
     gap: $spacing-md;
@@ -1944,17 +1938,17 @@
 
 .item-info {
   flex: 1;
-  
+
   h4 {
     color: $luxury-text;
     margin-bottom: $spacing-xs;
   }
-  
+
   p {
     color: $luxury-text-secondary;
     font-size: $font-size-sm;
     margin-bottom: $spacing-xs;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -1963,19 +1957,19 @@
 
 .item-pricing {
   text-align: right;
-  
+
   @include respond-to-max(sm) {
     text-align: left;
     width: 100%;
   }
-  
+
   .item-total {
     color: $luxury-text;
     font-weight: $font-weight-semibold;
     font-size: $font-size-lg;
     margin-bottom: $spacing-xs;
   }
-  
+
   .item-savings {
     color: $success-color;
     font-size: $font-size-sm;
@@ -1986,20 +1980,20 @@
   background: $dark-tertiary;
   padding: $spacing-lg;
   border-radius: $border-radius-md;
-  
+
   .total-row {
     @include flex-between;
     margin-bottom: $spacing-sm;
-    
+
     &:last-child {
       margin-bottom: 0;
     }
-    
+
     &.savings {
       color: $success-color;
       font-weight: $font-weight-semibold;
     }
-    
+
     &.final {
       font-size: $font-size-lg;
       font-weight: $font-weight-semibold;
@@ -2017,16 +2011,51 @@
   font-weight: $font-weight-semibold;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  
-  &--pending { background: rgba(#f59e0b, 0.2); color: #f59e0b; }
-  &--confirmed { background: rgba(#10b981, 0.2); color: #10b981; }
-  &--processing { background: rgba(#3b82f6, 0.2); color: #3b82f6; }
-  &--shipped { background: rgba(#8b5cf6, 0.2); color: #8b5cf6; }
-  &--delivered { background: rgba(#22c55e, 0.2); color: #22c55e; }
-  &--cancelled { background: rgba(#ef4444, 0.2); color: #ef4444; }
-  &--refunded { background: rgba(#6b7280, 0.2); color: #6b7280; }
-  &--completed { background: rgba(#22c55e, 0.2); color: #22c55e; }
-  &--failed { background: rgba(#ef4444, 0.2); color: #ef4444; }
+
+  &--pending {
+    background: rgba(#f59e0b, 0.2);
+    color: #f59e0b;
+  }
+
+  &--confirmed {
+    background: rgba(#10b981, 0.2);
+    color: #10b981;
+  }
+
+  &--processing {
+    background: rgba(#3b82f6, 0.2);
+    color: #3b82f6;
+  }
+
+  &--shipped {
+    background: rgba(#8b5cf6, 0.2);
+    color: #8b5cf6;
+  }
+
+  &--delivered {
+    background: rgba(#22c55e, 0.2);
+    color: #22c55e;
+  }
+
+  &--cancelled {
+    background: rgba(#ef4444, 0.2);
+    color: #ef4444;
+  }
+
+  &--refunded {
+    background: rgba(#6b7280, 0.2);
+    color: #6b7280;
+  }
+
+  &--completed {
+    background: rgba(#22c55e, 0.2);
+    color: #22c55e;
+  }
+
+  &--failed {
+    background: rgba(#ef4444, 0.2);
+    color: #ef4444;
+  }
 }
 
 .payment-id {
@@ -2046,7 +2075,7 @@
 // Shipping-related styles
 .tracking-info {
   font-size: $font-size-sm;
-  
+
   .tracking-details {
     .tracking-number {
       font-family: monospace;
@@ -2054,31 +2083,31 @@
       color: $luxury-text;
       margin-bottom: $spacing-xs;
     }
-    
+
     .courier-partner {
       color: $luxury-text-secondary;
       font-size: $font-size-xs;
       margin-bottom: $spacing-xs;
     }
-    
+
     .tracking-link {
       display: inline-block;
       color: $primary-color;
       font-size: $font-size-xs;
       text-decoration: none;
-      
+
       &:hover {
         text-decoration: underline;
       }
     }
   }
-  
+
   .no-tracking {
     color: #f59e0b;
     font-size: $font-size-xs;
     font-style: italic;
   }
-  
+
   .tracking-na {
     color: $luxury-text-muted;
   }
@@ -2087,7 +2116,7 @@
 .action-btn--edit {
   background: rgba(#3b82f6, 0.1);
   color: #3b82f6;
-  
+
   &:hover {
     background: rgba(#3b82f6, 0.2);
   }
@@ -2097,19 +2126,19 @@
 .shipping-form {
   .form-group {
     margin-bottom: $spacing-lg;
-    
+
     label {
       display: block;
       color: $luxury-text;
       font-weight: $font-weight-medium;
       margin-bottom: $spacing-sm;
-      
+
       &:after {
         content: ' *';
         color: #ef4444;
       }
     }
-    
+
     .form-input {
       width: 100%;
       padding: $spacing-md;
@@ -2119,21 +2148,21 @@
       color: $luxury-text;
       font-size: $font-size-base;
       transition: border-color $transition-normal;
-      
+
       &:focus {
         outline: none;
         border-color: $primary-color;
       }
-      
+
       &::placeholder {
         color: $luxury-text-muted;
       }
     }
-    
+
     select.form-input {
       cursor: pointer;
     }
-    
+
     small {
       display: block;
       color: $luxury-text-muted;
@@ -2147,7 +2176,7 @@
   color: $primary-color;
   text-decoration: none;
   font-weight: $font-weight-medium;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -2162,10 +2191,11 @@
 
 // Enhanced table for tracking column
 .admin-orders__table {
-  th:nth-child(8), 
+
+  th:nth-child(8),
   td:nth-child(8) {
     min-width: 150px;
-    
+
     @include respond-to-max(lg) {
       min-width: 120px;
     }
@@ -2184,12 +2214,12 @@
   font-weight: $font-weight-semibold;
   transition: all $transition-normal;
   cursor: pointer;
-  
+
   &:hover {
     background: lighten($primary-color, 5%);
     transform: translateY(-1px);
   }
-  
+
   @include respond-to-max(sm) {
     width: 100%;
     justify-content: center;
@@ -2215,12 +2245,12 @@
   gap: $spacing-xl;
   padding: $spacing-xl;
   border-bottom: 1px solid $dark-tertiary;
-  
+
   @include respond-to-max(sm) {
     gap: $spacing-lg;
     padding: $spacing-lg;
   }
-  
+
   .step {
     @include flex-center;
     flex-direction: column;
@@ -2228,21 +2258,21 @@
     cursor: pointer;
     transition: all $transition-normal;
     opacity: 0.5;
-    
+
     &--active {
       opacity: 1;
       color: $primary-color;
     }
-    
+
     &__icon {
       font-size: $font-size-2xl;
     }
-    
+
     &__name {
       font-size: $font-size-sm;
       font-weight: $font-weight-medium;
       text-align: center;
-      
+
       @include respond-to-max(sm) {
         font-size: $font-size-xs;
       }
@@ -2266,15 +2296,15 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: $spacing-lg;
-  
+
   &--3 {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   @include respond-to-max(md) {
     grid-template-columns: 1fr;
   }
-  
+
   .form-group--full {
     grid-column: 1 / -1;
   }
@@ -2286,13 +2316,13 @@
     color: $luxury-text;
     font-weight: $font-weight-medium;
     margin-bottom: $spacing-sm;
-    
+
     &:after {
       content: ' *';
       color: #ef4444;
     }
   }
-  
+
   .form-input {
     width: 100%;
     padding: $spacing-md;
@@ -2302,17 +2332,17 @@
     color: $luxury-text;
     font-size: $font-size-base;
     transition: border-color $transition-normal;
-    
+
     &:focus {
       outline: none;
       border-color: $primary-color;
     }
-    
+
     &::placeholder {
       color: $luxury-text-muted;
     }
   }
-  
+
   textarea.form-input {
     resize: vertical;
     min-height: 80px;
@@ -2338,7 +2368,7 @@
     color: $luxury-text;
     margin-bottom: $spacing-lg;
   }
-  
+
   .order-item-card {
     @include flex-between;
     align-items: center;
@@ -2346,42 +2376,42 @@
     padding: $spacing-lg;
     border-radius: $border-radius-lg;
     margin-bottom: $spacing-md;
-    
+
     .item-details {
       flex: 1;
-      
+
       h5 {
         color: $luxury-text;
         margin-bottom: $spacing-xs;
       }
-      
+
       p {
         color: $luxury-text-secondary;
         font-size: $font-size-sm;
         margin-bottom: $spacing-xs;
-        
+
         &:last-child {
           margin-bottom: 0;
         }
       }
     }
-    
+
     .item-pricing {
       text-align: right;
       margin-right: $spacing-lg;
-      
+
       .price {
         color: $luxury-text;
         font-weight: $font-weight-semibold;
         font-size: $font-size-lg;
       }
-      
+
       .savings {
         color: $success-color;
         font-size: $font-size-sm;
       }
     }
-    
+
     .remove-item-btn {
       @include flex-center;
       width: 32px;
@@ -2392,32 +2422,32 @@
       border-radius: $border-radius-md;
       cursor: pointer;
       transition: all $transition-normal;
-      
+
       &:hover {
         background: rgba(#ef4444, 0.2);
       }
-      
+
       svg {
         width: 16px;
         height: 16px;
       }
     }
   }
-  
+
   .order-summary {
     background: $dark-bg;
     padding: $spacing-lg;
     border-radius: $border-radius-lg;
     margin-top: $spacing-lg;
-    
+
     .summary-row {
       @include flex-between;
       margin-bottom: $spacing-sm;
-      
+
       &.savings {
         color: $success-color;
       }
-      
+
       &.total {
         font-weight: $font-weight-semibold;
         font-size: $font-size-lg;
@@ -2425,7 +2455,7 @@
         padding-top: $spacing-md;
         border-top: 2px solid rgba($primary-color, 0.2);
       }
-      
+
       &:last-child {
         margin-bottom: 0;
       }
@@ -2443,30 +2473,30 @@
   background: $dark-tertiary;
   padding: $spacing-xl;
   border-radius: $border-radius-lg;
-  
+
   h4 {
     color: $luxury-text;
     margin-bottom: $spacing-lg;
     padding-bottom: $spacing-sm;
     border-bottom: 1px solid rgba($primary-color, 0.2);
   }
-  
+
   p {
     color: $luxury-text-secondary;
     margin-bottom: $spacing-sm;
     line-height: 1.5;
   }
-  
+
   .review-item {
     @include flex-between;
     padding: $spacing-sm 0;
     border-bottom: 1px solid rgba($luxury-text-muted, 0.1);
-    
+
     &:last-child {
       border-bottom: none;
     }
   }
-  
+
   .review-total {
     margin-top: $spacing-md;
     padding-top: $spacing-md;
@@ -2482,7 +2512,7 @@
   display: flex;
   gap: $spacing-lg;
   align-items: center;
-  
+
   @include respond-to-max(sm) {
     width: 100%;
     justify-content: space-between;
@@ -2491,7 +2521,7 @@
 
 .create-order-final-btn {
   background: $success-color;
-  
+
   &:hover:not(:disabled) {
     background: lighten($success-color, 5%);
   }
@@ -2519,7 +2549,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: $spacing-lg;
-  
+
   @include respond-to-max(md) {
     grid-template-columns: 1fr;
   }
@@ -2529,7 +2559,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: $spacing-lg;
-  
+
   @include respond-to-max(md) {
     grid-template-columns: 1fr;
   }
@@ -2539,17 +2569,17 @@
 .radio-group {
   display: flex;
   gap: $spacing-lg;
-  
+
   .radio-item {
     display: flex;
     align-items: center;
     gap: $spacing-sm;
     cursor: pointer;
-    
+
     input[type="radio"] {
       accent-color: $primary-color;
     }
-    
+
     span {
       color: $luxury-text-secondary;
       font-weight: $font-weight-medium;
@@ -2575,12 +2605,12 @@
   background: $dark-tertiary;
   padding: $spacing-xl;
   border-radius: $border-radius-lg;
-  
+
   h4 {
     color: $luxury-text;
     margin-bottom: $spacing-lg;
   }
-  
+
   .item-row {
     display: flex;
     justify-content: space-between;
@@ -2589,26 +2619,26 @@
     background: $dark-bg;
     border-radius: $border-radius-md;
     margin-bottom: $spacing-md;
-    
+
     &:last-of-type {
       margin-bottom: $spacing-lg;
     }
-    
+
     .item-details {
       display: flex;
       flex-direction: column;
       gap: $spacing-xs;
-      
+
       strong {
         color: $luxury-text;
       }
-      
+
       span {
         color: $luxury-text-secondary;
         font-size: $font-size-sm;
       }
     }
-    
+
     .remove-btn {
       @include flex-center;
       width: 24px;
@@ -2619,18 +2649,18 @@
       border-radius: $border-radius-sm;
       cursor: pointer;
       transition: all $transition-normal;
-      
+
       &:hover {
         background: rgba(#ef4444, 0.2);
       }
-      
+
       svg {
         width: 14px;
         height: 14px;
       }
     }
   }
-  
+
   .items-total {
     padding: $spacing-md 0;
     border-top: 2px solid rgba($primary-color, 0.2);
@@ -2642,7 +2672,7 @@
 
 .create-order-btn {
   background: $success-color;
-  
+
   &:hover:not(:disabled) {
     background: lighten($success-color, 5%);
   }
@@ -2660,21 +2690,286 @@
     font-weight: $font-weight-medium;
     cursor: pointer;
     transition: all $transition-normal;
-    
+
     &:hover {
       border-color: rgba($primary-color, 0.3);
       background: rgba($primary-color, 0.05);
     }
-    
+
     &:focus {
       outline: none;
       border-color: $primary-color;
       background: rgba($primary-color, 0.1);
     }
-    
+
     &:disabled {
       opacity: 0.6;
       cursor: not-allowed;
     }
   }
 }
+
+
+.admin-orders__cards {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: $spacing-lg;
+
+  @include respond-to-max(lg) {
+    gap: $spacing-md;
+  }
+}
+
+.admin-orders__cards-empty,
+.admin-orders__cards-loading {
+  @include card;
+  grid-column: span 12;
+  background-color: $dark-secondary;
+  border-radius: $border-radius-xl;
+  padding: $spacing-xl;
+  text-align: center;
+  color: $luxury-text;
+
+  .spinner {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.15);
+    border-top-color: $primary-color;
+    margin: 0 auto $spacing-sm;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.order-card {
+  @include card;
+  grid-column: span 12;
+  background-color: $dark-secondary;
+  border-radius: $border-radius-xl;
+  padding: $spacing-xl;
+  @include respond-to-max(sm) {
+    padding: $spacing-md !important;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $spacing-md;
+    margin-bottom: $spacing-sm;
+
+    @include respond-to-max(sm) {
+      flex-direction: column;
+    }
+  }
+
+  &__head-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__primary {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    font-family: $font-family-heading;
+    color: $luxury-text;
+    font-size: $font-size-lg;
+
+    @include respond-to-max(sm) {
+      font-size: $font-size-base;
+      flex-direction: column;
+    }
+
+    @include respond-to-max(xs) {
+      flex-direction: column;
+    }
+  }
+
+  &__customer {
+    font-weight: 800;
+  }
+
+  &__dot,
+  &__sep {
+    color: $luxury-text-muted;
+  }
+
+  &__order {
+    color: $primary-color;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0;
+    font-weight: 700;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__secondary {
+    color: $luxury-text-muted;
+    font-size: $font-size-sm;
+    display: flex;
+    gap: $spacing-sm;
+
+    @include respond-to-max(xs) {
+      flex-direction: column;
+    }
+  }
+
+  &__badges {
+    display: flex;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  &__facts {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: $spacing-lg;
+    align-items: center;
+    margin: $spacing-sm 0 $spacing-md;
+
+    @include respond-to-max(md) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+    }
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    &__label {
+      color: $luxury-text-muted;
+      font-size: $font-size-xs;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    &__value {
+      color: $luxury-text;
+      font-weight: 700;
+    }
+  }
+
+  .amount-info {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: baseline;
+  }
+
+  .savings {
+    color: #22c55e;
+    font-size: $font-size-sm;
+  }
+
+  &__meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-sm;
+
+    @include respond-to-max(md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .meta__row {
+    display: flex;
+    gap: $spacing-sm;
+
+    .meta__label {
+      color: $luxury-text-muted;
+      width: 140px;
+      min-width: 140px;
+      font-size: $font-size-sm;
+    }
+
+    .meta__value {
+      color: $luxury-text;
+      overflow-wrap: anywhere;
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+  }
+
+  &__inline-controls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-sm;
+
+    @include respond-to-max(sm) {
+      grid-template-columns: 1fr;
+    }
+
+    .inline-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        color: $luxury-text-muted;
+        font-size: $font-size-xs;
+      }
+
+      select {
+        background: $dark-tertiary;
+        color: $luxury-text;
+        border: 1px solid $dark-secondary;
+        border-radius: $border-radius-md;
+        padding: $spacing-sm $spacing-md;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: $spacing-md;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+
+    .action-btn {
+      background-color: $dark-tertiary;
+      color: $luxury-text;
+      border: 1px solid $dark-secondary;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+      transition: all $transition-normal;
+
+      &:hover {
+        background-color: rgba($primary-color, 0.08);
+        border-color: rgba($primary-color, 0.4);
+        transform: translateY(-1px);
+      }
+
+      &--view {}
+
+      &--edit {}
+
+      &--delete {}
+    }
+  }
+}
+
+/* badges use same getStatusClass styles you already have */

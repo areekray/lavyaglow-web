@@ -700,11 +700,6 @@
 .order-section {
   background: $dark-secondary;
   border-radius: $border-radius-xl;
-  padding: $spacing-2xl;
-  
-  @include respond-to-max(sm) {
-    padding: $spacing-xl;
-  }
   
   &--highlight {
     border: 2px solid rgba($primary-color, 0.2);
@@ -966,7 +961,7 @@
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   @include flex-center;
-  z-index: 1000;
+  z-index: 10000;
   padding: $spacing-lg;
 }
 
@@ -1024,7 +1019,7 @@
 .modal-body {
   flex: 1;
   overflow-y: auto;
-  padding: $spacing-xl;
+  padding: $spacing-lg;
 }
 
 .modal-footer {

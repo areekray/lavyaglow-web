@@ -4,10 +4,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { 
   EyeIcon, 
-  TrashIcon, 
   MagnifyingGlassIcon,
-  FunnelIcon,
-  ArrowDownTrayIcon,
   XMarkIcon,
   TruckIcon,
   PencilIcon,
@@ -17,7 +14,7 @@ import {
 import toast from 'react-hot-toast';
 import type { Order, DatabaseOrderItem, Product } from '@/types';
 import { ColorChips } from '@/components/layout/ColorChips';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 // Extended order type for database queries
 interface AdminOrder extends Order {
@@ -26,6 +23,7 @@ interface AdminOrder extends Order {
 }
 
 export function AdminOrders() {
+  const navigate = useNavigate();
   const { user, isAdmin, isStaff } = useAuth();
   const [orders, setOrders] = useState<AdminOrder[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<AdminOrder[]>([]);
@@ -44,6 +42,11 @@ export function AdminOrders() {
     courierPartner: '',
     trackingUrl: ''
   });
+  const [searchParams] = useSearchParams();
+
+  
+  const orderIdFromUrl = searchParams.get('order');
+
   // Permission check
   if (!user || (!isAdmin && !isStaff)) {
     return (
@@ -322,7 +325,7 @@ export function AdminOrders() {
         updated_at: dbOrder.updated_at,
         confirmed_at: dbOrder.confirmed_at,
         paid_at: dbOrder.paid_at,
-        
+        courier_partner: dbOrder.courier_partner,
         // Transform to your existing format
         shipping_address: {
           full_name: dbOrder.delivery_name,
@@ -342,6 +345,11 @@ export function AdminOrders() {
 
       setOrders(transformedOrders);
       setFilteredOrders(transformedOrders);
+      const preselectedOrder = transformedOrders.find((order) => order.id === orderIdFromUrl);
+      if (preselectedOrder) {
+        setSelectedOrder(preselectedOrder);
+        setShowOrderModal(true);
+      }
     } catch (error: any) {
       console.error('Error fetching orders:', error);
       toast.error(`Failed to fetch orders: ${error.message}`);
@@ -527,42 +535,42 @@ export function AdminOrders() {
 
 
   // Delete order (Admin only)
-  const deleteOrder = async (orderId: string, orderNumber: string) => {
-    if (!isAdmin) {
-      toast.error('Only administrators can delete orders');
-      return;
-    }
+  // const deleteOrder = async (orderId: string, orderNumber: string) => {
+  //   if (!isAdmin) {
+  //     toast.error('Only administrators can delete orders');
+  //     return;
+  //   }
 
-    const confirmed = window.confirm(
-      `Are you sure you want to delete order ${orderNumber}? This action cannot be undone.`
-    );
+  //   const confirmed = window.confirm(
+  //     `Are you sure you want to delete order ${orderNumber}? This action cannot be undone.`
+  //   );
 
-    if (!confirmed) return;
+  //   if (!confirmed) return;
 
-    try {
-      setUpdating(orderId);
+  //   try {
+  //     setUpdating(orderId);
 
-      const { error } = await supabase
-        .from('orders')
-        .delete()
-        .eq('id', orderId);
+  //     const { error } = await supabase
+  //       .from('orders')
+  //       .delete()
+  //       .eq('id', orderId);
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      setOrders(prev => prev.filter(order => order.id !== orderId));
-      toast.success(`Order ${orderNumber} deleted successfully`);
+  //     setOrders(prev => prev.filter(order => order.id !== orderId));
+  //     toast.success(`Order ${orderNumber} deleted successfully`);
       
-      if (selectedOrder?.id === orderId) {
-        setShowOrderModal(false);
-        setSelectedOrder(null);
-      }
-    } catch (error: any) {
-      console.error('Error deleting order:', error);
-      toast.error(`Failed to delete order: ${error.message}`);
-    } finally {
-      setUpdating(null);
-    }
-  };
+  //     if (selectedOrder?.id === orderId) {
+  //       setShowOrderModal(false);
+  //       setSelectedOrder(null);
+  //     }
+  //   } catch (error: any) {
+  //     console.error('Error deleting order:', error);
+  //     toast.error(`Failed to delete order: ${error.message}`);
+  //   } finally {
+  //     setUpdating(null);
+  //   }
+  // };
 
   // Export orders to CSV
   const exportOrders = () => {
@@ -617,7 +625,7 @@ export function AdminOrders() {
       {/* Header */}
       <div className="admin-orders__header">
         <div className="admin-orders__title-section">
-          <h2>📦 Order Management</h2>
+          <h2>Order Management</h2>
           <p className="admin-orders__count">
             {filteredOrders.length} of {orders.length} orders
           </p>
@@ -625,22 +633,19 @@ export function AdminOrders() {
 
         <div className="admin-orders__actions">
           <button 
-            className="admin-orders__export-btn"
+            className="btn btn--luxury btn--lg"
             onClick={exportOrders}
             disabled={filteredOrders.length === 0}
           >
-            <ArrowDownTrayIcon className="btn-icon" />
             Export CSV
           </button>
           {isAdmin && (
-            <Button 
+            <button 
               onClick={() => setShowCreateOrderModal(true)}
-              className="admin-orders__create-btn"
-              variant="primary"
+              className="btn btn--primary btn--lg"
             >
-              <PlusIcon className="btn-icon" />
               Create Offline Order
-            </Button>
+            </button>
           )}
         </div>
       </div>
@@ -659,7 +664,6 @@ export function AdminOrders() {
         </div>
 
         <div className="filter-group">
-          <FunnelIcon className="filter-group__icon" />
           <select
             className="filter-group__select"
             value={statusFilter}
@@ -697,177 +701,197 @@ export function AdminOrders() {
             <p>No orders match your current filters.</p>
           </div>
         ) : (
-          <div className="admin-orders__table-wrapper">
-            <table className="admin-orders__table">
-              <thead>
-                <tr>
-                  <th>Order #</th>
-                  <th>Date</th>
-                  <th>Customer</th>
-                  <th>Items</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Payment</th>
-                  <th>Tracking</th>
-                  <th>Actions</th>
-                </tr>
-              </thead><tbody>
-                {filteredOrders.map((order) => (
-                  <tr key={order.id}>
-                    <td>
-                      <button 
-                        className="order-link"
-                        onClick={() => {
-                          setSelectedOrder(order);
-                          setShowOrderModal(true);
-                        }}
-                      >
-                        {order.order_number}
-                      </button>
-                    </td>
-                    <td>
-                      <div className="order-date">
-                        <div>{new Date(order.created_at).toLocaleDateString()}</div>
-                        <small>{new Date(order.created_at).toLocaleTimeString()}</small>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="customer-info">
-                        <div className="customer-name">
-                          {order.delivery_name || order.shipping_address.full_name}
-                        </div>
-                        <div className="customer-email">
-                          {order.user_email || 'N/A'}
-                        </div>
-                        <div className="customer-location">
-                          {order.delivery_city || order.shipping_address.city}, {order.delivery_state || order.shipping_address.state}
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span className="items-count">
-                        {order.order_items?.length || order.items.length} items
-                      </span>
-                    </td>
-                    <td>
-                      <div className="amount-info">
-                        <div className="total-amount">
-                          ₹{order.total_amount.toLocaleString()}
-                        </div>
-                        {order.total_savings && order.total_savings > 0 && (
-                          <div className="savings">
-                            -₹{order.total_savings.toLocaleString()}
-                          </div>
-                        )}
-                      </div>
-                    </td>
-                    <td>
-                      <select
-                        className={getStatusClass(order.status, 'order')}
-                        value={order.status}
-                        onChange={(e) => updateOrderStatus(order.id, e.target.value)}
-                        disabled={updating === order.id}
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
-                    </td>
-                    <td>
-                      <select
-                        className={getStatusClass(order.payment_status, 'payment')}
-                        value={order.payment_status}
-                        onChange={(e) => updatePaymentStatus(order.id, e.target.value)}
-                        disabled={updating === order.id}
-                      >
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                        <option value="failed">Failed</option>
-                        <option value="refunded">Refunded</option>
-                      </select>
-                    </td>
-                    <td>
-                      {/* NEW: Tracking column */}
-                      <div className="tracking-info">
-                        {order.tracking_number ? (
-                          <div className="tracking-details">
-                            <div className="tracking-number">
-                              #{order.tracking_number}
-                            </div>
-                            <div className="courier-partner">
-                              {order.courier_partner}
-                            </div>
-                            {order.tracking_url && (
-                              <a 
-                                href={order.tracking_url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="tracking-link"
-                                title="Track Package"
-                              >
-                                🔗 Track
-                              </a>
-                            )}
-                          </div>
-                        ) : order.status === 'shipped' ? (
-                          <span className="no-tracking">No tracking</span>
-                        ) : (
-                          <span className="tracking-na">-</span>
-                        )}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="table-actions">
-                        <button
-                          className="action-btn action-btn--view"
-                          onClick={() => {
-                            setSelectedOrder(order);
-                            setShowOrderModal(true);
-                          }}
-                          title="View Details"
-                        >
-                          <EyeIcon />
-                        </button>
-                        
-                        {/* NEW: Edit shipping button for shipped orders */}
-                        {order.status === 'shipped' && (
-                          <button
-                            className="action-btn action-btn--edit"
-                            onClick={() => {
-                              setShippingData({
-                                orderId: order.id,
-                                trackingNumber: order.tracking_number || '',
-                                courierPartner: order.courier_partner || '',
-                                trackingUrl: order.tracking_url || ''
-                              });
-                              setShowShippingModal(true);
-                            }}
-                            title="Edit Shipping Info"
-                          >
-                            <PencilIcon />
-                          </button>
-                        )}
-                        
-                        {isAdmin && (
-                          <button
-                            className="action-btn action-btn--delete"
-                            onClick={() => deleteOrder(order.id, order.order_number)}
-                            disabled={updating === order.id}
-                            title="Delete Order"
-                          >
-                            <TrashIcon />
-                          </button>
-                        )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+<div className="admin-orders__cards">
+  {filteredOrders.length === 0 && !loading && (
+    <div className="admin-orders__cards-empty">
+      <h3>No matching orders</h3>
+      <p>Try a different search, status, or time range.</p>
+    </div>
+  )}
+
+  {loading && (
+    <div className="admin-orders__cards-loading">
+      <div className="spinner" />
+      <p>Loading orders…</p>
+    </div>
+  )}
+
+  {!loading && filteredOrders.map((order) => {
+    const orderCity = order.delivery_city || order.shipping_address.city;
+    const orderState = order.delivery_state || order.shipping_address.state;
+    const cityState = [orderCity, orderState].filter(Boolean).join(', ');
+    const itemsCount = order.order_items?.length || order.items.length;
+
+    return (
+      <div key={order.id} className="order-card" role="group" aria-label={`Order ${order.order_number}`}>
+        {/* Header: primary focus info */}
+        <header className="order-card__header">
+          <div className="order-card__head-left">
+            <div className="order-card__primary">
+              <span className="order-card__customer">
+                {order.delivery_name || order.shipping_address.full_name}
+              </span>
+              <button
+                className="order-card__order"
+                onClick={() => {
+                  setSelectedOrder(order);
+                  setShowOrderModal(true);
+                }}
+                title="View Order"
+              >
+                #{order.order_number}
+              </button>
+            </div>
+
+            <div className="order-card__secondary">
+              <span className="order-card__location">{cityState || '—'}</span>
+              <div className="order-card__date">
+                <span>{new Date(order.created_at).toLocaleDateString()}</span>
+                <small>{new Date(order.created_at).toLocaleTimeString()}</small>
+              </div>
+            </div>
           </div>
+
+          <div className="order-card__badges">
+            <span className={`badge ${getStatusClass(order.status, 'order')}`}>
+              {order.status}
+            </span>
+            <span className={`badge ${getStatusClass(order.payment_status, 'payment')}`}>
+              {order.payment_status}
+            </span>
+          </div>
+        </header>
+
+        {/* Facts row (Items, Amount, Savings, Payment, Tracking brief) */}
+        <div className="order-card__facts">
+          <div className="fact">
+            <span className="fact__label">Items</span>
+            <span className="fact__value">{itemsCount}</span>
+          </div>
+
+          <div className="fact">
+            <span className="fact__label">Amount</span>
+            <div className="amount-info">
+              <span className="fact__value">₹{order.total_amount.toLocaleString()}</span>
+              {order.total_savings && order.total_savings > 0 && (
+                <span className="savings">-₹{order.total_savings.toLocaleString()}</span>
+              )}
+            </div>
+          </div>
+
+          {order.courier_partner && (
+            <div className="fact">
+              <span className="fact__label">Courier</span>
+              <span className="fact__value">{order.courier_partner}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Meta block (Customer email, optional actions like track link and courier name) */}
+        <div className="order-card__meta">
+
+          {order.tracking_url && (
+            <div className="meta__row">
+              <span className="meta__label">Track</span>
+              <span className="meta__value">
+                <a
+                  href={order.tracking_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tracking-link"
+                  title="Track Package"
+                >
+                  🔗 Open
+                </a>
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Inline controls: same selects as table cells */}
+        <div className="order-card__inline-controls">
+          <div className="inline-field">
+            <label>Status</label>
+            <select
+              className={getStatusClass(order.status, 'order')}
+              value={order.status}
+              onChange={(e) => updateOrderStatus(order.id, e.target.value)}
+              disabled={updating === order.id}
+            >
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="processing">Processing</option>
+              <option value="shipped">Shipped</option>
+              <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div className="inline-field">
+            <label>Payment</label>
+            <select
+              className={getStatusClass(order.payment_status, 'payment')}
+              value={order.payment_status}
+              onChange={(e) => updatePaymentStatus(order.id, e.target.value)}
+              disabled={updating === order.id}
+            >
+              <option value="pending">Pending</option>
+              <option value="completed">Completed</option>
+              <option value="failed">Failed</option>
+              <option value="refunded">Refunded</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Actions: same buttons as the table row */}
+        <footer className="order-card__footer">
+          <div className="order-card__actions">
+            <button
+              className="action-btn action-btn--view"
+              onClick={() => {
+                setSelectedOrder(order);
+                setShowOrderModal(true);
+              }}
+              title="View Details"
+            >
+              <EyeIcon />
+            </button>
+
+            {order.status === 'shipped' && (
+              <button
+                className="action-btn action-btn--edit"
+                onClick={() => {
+                  setShippingData({
+                    orderId: order.id,
+                    trackingNumber: order.tracking_number || '',
+                    courierPartner: order.courier_partner || '',
+                    trackingUrl: order.tracking_url || ''
+                  });
+                  setShowShippingModal(true);
+                }}
+                title="Edit Shipping Info"
+              >
+                <PencilIcon />
+              </button>
+            )}
+
+            {/* {isAdmin && (
+              <button
+                className="action-btn action-btn--delete"
+                onClick={() => deleteOrder(order.id, order.order_number)}
+                disabled={updating === order.id}
+                title="Delete Order"
+              >
+                <TrashIcon />
+              </button>
+            )} */}
+          </div>
+        </footer>
+      </div>
+    );
+  })}
+</div>
+
         )}
       </div>
 
@@ -878,6 +902,10 @@ export function AdminOrders() {
           onClose={() => {
             setShowOrderModal(false);
             setSelectedOrder(null);
+            if (orderIdFromUrl) {
+              searchParams.delete('order');
+              navigate({ pathname: location.pathname, search: '' }, { replace: true });
+            }
           }}
         />
       )}
@@ -1431,7 +1459,7 @@ function OrderDetailsModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header">
-          <h2>📦 Order Details: {order.order_number}</h2>
+          <h3 style={{marginBottom: 0}}>{order.order_number}</h3>
           <button className="modal-close" onClick={onClose}>
             <XMarkIcon />
           </button>
@@ -1686,9 +1714,9 @@ function OrderDetailsModal({
         </div>
 
         <div className="modal-footer">
-          <Button onClick={onClose} variant="secondary">
+          <button className='btn btn--luxury btn--lg' onClick={onClose}>
             Close
-          </Button>
+          </button>
         </div>
       </div>
     </div>

@@ -45,7 +45,7 @@ export function PWAUpdateModal({
           <div className="pwa-update-modal__header">
             <div className="pwa-update-modal__icon">
               {isUpdating ? (
-                <div className="loading__spinner" style={{ width: 20, height: 20, marginBottom: 0 }}></div>
+                <div style={{width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><div className="loading__spinner" style={{ width: 20, height: 20, marginBottom: 0 }}></div></div>
               ) : (
                 <div className="update-icon">✨</div>
               )}

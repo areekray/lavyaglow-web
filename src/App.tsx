@@ -1,5 +1,5 @@
 // App.tsx - Add AuthModalProvider and AuthModal
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { AuthModalProvider } from '@/contexts/AuthModalContext';
@@ -76,8 +76,10 @@ function App() {
                 </Route>
                 
                 {/* Keep existing routes for direct access/SEO */}
-                <Route path="auth/login" element={<Login />} />
-                <Route path="auth/register" element={<Register />} />
+                {/* <Route path="auth/login" element={<Login />} />
+                <Route path="auth/register" element={<Register />} /> */}
+                {/* Catch-all: redirect unknown routes to home */}
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
 
               {/* Universal Auth Modal */}

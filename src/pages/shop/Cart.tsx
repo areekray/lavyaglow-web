@@ -26,8 +26,8 @@ export function Cart() {
   const handleProceedToCheckout = () => {
     if (!user) {
       openLogin({
-        redirectPath: '/cart',
-        message: 'Registered users get complimentary gifts for orders above 500'
+        redirectPath: '/checkout',
+        message: 'Registered users can track orders and exiciting offers in future!'
       });
       return;
     }
