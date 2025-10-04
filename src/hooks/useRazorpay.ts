@@ -289,9 +289,11 @@ export function useRazorpay() {
       if (data.verified) {
         setPaymentStatus('success');
         console.log('Redirecting to order details');
-        navigate(`/orders/${order.id}?confirmed=true`);
         clearCart();
         toast.success('Order placed successfully');
+        setTimeout(() => {
+            navigate(`/orders/${order.id}?confirmed=true`);
+        }, 1000);
       } else {
         throw new Error('Payment verification failed');
       }
