@@ -25,7 +25,9 @@ interface ProductFormProps {
 export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
   const [images, setImages] = useState<string[]>(product?.images || []);
   const [uploading, setUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState<{ [key: string]: number }>({});
+  const [uploadProgress, setUploadProgress] = useState<{
+    [key: string]: number;
+  }>({});
   const [highlightCount, setHighlightCount] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -101,32 +103,64 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
     }
   }, [watchCanDoBulk, setValue]);
 
+  // Watch for changes in set quantities
+  const watchedPriceSets = priceSetFields.map((_, index) => ({
+    quantity: watch(`price_sets.${index}.set_quantity` as const),
+    actualPrice: watch(`price_sets.${index}.actual_price` as const),
+    discountedPrice: watch(`price_sets.${index}.discounted_price` as const),
+  }));
+
   useEffect(() => {
-    // Auto-update set prices when actual price changes
+    // Auto-update set prices when actual price OR set quantity changes
     if (watchActualPrice > 0 && priceSetFields.length > 0) {
       priceSetFields.forEach((_field, index) => {
         const setQuantity = watch(`price_sets.${index}.set_quantity` as const);
-        if (setQuantity) {
-          // Auto-calculate actual price for set
-          const newActualPrice = watchActualPrice * setQuantity;
-          setValue(`price_sets.${index}.actual_price` as const, newActualPrice);
 
-          // Keep discounted price proportional or suggest a discount
-          const currentDiscounted = watch(
+        if (setQuantity && setQuantity > 0) {
+          // Calculate actual price for set based on quantity
+          const newActualPrice = watchActualPrice * setQuantity;
+
+          // Only update if value changed
+          const currentActualPrice = watch(
+            `price_sets.${index}.actual_price` as const
+          );
+          if (currentActualPrice !== newActualPrice) {
+            setValue(
+              `price_sets.${index}.actual_price` as const,
+              newActualPrice
+            );
+          }
+
+          // Calculate proportional discounted price
+          // Maintain the same discount percentage as the single product
+          const singleItemDiscount =
+            watchActualPrice > 0
+              ? (watchActualPrice - watchDiscountedPrice) / watchActualPrice
+              : 0;
+
+          const newDiscountedPrice = Math.round(
+            newActualPrice * (1 - singleItemDiscount)
+          );
+
+          // Update discounted price
+          const currentDiscountedPrice = watch(
             `price_sets.${index}.discounted_price` as const
           );
-          if (!currentDiscounted || currentDiscounted >= newActualPrice) {
-            // Suggest 10-15% discount for sets
-            const suggestedDiscount = Math.round(newActualPrice * 0.85); // 15% discount
+          if (currentDiscountedPrice !== newDiscountedPrice) {
             setValue(
               `price_sets.${index}.discounted_price` as const,
-              suggestedDiscount
+              newDiscountedPrice
             );
           }
         }
       });
     }
-  }, [watchActualPrice, priceSetFields, setValue, watch]);
+  }, [
+    watchActualPrice,
+    watchDiscountedPrice,
+    priceSetFields.length,
+    ...watchedPriceSets.map((ps) => ps.quantity), // Watch quantity changes
+  ]);
 
   // Update the addPriceSet function:
 
@@ -173,18 +207,18 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
 
   const removeImage = async (indexToRemove: number) => {
     const imageToRemove = images[indexToRemove];
-    
+
     // Delete from Supabase Storage
     try {
       await imageUploadService.deleteImage(imageToRemove);
-      
+
       // Remove from local state
-      setImages(prev => prev.filter((_, index) => index !== indexToRemove));
-      
-      toast.success('Image removed successfully');
+      setImages((prev) => prev.filter((_, index) => index !== indexToRemove));
+
+      toast.success("Image removed successfully");
     } catch (error: any) {
-      console.error('Error removing image:', error);
-      toast.error('Failed to remove image');
+      console.error("Error removing image:", error);
+      toast.error("Failed to remove image");
     }
   };
 
@@ -540,6 +574,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
                       label="Actual Price (₹)"
                       type="number"
                       step="0.01"
+                      disabled={true}
                       {...register(
                         `price_sets.${index}.actual_price` as const,
                         {
@@ -736,7 +771,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
           {/* Image Upload Section */}
           <div className="product-form__section">
             <h3 className="product-form__section-title">Product Images</h3>
-            
+
             <div className="image-upload">
               <input
                 type="file"
@@ -745,7 +780,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
                 accept="image/*"
                 multiple
                 className="image-upload__input"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
               <Button
                 type="button"
@@ -753,27 +788,30 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
                 variant="secondary"
                 disabled={uploading}
               >
-                {uploading ? 'Uploading...' : 'Add Images'}
+                {uploading ? "Uploading..." : "Add Images"}
               </Button>
               <p className="image-upload__hint">
-                Upload multiple images. First image will be the main product image.
+                Upload multiple images. First image will be the main product
+                image.
               </p>
-              
+
               {/* Upload Progress */}
               {uploading && Object.keys(uploadProgress).length > 0 && (
                 <div className="upload-progress">
-                  {Object.entries(uploadProgress).map(([fileName, progress]) => (
-                    <div key={fileName} className="upload-progress__item">
-                      <span>{fileName}</span>
-                      <div className="progress-bar">
-                        <div 
-                          className="progress-bar__fill" 
-                          style={{ width: `${progress}%` }}
-                        />
+                  {Object.entries(uploadProgress).map(
+                    ([fileName, progress]) => (
+                      <div key={fileName} className="upload-progress__item">
+                        <span>{fileName}</span>
+                        <div className="progress-bar">
+                          <div
+                            className="progress-bar__fill"
+                            style={{ width: `${progress}%` }}
+                          />
+                        </div>
+                        <span>{progress}%</span>
                       </div>
-                      <span>{progress}%</span>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               )}
             </div>
@@ -799,7 +837,9 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
                         ×
                       </button>
                       {index === 0 && (
-                        <span className="image-preview__main-badge">Main Image</span>
+                        <span className="image-preview__main-badge">
+                          Main Image
+                        </span>
                       )}
                     </div>
                   ))}
