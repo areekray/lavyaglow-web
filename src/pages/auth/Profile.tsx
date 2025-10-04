@@ -7,17 +7,22 @@ import {
   UserIcon, 
   ClipboardDocumentListIcon, 
   MapPinIcon,
-  EyeIcon,
   PencilIcon,
   TrashIcon,
   PlusIcon,
   XMarkIcon,
-  CalendarIcon,
-  CurrencyRupeeIcon,
-  ShoppingBagIcon
+  ShoppingBagIcon,
+  TruckIcon,
+  CheckCircleIcon,
+  ClockIcon,
+  ArrowRightIcon
 } from '@heroicons/react/24/outline';
 import toast from 'react-hot-toast';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import type { Order, DatabaseOrderItem } from '@/types';
+
+dayjs.extend(relativeTime);
 
 interface UserAddress {
   id: string;
@@ -43,7 +48,7 @@ interface ProfileOrder extends Order {
 export function Profile() {
   const navigate = useNavigate();
   const { user, updateProfile, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'addresses'>('profile');
+  const [activeTab, setActiveTab] = useState<'orders' | 'addresses' | 'profile'>('orders'); // Orders first!
 
   // Profile state
   const [profileData, setProfileData] = useState({
@@ -108,7 +113,6 @@ export function Profile() {
 
       if (error) throw error;
 
-      // Transform to match your Order type
       const transformedOrders: ProfileOrder[] = (data || []).map(dbOrder => ({
         id: dbOrder.id,
         user_id: dbOrder.user_id,
@@ -137,8 +141,8 @@ export function Profile() {
         updated_at: dbOrder.updated_at,
         confirmed_at: dbOrder.confirmed_at,
         paid_at: dbOrder.paid_at,
+        estimated_delivery_date: dbOrder.estimated_delivery_date,
         
-        // For compatibility
         shipping_address: {
           full_name: dbOrder.delivery_name,
           phone: dbOrder.delivery_phone,
@@ -150,7 +154,7 @@ export function Profile() {
           country: dbOrder.delivery_country || 'India'
         },
         
-        items: [], // We'll use order_items
+        items: [],
         notes: dbOrder.special_request,
         order_items: dbOrder.order_items
       }));
@@ -210,7 +214,6 @@ export function Profile() {
       setAddressesLoading(true);
 
       if (editingAddress) {
-        // Update existing
         const { error } = await supabase
           .from('user_addresses')
           .update(addressForm)
@@ -219,7 +222,6 @@ export function Profile() {
         if (error) throw error;
         toast.success('Address updated successfully');
       } else {
-        // Create new
         const { error } = await supabase
           .from('user_addresses')
           .insert([{ ...addressForm, user_id: user.id }]);
@@ -282,10 +284,11 @@ export function Profile() {
     }
   }, [activeTab]);
 
+  // Reordered tabs: Orders → Addresses → Profile
   const tabs = [
-    { id: 'profile', label: 'Profile', icon: UserIcon },
-    { id: 'orders', label: 'Orders', icon: ClipboardDocumentListIcon },
-    { id: 'addresses', label: 'Addresses', icon: MapPinIcon }
+    { id: 'orders', label: 'My Orders', icon: ClipboardDocumentListIcon },
+    { id: 'addresses', label: 'Addresses', icon: MapPinIcon },
+    { id: 'profile', label: 'Profile', icon: UserIcon }
   ];
 
   const signOutAsync = async () => {
@@ -295,14 +298,30 @@ export function Profile() {
     } catch (error) {
       console.log('Signed out');
     }
-  }
+  };
+
+  // Helper: Get status icon and color
+  const getStatusIcon = (status: string) => {
+    switch(status) {
+      case 'delivered':
+        return { icon: CheckCircleIcon, color: '#22c55e' };
+      case 'shipped':
+        return { icon: TruckIcon, color: '#8b5cf6' };
+      case 'processing':
+        return { icon: ClockIcon, color: '#3b82f6' };
+      case 'confirmed':
+        return { icon: CheckCircleIcon, color: '#10b981' };
+      default:
+        return { icon: ClockIcon, color: '#f59e0b' };
+    }
+  };
 
   return (
     <div className="profile">
       <div className="profile__container">
         <div className="profile__header">
           <h1>My Account</h1>
-          <p>Manage your profile, orders, and addresses</p>
+          <p>Manage your orders, addresses, and profile</p>
         </div>
 
         {/* Tab Navigation */}
@@ -324,12 +343,208 @@ export function Profile() {
 
         {/* Tab Content */}
         <div className="profile__content">
-          {/* Profile Tab */}
+          {/* Orders Tab - NEW MODERN DESIGN */}
+          {activeTab === 'orders' && (
+  <div className="profile__section">
+    <div className="profile__section-header">
+      <div>
+        <h2>My Orders</h2>
+        <p>Track and manage your orders</p>
+      </div>
+    </div>
+
+    {ordersLoading ? (
+      <div className="profile__loading">
+        <div className="loading__spinner"></div>
+        <p>Loading your orders...</p>
+      </div>
+    ) : orders.length === 0 ? (
+      <div className="profile__empty">
+        <ShoppingBagIcon className="empty-icon" />
+        <h3>No Orders Yet</h3>
+        <p>Start shopping and your orders will appear here</p>
+        <Button onClick={() => navigate('/products')}>
+          Explore Products
+        </Button>
+      </div>
+    ) : (
+      <div className="orders__grid">
+        {orders.map((order) => {
+          const statusInfo = getStatusIcon(order.status);
+          const StatusIcon = statusInfo.icon;
+          // const totalItems = order.order_items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+
+          return (
+            <div 
+              key={order.id} 
+              className="order-card"
+              onClick={() => navigate(`/orders/${order.id}`)}
+            >
+              {/* Header: Status + Date */}
+              <div className="order-card__header">
+                <div 
+                  className="order-card__status" 
+                  style={{ 
+                    backgroundColor: `${statusInfo.color}15`, 
+                    color: statusInfo.color,
+                    borderColor: `${statusInfo.color}40`
+                  }}
+                >
+                  <StatusIcon className="status-icon" />
+                  <span>{order.order_status}</span>
+                </div>
+                <div className="order-card__date">
+                  {dayjs(order.created_at).format('MMM DD')}
+                </div>
+              </div>
+
+              {/* Order Number */}
+              <div className="order-card__number">
+                {order.order_number}
+                {/* Tracking Indicator */}
+                {order.tracking_number && (
+                  <div className="order-card__tracking">
+                    <TruckIcon />
+                  </div>
+                )}
+              </div>
+
+              {/* Items */}
+              <div className="order-card__items">
+                {order.order_items?.slice(0, 2).map((item, idx) => (
+                  <div key={idx} className="order-item">
+                    <div className="order-item__info">
+                      <div className="order-item__name">{item.product_name}</div>
+                      <div className="order-item__meta">
+                        {item.selected_color && <span>{item.selected_color}</span>}
+                        {item.selected_color && <span className="dot">•</span>}
+                        <span>Qty {item.quantity}</span>
+                      </div>
+                    </div>
+                    <div className="order-item__price">
+                      ₹{item.total_price.toLocaleString('en-IN')}
+                    </div>
+                  </div>
+                ))}
+                {(order.order_items?.length || 0) > 2 && (
+                  <div className="order-card__more">
+                    +{(order.order_items?.length || 0) - 2} more item{(order.order_items?.length || 0) - 2 > 1 ? 's' : ''}
+                  </div>
+                )}
+              </div>
+
+              {/* Footer: Total + Arrow */}
+              <div className="order-card__footer">
+                <div className="order-card__total">
+                  <span className="label">Total</span>
+                  <span className="amount">₹{order.total_amount.toLocaleString('en-IN')}</span>
+                </div>
+                <div className="order-card__arrow">
+                  <ArrowRightIcon />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
+)}
+
+          {/* Addresses Tab - KEEP AS IS */}
+          {activeTab === 'addresses' && (
+            <div className="profile__section">
+              <div className="profile__section-header">
+                <div>
+                  <h2>Saved Addresses</h2>
+                  <p>Manage your delivery addresses</p>
+                </div>
+                <Button
+                  onClick={() => {
+                    resetAddressForm();
+                    setEditingAddress(null);
+                    setShowAddressModal(true);
+                  }}
+                  className="profile__add-btn"
+                >
+                  <PlusIcon className="btn-icon" />
+                  Add Address
+                </Button>
+              </div>
+
+              {addressesLoading ? (
+                <div className="profile__loading">
+                  <div className="loading__spinner"></div>
+                  <p>Loading addresses...</p>
+                </div>
+              ) : addresses.length === 0 ? (
+                <div className="profile__empty">
+                  <MapPinIcon className="empty-icon" />
+                  <h3>No Addresses Saved</h3>
+                  <p>Add a delivery address to make checkout faster</p>
+                </div>
+              ) : (
+                <div className="addresses__grid">
+                  {addresses.map((address) => (
+                    <div key={address.id} className="address-card">
+                      <div className="address-card__header">
+                        <div className="address-card__type">
+                          <span className={`address-type address-type--${address.address_type}`}>
+                            {address.address_type}
+                          </span>
+                          {address.is_default && (
+                            <span className="address-default">Default</span>
+                          )}
+                        </div>
+                        <div className="address-card__actions">
+                          <button
+                            onClick={() => {
+                              setEditingAddress(address);
+                              setAddressForm(address);
+                              setShowAddressModal(true);
+                            }}
+                            className="address-action address-action--edit"
+                            title="Edit address"
+                          >
+                            <PencilIcon />
+                          </button>
+                          <button
+                            onClick={() => deleteAddress(address.id)}
+                            className="address-action address-action--delete"
+                            title="Delete address"
+                          >
+                            <TrashIcon />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="address-card__content">
+                        <div className="address-name">
+                          <strong>{address.full_name}</strong>
+                        </div>
+                        <div className="address-details">
+                          {address.company && <div>{address.company}</div>}
+                          <div>{address.address}</div>
+                          {address.apartment && <div>{address.apartment}</div>}
+                          <div>{address.city}, {address.state} {address.zip_code}</div>
+                          <div>📱 {address.phone}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Profile Tab - KEEP AS IS */}
           {activeTab === 'profile' && (
             <div className="profile__section">
               <div className="profile__section-header">
-                <h2>Profile Settings</h2>
-                <p>Update your personal information</p>
+                <div>
+                  <h2>Profile Settings</h2>
+                  <p>Update your personal information</p>
+                </div>
               </div>
               
               <div className="profile__form">
@@ -392,181 +607,6 @@ export function Profile() {
               </div>
             </div>
           )}
-
-          {/* Orders Tab */}
-          {activeTab === 'orders' && (
-            <div className="profile__section">
-              <div className="profile__section-header">
-                <h2>My Orders</h2>
-                <p>View and track your orders</p>
-              </div>
-
-              {ordersLoading ? (
-                <div className="profile__loading">
-                  <div className="loading__spinner"></div>
-                  <p>Loading orders...</p>
-                </div>
-              ) : orders.length === 0 ? (
-                <div className="profile__empty">
-                  <ShoppingBagIcon className="empty-icon" />
-                  <h3>No Orders Yet</h3>
-                  <p>You haven't placed any orders yet.</p>
-                  <Button onClick={() => navigate('/products')}>
-                    Start Shopping
-                  </Button>
-                </div>
-              ) : (
-                <div className="orders__grid">
-                  {orders.map((order) => (
-                    <div key={order.id} className="order-card">
-                      <div className="order-card__header">
-                        <div className="order-card__number">
-                          #{order.order_number}
-                        </div>
-                        <div className="order-card__date">
-                          <CalendarIcon className="date-icon" />
-                          {new Date(order.created_at).toLocaleDateString()}
-                        </div>
-                      </div>
-
-                      <div className="order-card__body">
-                        <div className="order-card__status">
-                          <span className={`status-badge status-badge--${order.status}`}>
-                            {order.status}
-                          </span>
-                          <span className={`status-badge status-badge--${order.payment_status}`}>
-                            {order.payment_status}
-                          </span>
-                        </div>
-
-                        <div className="order-card__details">
-                          <div className="order-detail">
-                            <ShoppingBagIcon className="detail-icon" />
-                            <span>{order.order_items?.length || 0} items</span>
-                          </div>
-                          <div className="order-detail">
-                            <CurrencyRupeeIcon className="detail-icon" />
-                            <span>₹{order.total_amount.toLocaleString()}</span>
-                          </div>
-                        </div>
-
-                        {order.tracking_number && (
-                          <div className="order-card__tracking">
-                            <span>Tracking: {order.tracking_number}</span>
-                            {order.tracking_url && (
-                              <a 
-                                href={order.tracking_url} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="tracking-link"
-                              >
-                                Track Package
-                              </a>
-                            )}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="order-card__footer">
-                        <Button
-                          onClick={() => navigate(`/orders/${order.id}`)}
-                          variant="secondary"
-                          size="sm"
-                        >
-                          <EyeIcon className="btn-icon" />
-                          View Details
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Addresses Tab */}
-          {activeTab === 'addresses' && (
-            <div className="profile__section">
-              <div className="profile__section-header">
-                <h2>Saved Addresses</h2>
-                <p>Manage your delivery addresses</p>
-                <Button
-                  onClick={() => {
-                    resetAddressForm();
-                    setEditingAddress(null);
-                    setShowAddressModal(true);
-                  }}
-                  className="profile__add-btn"
-                >
-                  <PlusIcon className="btn-icon" />
-                  Add Address
-                </Button>
-              </div>
-
-              {addressesLoading ? (
-                <div className="profile__loading">
-                  <div className="loading__spinner"></div>
-                  <p>Loading addresses...</p>
-                </div>
-              ) : addresses.length === 0 ? (
-                <div className="profile__empty">
-                  <MapPinIcon className="empty-icon" />
-                  <h3>No Addresses Saved</h3>
-                  <p>Add a delivery address to make checkout faster.</p>
-                </div>
-              ) : (
-                <div className="addresses__grid">
-                  {addresses.map((address) => (
-                    <div key={address.id} className="address-card">
-                      <div className="address-card__header">
-                        <div className="address-card__type">
-                          <span className={`address-type address-type--${address.address_type}`}>
-                            {address.address_type}
-                          </span>
-                          {address.is_default && (
-                            <span className="address-default">Default</span>
-                          )}
-                        </div>
-                        <div className="address-card__actions">
-                          <button
-                            onClick={() => {
-                              setEditingAddress(address);
-                              setAddressForm(address);
-                              setShowAddressModal(true);
-                            }}
-                            className="address-action address-action--edit"
-                            title="Edit address"
-                          >
-                            <PencilIcon />
-                          </button>
-                          <button
-                            onClick={() => deleteAddress(address.id)}
-                            className="address-action address-action--delete"
-                            title="Delete address"
-                          >
-                            <TrashIcon />
-                          </button>
-                        </div>
-                      </div>
-
-                      <div className="address-card__content">
-                        <div className="address-name">
-                          <strong>{address.full_name}</strong>
-                        </div>
-                        <div className="address-details">
-                          {address.company && <div>{address.company}</div>}
-                          <div>{address.address}</div>
-                          {address.apartment && <div>{address.apartment}</div>}
-                          <div>{address.city}, {address.state} {address.zip_code}</div>
-                          <div>📱 {address.phone}</div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
         </div>
       </div>
 
@@ -589,7 +629,7 @@ export function Profile() {
   );
 }
 
-// Address Modal Component
+// Address Modal Component - KEEP AS IS
 function AddressModal({
   addressForm,
   setAddressForm,
