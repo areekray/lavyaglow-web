@@ -247,7 +247,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
 
           {/* Piece Purchase */}
           {purchaseMode === "piece" && (
-            <div className="purchase-section">
+            <div className="purchase-section" style={!product.price_sets?.length ? { paddingTop: '1.5rem' } : {}}>
               <div className="quantity-input">
                 <label>Number of Pieces:</label>
                 <div className="quantity-controls">

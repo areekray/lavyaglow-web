@@ -2838,6 +2838,7 @@
 
     @include respond-to-max(xs) {
       flex-direction: column;
+      gap: $spacing-lg;
     }
   }
 
