@@ -12,7 +12,7 @@ export default defineConfig({
         name: 'LavyaGlow - Premium Handcrafted Candles',
         short_name: 'LavyaGlow',
         description: 'Premium handcrafted candles from Bangalore with Pan-India delivery',
-        theme_color: '#e8e3d8',
+        theme_color: '#2c1810',
         background_color: '#1a1612',
         display: 'standalone',
         scope: '/',
