@@ -11,8 +11,6 @@ import { AuthModal } from '@/components/ui/AuthModal';
 import { Home } from '@/pages/shop/Home';
 import { Products } from '@/pages/shop/Products';
 import { Cart } from '@/pages/shop/Cart';
-import { Login } from '@/pages/auth/Login';
-import { Register } from '@/pages/auth/Register';
 import { Profile } from '@/pages/auth/Profile';
 import { AdminPage } from '@/pages/admin/AdminPage';
 import { ProductDetail } from './pages/shop/ProductDetail';
