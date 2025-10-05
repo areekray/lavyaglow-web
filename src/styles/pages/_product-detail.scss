@@ -43,7 +43,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr auto;
     gap: $spacing-3xl;
-    margin-bottom: $spacing-3xl;
+    margin-bottom: $spacing-lg;
     
     @include respond-to-max(lg) {
       grid-template-columns: 1fr;

@@ -9,6 +9,7 @@ import { ImageWithPlaceholder } from "@/components/ui/ImageWithPlaceholder";
 import { ImagePreviewer } from "@/components/layout/ImagePreviewer";
 import { AnnouncementMarquee } from "@/components/layout/AnnouncementMarquee";
 import { useSEO } from "@/hooks/useSEO";
+import { SocialMediaEmbed } from "@/components/SocialMediaEmbed";
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -419,6 +420,8 @@ export function ProductDetail() {
               </div>
             </div>
           </div>
+          
+            {product.instagram_media_id && <SocialMediaEmbed title="Check this candle in Instagram" url={product.instagram_media_id}/>}
           {product.description && (
             <div className="product-info__description mobile-view">
               <h3>About this candle</h3>
@@ -459,6 +462,7 @@ export function ProductDetail() {
                     </>
                   )}
                 </dl>
+                
               </div>
             )}
           {/* Back Button */}

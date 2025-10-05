@@ -929,9 +929,7 @@
 }
 
 // Payment Actions
-.payment-actions {
-  margin-top: $spacing-xl;
-  
+.payment-actions {  
   .pay-now-btn {
     @include flex-center;
     gap: $spacing-sm;

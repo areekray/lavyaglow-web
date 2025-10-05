@@ -30,8 +30,8 @@ export default function RazorpayWidget({ paymentMode }: {paymentMode : boolean})
       <div style={{ display: "flex", alignItems: "center", minWidth: 0 }}>
         <ShieldCheckIcon style={{ width: "40px", height: "40px", color: "#0f9d58" }} />
         <div style={{ marginLeft: "0.5rem" }}>
-          <img style={{ width: "150px" }} src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/Razorpay_logo.svg" alt="Razor Pay" />
-          <div style={{ fontSize: "0.9rem", fontWeight: 500, color: "#2563eb" }}>{paymentMode ? 'TRUSTED BUSINESS' : 'SECURED PAYMENTS'}</div>
+          <img style={{ width: "140px" }} src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/Razorpay_logo.svg" alt="Razor Pay" />
+          <div style={{ fontSize: "0.75rem", fontWeight: 500, color: "#3395ff" }}>{paymentMode ? 'TRUSTED BUSINESS' : 'SECURED PAYMENTS'}</div>
         </div>
       </div>
 
@@ -41,36 +41,35 @@ export default function RazorpayWidget({ paymentMode }: {paymentMode : boolean})
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, minmax(120px, 1fr))",
-          gap: "1.25rem",
           flex: "1 1 420px",
         }}
       >
         {/* Cards */}
         <div className="payment-item" style={{ textAlign: "center" }}>
-          <CreditCardIcon style={{ width: "28px", height: "28px", color: "#2563eb" }} />
-          <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#111827" }}>Cards</div>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>Visa, Mastercard, etc</div>
+          <CreditCardIcon style={{ width: "25px", height: "25px", color: "#2563eb" }} />
+          <div style={{ fontSize: "0.75rem", fontWeight: 500, color: "#111827" }}>Cards</div>
+          <div style={{ fontSize: "0.6rem", color: "#6b7280" }}>Visa, Mastercard, etc</div>
         </div>
 
         {/* UPI */}
         <div className="payment-item" style={{ textAlign: "center" }}>
-          <QrCodeIcon style={{ width: "28px", height: "28px", color: "#2563eb" }} />
-          <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#111827" }}>UPI</div>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>GPay, PhonePe, etc</div>
+          <QrCodeIcon style={{ width: "25px", height: "25px", color: "#2563eb" }} />
+          <div style={{ fontSize: "0.75rem", fontWeight: 500, color: "#111827" }}>UPI</div>
+          <div style={{ fontSize: "0.6rem", color: "#6b7280" }}>GPay, PhonePe, etc</div>
         </div>
 
         {/* Netbanking */}
         <div className="payment-item" style={{ textAlign: "center" }}>
-          <BanknotesIcon style={{ width: "28px", height: "28px", color: "#2563eb" }} />
-          <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#111827" }}>Netbanking</div>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>All major banks</div>
+          <BanknotesIcon style={{ width: "25px", height: "25px", color: "#2563eb" }} />
+          <div style={{ fontSize: "0.75rem", fontWeight: 500, color: "#111827" }}>Netbanking</div>
+          <div style={{ fontSize: "0.6rem", color: "#6b7280" }}>All major banks</div>
         </div>
 
         {/* Wallets */}
         <div className="payment-item" style={{ textAlign: "center" }}>
-          <WalletIcon style={{ width: "28px", height: "28px", color: "#2563eb" }} />
-          <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#111827" }}>Wallets</div>
-          <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>MobiKwik, Airtel, etc</div>
+          <WalletIcon style={{ width: "25px", height: "25px", color: "#2563eb" }} />
+          <div style={{ fontSize: "0.75rem", fontWeight: 500, color: "#111827" }}>Wallets</div>
+          <div style={{ fontSize: "0.6rem", color: "#6b7280" }}>MobiKwik, Airtel, etc</div>
         </div>
       </div>)}
 

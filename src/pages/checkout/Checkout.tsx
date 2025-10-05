@@ -136,10 +136,12 @@ export function Checkout() {
     if (isValid) {
       setCompletedSteps(prev => [...prev.filter(step => step !== currentStep), currentStep]);
       setCurrentStep(prev => Math.min(prev + 1, STEPS.length - 1));
-      const stepper = document.getElementById('checkout-stepper');
-      if (stepper) {
-        stepper.scrollIntoView({ behavior: "smooth" });
-      }
+      setTimeout(() => {
+        const stepper = document.getElementById('checkout-stepper');
+        if (stepper) {
+          stepper.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 500);
     } else {
       toast.error('Please fill in all required fields correctly');
     }
@@ -147,10 +149,12 @@ export function Checkout() {
 
   const handleBack = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
-    const stepper = document.getElementById('checkout-stepper');
-    if (stepper) {
-      stepper.scrollIntoView({ behavior: "smooth" });
-    }
+    setTimeout(() => {
+      const stepper = document.getElementById('checkout-stepper');
+      if (stepper) {
+        stepper.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 500);
   };
 
   const handleStepClick = (stepIndex: number) => {

@@ -1,0 +1,159 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.instagram-post-embed {
+  padding: $spacing-lg 0;
+  
+  @media (min-width: 768px) {
+    padding: $spacing-lg 0;
+  }
+  
+  // Header
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+    position: relative;
+    
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: $luxury-text;
+      margin-bottom: $spacing-sm;
+      
+      @media (min-width: 768px) {
+        font-size: 24px;
+      }
+    }
+  }
+  
+  &__decoration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-xs;
+    
+    &::before,
+    &::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba($primary-color, 0.5)
+      );
+      
+      @media (min-width: 768px) {
+        width: 60px;
+      }
+    }
+    
+    &::after {
+      background: linear-gradient(
+        to left,
+        transparent,
+        rgba($primary-color, 0.5)
+      );
+    }
+  }
+  
+  .instagram-icon {
+    width: 20px;
+    height: 20px;
+    color: $primary-color;
+    
+    @media (min-width: 768px) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+  
+  // Embed Wrapper
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    min-height: 400px;
+    
+    @media (min-width: 768px) {
+      padding: 0 $spacing-xl;
+    }
+    
+    // Style the embedded iframe container
+    > div {
+      max-width: 100%;
+      width: 100% !important;
+      
+      @media (min-width: 480px) {
+        width: 400px !important;
+      }
+      
+      @media (min-width: 768px) {
+        width: 500px !important;
+      }
+    }
+    
+    // Add subtle border and shadow to iframe
+    iframe {
+      border: 2px solid rgba($primary-color, 0.15) !important;
+      border-radius: $border-radius-lg !important;
+      box-shadow: 0 8px 24px rgba($primary-color, 0.1) !important;
+      background: $dark-secondary !important;
+      
+      @media (min-width: 768px) {
+        border-width: 3px !important;
+      }
+    }
+  }
+  
+  // Footer Link
+  &__footer {
+    text-align: center;
+    margin-top: $spacing-lg;
+    
+    @media (min-width: 768px) {
+      margin-top: $spacing-xl;
+    }
+  }
+  
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-lg;
+    background: rgba($primary-color, 0.1);
+    color: $primary-color;
+    text-decoration: none;
+    border-radius: $border-radius-md;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba($primary-color, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($primary-color, 0.2);
+    }
+    
+    @media (min-width: 768px) {
+      font-size: 14px;
+      padding: $spacing-md $spacing-xl;
+    }
+  }
+}
+
+// Loading animation for Instagram embed
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Add loading state styling if needed
+.instagram-post-embed__wrapper {
+  &[data-loading="true"] {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
