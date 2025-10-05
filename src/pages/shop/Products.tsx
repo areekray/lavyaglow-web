@@ -11,6 +11,7 @@ import {
   AdjustmentsHorizontalIcon,
 } from '@heroicons/react/24/outline';
 import { ProductCard } from '@/components/ui/ProductCard';
+import { useSEO } from '@/hooks/useSEO';
 
 export function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -20,7 +21,13 @@ export function Products() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState<boolean>(false);
-
+  useSEO({
+    title: 'Shop Handcrafted Candles Online - LavyaGlow',
+    description: 'Browse our collection of premium handcrafted scented candles. 20+ unique fragrances, 100% soy wax, made in Bangalore. Free shipping available.',
+    keywords: 'shop candles, buy candles online, scented candles collection, handmade candles',
+    url: 'https://lavyaglow.com/products',
+    canonical: 'https://lavyaglow.com/products'
+  });
   useEffect(() => {
     loadProducts();
   }, []);

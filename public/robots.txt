@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Allow: /products
+Allow: /products/*
+Allow: /about
+Allow: /contact
+Allow: /policies
+
+Disallow: /admin
+Disallow: /auth
+Disallow: /checkout
+Disallow: /profile
+Disallow: /orders/*
+
+Sitemap: https://lavyaglow.com/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /

@@ -5,6 +5,7 @@ import { productService } from '@/services/productService';
 import type { Product } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { HeroCarousel } from '@/components/features/HeroCarousel';
+import { useSEO } from '@/hooks/useSEO';
 
 export function Home() {
   const [curatedProducts, setCuratedProducts] = useState<Product[]>([]);
@@ -13,6 +14,14 @@ export function Home() {
   useEffect(() => {
     loadCuratedCollection();
   }, []);
+
+  useSEO({
+    title: 'LavyaGlow - Premium Handcrafted Scented Candles | Buy Online',
+    description: 'Shop premium handcrafted scented candles in India. 100% soy wax, 20+ fragrances. Made in Bangalore. Free shipping on orders above ₹999. Order now!',
+    keywords: 'buy candles online, scented candles India, handcrafted candles Bangalore, soy wax candles',
+    url: 'https://lavyaglow.com/',
+    canonical: 'https://lavyaglow.com/'
+  });
 
   const loadCuratedCollection = async () => {
     try {
@@ -26,7 +35,7 @@ export function Home() {
   };
 
   return (
-    <div className="home">
+    <main className="home">
       <section className="hero-luxury">
         <HeroCarousel />
         
@@ -182,6 +191,6 @@ export function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
