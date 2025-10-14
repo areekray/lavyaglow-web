@@ -10,6 +10,7 @@ import { ImagePreviewer } from "@/components/layout/ImagePreviewer";
 import { AnnouncementMarquee } from "@/components/layout/AnnouncementMarquee";
 import { useSEO } from "@/hooks/useSEO";
 import { SocialMediaEmbed } from "@/components/SocialMediaEmbed";
+import { analytics } from "@/utils/analytics";
 
 export function ProductDetail() {
   const { id } = useParams<{ id: string }>();
@@ -59,6 +60,7 @@ export function ProductDetail() {
     if (!product) {
       return;
     }
+    analytics.viewProduct(product);
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.innerHTML = JSON.stringify({
