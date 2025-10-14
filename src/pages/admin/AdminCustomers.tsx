@@ -60,6 +60,18 @@ export function AdminCustomers() {
       </div>
       
       <div className="user-card__details">
+        {user.full_name && (
+          <div className="user-card__detail">
+            <span className="user-card__label">Name:</span>
+            <span className="user-card__value">{user.full_name}</span>
+          </div>
+        )}
+        {user.email && (
+          <div className="user-card__detail">
+            <span className="user-card__label">Email:</span>
+            <span className="user-card__value">{user.email}</span>
+          </div>
+        )}
         {user.phone && (
           <div className="user-card__detail">
             <span className="user-card__label">Phone:</span>
