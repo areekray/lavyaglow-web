@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { DeliveryAddress } from '@/components/checkout/DeliveryAddress';
 import { BillingAddress } from '@/components/checkout/BillingAddress';
 import { Payment } from '@/components/checkout/Payment';
+import { analytics } from '@/utils/analytics';
 
 export interface CheckoutFormData {
   // Delivery Address
@@ -86,7 +87,9 @@ export function Checkout() {
   useEffect(() => {
     if (!user) {
       navigate('/cart');
+      return;
     }
+    analytics.beginCheckout(cartState.totalPrice, cartState.items);
   }, [user, openLogin]);
 
   // Redirect to cart if no items

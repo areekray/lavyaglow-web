@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { ColorSelector } from '../features/ColorSelector';
 import { stringToArray } from '@/constants/productOptions';
 import { useNavigate } from 'react-router-dom';
+import { analytics } from '@/utils/analytics';
 
 interface ProductPurchaseOptionsProps {
   product: Product;
@@ -133,6 +134,18 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
         breakdown,
         selectedColor: selectedColor as string
       });
+
+      analytics.addToCart({
+        product,
+        quantity: purchaseMode === 'piece' ? pieceQuantity : setsCount,
+        purchaseType: purchaseMode,
+        setId: purchaseMode === 'set' ? selectedSet : undefined,
+        breakdown,
+        selectedColor: selectedColor as string,
+        addedAt: '',
+        id: 'xxx'
+      });
+
       setAddedToCart(true);
       // Success message
       const itemDescription = purchaseMode === 'set' 
