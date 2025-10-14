@@ -12,6 +12,7 @@ export function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = 'LavyaGlow - Premium Handcrafted Scented Candles | Pan India Delivery';
     loadCuratedCollection();
   }, []);
 

@@ -282,6 +282,7 @@ export function Profile() {
     } else if (activeTab === 'addresses' && addresses.length === 0) {
       fetchAddresses();
     }
+    document.title = 'LavyaGlow - Profile - ' + activeTab.charAt(0).toUpperCase() + activeTab.slice(1);
   }, [activeTab]);
 
   // Reordered tabs: Orders → Addresses → Profile

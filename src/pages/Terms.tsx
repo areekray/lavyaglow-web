@@ -1,5 +1,9 @@
+import { useEffect } from "react";
 
 export default function Terms() {
+  useEffect(() => {
+    document.title = 'LavyaGlow - Terms & Conditions';
+  }, []);
 
   return (
     <main className="policy-page">

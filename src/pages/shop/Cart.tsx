@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 // import { priceOptimizer } from "@/utils/priceOptimizer";
@@ -23,6 +23,11 @@ export function Cart() {
   const { user } = useAuth();
   const { openLogin } = useAuthModal();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'LavyGlow - Cart';
+  }, [])
+
   const handleProceedToCheckout = () => {
     if (!user) {
       openLogin({

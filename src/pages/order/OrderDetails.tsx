@@ -152,7 +152,7 @@ export function OrderDetails() {
         navigate("/profile");
         return;
       }
-
+      document.title = 'LavyaGlow - Order Details - ' + data.order_number;
       const transformedOrder: DetailedOrder = {
         id: data.id,
         user_id: data.user_id,
@@ -211,6 +211,7 @@ export function OrderDetails() {
 
   useEffect(() => {
     fetchOrderDetails();
+    document.title = 'LavyaGlow - Order Details';
   }, [orderId, user]);
 
   if (!user) {

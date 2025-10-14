@@ -13,6 +13,7 @@ export function AdminPage() {
   useEffect(() => {
     if (preselectedTab && ['products', 'customers', 'orders'].includes(preselectedTab)) {
       setActiveTab(preselectedTab as 'products' | 'customers' | 'orders');
+      document.title = 'LavyaGlow Admin - ' + preselectedTab.charAt(0).toUpperCase() + preselectedTab.slice(1);
     }
   }, [preselectedTab]);
   return (

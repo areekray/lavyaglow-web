@@ -30,6 +30,7 @@ export function Products() {
   });
   useEffect(() => {
     loadProducts();
+    document.title = 'All Products - LavyaGlow';
   }, []);
 
   useEffect(() => {

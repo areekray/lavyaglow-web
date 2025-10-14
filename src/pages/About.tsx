@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function About() {
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = 'LavyaGlow - Our Story';
+  }, []);
   return (
     <main className="about-page">
       {/* Header */}

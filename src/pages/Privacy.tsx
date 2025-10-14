@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 export default function Privacy() {
+  useEffect(() => {
+    document.title = 'LavyaGlow - Privacy Policy';
+  }, []);
 
   return (
     <main className="policy-page">

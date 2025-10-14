@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 export default function Contact() {
+  useEffect(() => {
+    document.title = 'LavyaGlow - Contact Us';
+  }, []);
 
   return (
     <main className="contact-page">

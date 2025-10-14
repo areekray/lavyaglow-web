@@ -37,7 +37,7 @@ export function ProductDetail() {
         setError("Product not found");
         return;
       }
-
+      document.title = `${data?.name} - LavyGlow Product`;
       setProduct(data);
     } catch (err) {
       setError("Failed to load product. Please try again later.");

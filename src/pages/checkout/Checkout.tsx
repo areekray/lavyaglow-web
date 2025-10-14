@@ -97,6 +97,7 @@ export function Checkout() {
     if (!cartState.items.length) {
       navigate('/cart');
     }
+    document.title = 'LavyaGlow - Checkout';
   }, [cartState.items, navigate]);
 
   const validateStep = async (stepIndex: number): Promise<boolean> => {

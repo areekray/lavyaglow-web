@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 export default function FAQ() {
+  useEffect(() => {
+    document.title = 'LavyaGlow - FAQs';
+  }, []);
 
   return (
     <main className="faq-page">
