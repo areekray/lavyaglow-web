@@ -201,7 +201,13 @@ export function Header() {
 
         <nav className="header-luxury__mobile-menu-content">
           <div className="header-luxury__mobile-menu-header">
-            {/* <h2 className="header-luxury__mobile-menu-title">Menu</h2> */}
+            <div className="header-luxury__logo-container">
+              <img
+                src="/pwa-512x512.png"
+                alt="LavyaGlow Logo"
+                className="header-luxury__logo-icon"
+              />
+            </div>
             <button
               className="header-luxury__mobile-menu-close"
               onClick={toggleMobileMenu}

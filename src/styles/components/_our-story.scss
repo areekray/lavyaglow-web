@@ -50,6 +50,9 @@
     gap: $spacing-3xl;
     align-items: start;
     
+    .btn--lg {
+      margin-top: $spacing-xl;
+    }
     @include respond-to-max(lg) {
       grid-template-columns: 320px 1fr;
       gap: $spacing-2xl;
@@ -138,7 +141,6 @@
     background: $dark-bg;
     border-left: 4px solid $primary-color;
     border-radius: $border-radius-lg;
-    
     @include respond-to-max(sm) {
       padding: $spacing-lg;
     }
