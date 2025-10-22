@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { CartIcon } from './CartIcon';
 import { useAuthModal } from '@/contexts/AuthModalContext';
-import { ArrowLeftIcon, ArrowRightEndOnRectangleIcon, Bars3Icon, DevicePhoneMobileIcon, UserIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, ArrowRightEndOnRectangleIcon, Bars3Icon, DevicePhoneMobileIcon, UserIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { InstallPwaModal } from '@/components/pwa/InstallPwaModal';
 import { isStandalone, useInstalledState } from '@/utils/detectPlatform';
 
@@ -201,13 +201,13 @@ export function Header() {
 
         <nav className="header-luxury__mobile-menu-content">
           <div className="header-luxury__mobile-menu-header">
-            <h2 className="header-luxury__mobile-menu-title">Menu</h2>
+            {/* <h2 className="header-luxury__mobile-menu-title">Menu</h2> */}
             <button
               className="header-luxury__mobile-menu-close"
               onClick={toggleMobileMenu}
               aria-label="Close mobile menu"
             >
-              <span>×</span>
+              <XMarkIcon style={{ height: '2rem', width: '2rem' }} />
             </button>
           </div>
 
@@ -259,14 +259,8 @@ export function Header() {
                   className="header-luxury__mobile-link"
                   onClick={handleLinkClick}
                 >
-                  Profile
+                  Profile {(isAdmin ? '(Admin)' : isStaff ? '(Staff)' : '')}
                 </Link>
-
-                {(isAdmin || isStaff) && (
-                  <div className="header-luxury__mobile-role-badge">
-                    {isAdmin ? "Admin" : "Staff"}
-                  </div>
-                )}
 
                 <button
                   onClick={handleSignOut}
@@ -284,6 +278,37 @@ export function Header() {
               </button>
             )}
           </div>
+          <div className="header-luxury__mobile-menu-contact">
+            <a
+              className="btn btn--luxury btn--lg"
+              href="https://wa.me/+919036758208?text=Hi%20LavyaGlow%20Team%20(from%20App)"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img style={{marginRight: '0.5rem'}}
+                src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/WhatsApp.svg"
+                alt="WhatsApp"
+                className="contact-page__icon"
+                loading="lazy"
+              />
+              WhatsApp
+            </a>
+
+            <a
+              className="btn btn--luxury btn--lg"
+              href="https://instagram.com/lavyaglow"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img style={{marginRight: '0.5rem'}}
+                src="https://fajpirmuqtbewsebwkhv.supabase.co/storage/v1/object/public/misc/Instagram_logo.svg"
+                alt="Instagram"
+                className="contact-page__icon"
+                loading="lazy"
+              />
+              Instagram
+            </a>
+        </div>
         </nav>
       </div>
       

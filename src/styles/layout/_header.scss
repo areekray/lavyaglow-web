@@ -251,6 +251,25 @@
     }
   }
 
+  &__mobile-menu-contact {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;    
+    padding: $spacing-lg;
+    gap: $spacing-lg;
+    @include respond-to-max(sm) {
+      padding: $spacing-md;
+      gap: $spacing-md;
+    }
+    .btn--lg {  
+      padding: $spacing-lg;
+      @include respond-to-max(sm) {
+        padding: $spacing-md;
+      }
+      font-size: 0.5rem;
+    }
+  }
+
   &__mobile-menu-overlay {
     position: absolute;
     top: 0;
@@ -274,6 +293,8 @@
     transform: translateX(-100%);
     transition: transform $transition-normal;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
     
     @include respond-to-max(sm) {
       width: 280px;
@@ -282,8 +303,13 @@
 
   &__mobile-menu-header {
     @include flex-between;
-    padding: $spacing-xl;
     border-bottom: 1px solid $dark-tertiary;
+    height: 65px;
+    padding: 0 $spacing-lg;
+    
+    @include respond-to-max(sm) {
+      padding: 0 $spacing-md;
+    }
   }
 
   &__mobile-menu-title {
@@ -302,36 +328,42 @@
     cursor: pointer;
     padding: $spacing-sm;
     transition: color $transition-normal;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &:hover {
       color: $primary-color;
     }
   }
 
   &__mobile-menu-links {
-    padding: $spacing-xl 0;
+    padding: 0;
   }
 
   &__mobile-link {
     display: block;
-    padding: $spacing-lg $spacing-xl;
     color: $luxury-text;
     font-size: $font-size-base;
     font-weight: $font-weight-normal;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     transition: all $transition-normal;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid $dark-tertiary;
+    
+    padding: $spacing-lg;
     
     &:hover {
       color: $primary-color;
       background-color: rgba($primary-color, 0.1);
       border-bottom-color: $primary-color;
     }
+    @include respond-to-max(sm) {
+      padding: $spacing-md;
+      color: $primary-color;
+    }
 
     &--button {
-      background: none;
-      border: none;
+      // border: none;
       cursor: pointer;
       font-family: inherit;
       font-size: inherit;
