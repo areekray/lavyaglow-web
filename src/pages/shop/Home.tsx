@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ProductCard } from "@/components/features/ProductCard";
-import { productService } from "@/services/productService";
-import type { Product } from "@/types";
+import { useEffect } from "react";
+// import { productService } from "@/services/productService";
+// import type { Product } from "@/types";
 import { Button } from "@/components/ui/Button";
 import { HeroCarousel } from "@/components/features/HeroCarousel";
 import { useSEO } from "@/hooks/useSEO";
@@ -11,13 +9,13 @@ import { ArrowDownIcon } from "@heroicons/react/24/outline";
 import { OurStory } from "@/components/shop/OurStory";
 
 export function Home() {
-  const [curatedProducts, setCuratedProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [curatedProducts, setCuratedProducts] = useState<Product[]>([]);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     document.title =
       "LavyaGlow - Premium Handcrafted Scented Candles | Pan India Delivery";
-    loadCuratedCollection();
+    // loadCuratedCollection();
   }, []);
 
   useSEO({
@@ -30,16 +28,16 @@ export function Home() {
     canonical: "https://lavyaglow.com/",
   });
 
-  const loadCuratedCollection = async () => {
-    try {
-      const products = await productService.getHighlightedProducts();
-      setCuratedProducts(products);
-    } catch (error) {
-      console.error("Failed to load curated collection:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const loadCuratedCollection = async () => {
+  //   try {
+  //     const products = await productService.getHighlightedProducts();
+  //     setCuratedProducts(products);
+  //   } catch (error) {
+  //     console.error("Failed to load curated collection:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <main className="home">
