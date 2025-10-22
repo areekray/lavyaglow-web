@@ -290,7 +290,7 @@ export function ProductDetail() {
                   )}
                 </div>
                 <small className="text-muted">
-                  *No additional shipping cost
+                  🚚 No additional shipping cost
                 </small>
               </div>
 

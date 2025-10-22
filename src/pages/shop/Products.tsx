@@ -133,7 +133,7 @@ export function Products() {
             />
           </div>
         )}
-
+<small className="text-muted explore-products-shipping-cost">🚚 No additional shipping cost on any purchase</small>
         {/* Content */}
         <section className="products-page__content">
           {loading ? (

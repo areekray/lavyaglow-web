@@ -261,7 +261,7 @@ export function Home() {
               <h4>Pan-India Delivery</h4>
               <p>
                 Carefully packaged and delivered across India, dispatched within
-                1-2 days.
+                1-2 days with trusted and reliable courier partners.
               </p>
             </div>
 
@@ -270,7 +270,7 @@ export function Home() {
               <h4>Bulk Orders</h4>
               <p>
                 Special pricing and bespoke packaging for events, hotels, and
-                corporate clients.
+                corporate clients. Contact via WhatsApp or Instagram.
               </p>
             </div>
           </div>
