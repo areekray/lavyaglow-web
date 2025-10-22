@@ -62,9 +62,9 @@ export function OrderDetails() {
     const today = dayjs();
     const daysElapsed = today.diff(confirmedDate, "day");
 
-    // Expected dispatch window: 3-4 days
-    const dispatchStart = confirmedDate.add(3, "day");
-    const dispatchEnd = confirmedDate.add(4, "day");
+    // Expected dispatch window: 1-2 days
+    const dispatchStart = confirmedDate.add(1, "day");
+    const dispatchEnd = confirmedDate.add(2, "day");
 
     // Day 0 (same day as order): "Order will be dispatched by 5th-6th October"
     if (daysElapsed === 0) {

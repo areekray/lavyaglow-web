@@ -55,17 +55,21 @@
     border-radius: $border-radius-xl;
     
     @include respond-to-max(sm) {
-      margin-bottom: $spacing-lg;
-      padding: $spacing-lg;
+      margin-bottom: $spacing-md;
+      padding: $spacing-md;
+      grid-template-columns: auto 56px;
     }
   }
   
   &__results-info {
+    height: 100%;
+    display: flex;
+    align-items: center;
     justify-self: end;
     color: $luxury-text-muted;
     font-size: $font-size-sm;
     
-    @include respond-to-max(md) {
+    @include respond-to-max(sm) {
       justify-self: center;
       display: none
     }

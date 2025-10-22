@@ -32,7 +32,7 @@ export default function FAQ() {
           <article className="faq-page__card">
             <h2 className="faq-page__q">How long before my order is dispatched?</h2>
             <p className="faq-page__a">
-              Orders typically take 3-4 days to dispatch. Each candle is checked and packed securely to arrive safely and beautifully.
+              Orders typically take 1-2 days to dispatch. Each candle is checked and packed securely to arrive safely and beautifully.
             </p>
           </article>
 

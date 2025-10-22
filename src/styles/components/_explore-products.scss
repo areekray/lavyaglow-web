@@ -1,0 +1,317 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.explore-products {
+  background-color: $dark-bg;
+  padding: $spacing-5xl 0;
+
+  @include respond-to-max(sm) { padding: $spacing-3xl 0; }
+
+  // Header styling matching curated products
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-2xl;
+    
+    @include respond-to-max(sm) {
+      margin-bottom: $spacing-xl;
+    }
+  }
+
+  &__title {
+    font-family: $font-family-heading;
+    font-size: $font-size-4xl;
+    color: $luxury-text;
+    margin-bottom: $spacing-md;
+    
+    @include respond-to-max(md) {
+      font-size: $font-size-3xl;
+    }
+    
+    @include respond-to-max(sm) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  &__subtitle {
+    color: $luxury-text-secondary;
+    font-size: $font-size-lg;
+    max-width: 600px;
+    margin: 0 auto;
+    
+    @include respond-to-max(sm) {
+      font-size: $font-size-base;
+    }
+  }
+
+  &__tabs {
+    margin-bottom: $spacing-2xl;
+    overflow: hidden;
+    
+    @include respond-to-max(sm) {
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  &__loading {
+    @include flex-center;
+    padding: $spacing-3xl;
+    color: $luxury-text-secondary;
+  }
+
+  &__carousel {
+    position: relative;
+    padding: 0 $spacing-lg;
+    
+    @include respond-to-max(sm) {
+      padding: 0 $spacing-sm;
+    }
+  }
+}
+
+// Horizontal scrollable tabs
+.tabs-scroll {
+  display: flex;
+  gap: $spacing-sm;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: $spacing-sm 0;
+  scroll-behavior: smooth;
+  
+  // Hide scrollbar but keep functionality
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  
+  @include respond-to-max(sm) {
+    gap: $spacing-xs;
+  }
+}
+
+.tab-button {
+  flex-shrink: 0;
+  padding: $spacing-md $spacing-xl;
+  background-color: $dark-secondary;
+  border: 2px solid transparent;
+  border-radius: $border-radius-lg;
+  color: $luxury-text-secondary;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: all $transition-normal;
+  white-space: nowrap;
+  text-transform: capitalize;
+  
+  @include respond-to-max(sm) {
+    padding: $spacing-sm $spacing-lg;
+    font-size: $font-size-sm;
+  }
+  
+  &:hover {
+    border-color: rgba($primary-color, 0.4);
+    background-color: rgba($primary-color, 0.1);
+    // color: $primary-color;
+  }
+  
+  &--active {
+    background-color: $primary-color;
+    color: $dark-bg;
+    border-color: $primary-color;
+    
+    &:hover {
+      background-color: lighten($primary-color, 5%);
+    }
+  }
+}
+
+// Scroll arrows for navigation
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba($dark-secondary, 0.95);
+  border: 2px solid rgba($primary-color, 0.3);
+  color: $primary-color;
+  cursor: pointer;
+  z-index: 10;
+  transition: all $transition-normal;
+  @include flex-center;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  &:hover {
+    background-color: $primary-color;
+    color: $dark-bg;
+    border-color: $primary-color;
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  &--left {
+    left: 0;
+  }
+  
+  &--right {
+    right: 0;
+  }
+  
+  @include respond-to-max(sm) {
+    width: 36px;
+    height: 36px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.explore-products-shipping-cost {
+    @include container;
+    display: block;
+    margin-bottom: 2rem;
+}
+
+// Manual scroll container with fade gradients
+.explore-products__scroll {
+  display: flex;
+  gap: $spacing-lg;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  padding: $spacing-md 0;
+  position: relative;
+  margin-bottom: 2rem;
+
+  
+  // Show scrollbar for clear affordance
+  scrollbar-width: thin;
+  scrollbar-color: rgba($primary-color, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary-color, 0.3);
+    border-radius: $border-radius-full;
+    
+    &:hover {
+      background: rgba($primary-color, 0.5);
+    }
+  }
+  
+  @include respond-to-max(sm) {
+    gap: $spacing-md;
+  }
+  
+  // Fade gradient on left when scrollable
+  &.fade-left::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background: linear-gradient(to right, $dark-bg, transparent);
+    pointer-events: none;
+    z-index: 5;
+    
+    @include respond-to-max(sm) {
+      width: 40px;
+    }
+  }
+  
+  // Fade gradient on right when scrollable
+  &.fade-right::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background: linear-gradient(to left, $dark-bg, transparent);
+    pointer-events: none;
+    z-index: 5;
+    
+    @include respond-to-max(sm) {
+      width: 40px;
+    }
+  }
+}
+
+// Minimal product card (image + name only)
+.explore-card {
+  flex-shrink: 0;
+  width: 250px;
+  cursor: pointer;
+  transition: transform $transition-normal;
+  
+  @include respond-to-max(sm) {
+    width: 180px;
+  }
+  
+  &:hover {
+    transform: translateY(-4px);
+  }
+  
+  &__image {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    background-color: $dark-secondary;
+    margin-bottom: $spacing-sm;
+    outline: 1px solid #e8e3d8;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform $transition-normal;
+    }
+    
+    .explore-card:hover & img {
+      transform: scale(1.05);
+    }
+  }
+  
+  &__name {
+    color: $luxury-text;
+    font-size: $font-size-base;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 $spacing-xs;
+    
+    @include respond-to-max(sm) {
+      font-size: $font-size-sm;
+    }
+
+    .product-info__price-actual {
+        font-size: $font-size-sm;
+    
+        @include respond-to-max(sm) {
+            font-size: $font-size-xs;
+        }
+    }
+
+    .product-info__price-discounted {
+        font-size: $font-size-base;
+    
+       @include respond-to-max(sm) {
+        font-size: $font-size-sm;
+        }
+    }
+  }
+}

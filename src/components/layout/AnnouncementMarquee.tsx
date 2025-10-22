@@ -1,7 +1,7 @@
 // components/layout/AnnouncementMarquee.tsx
 export function AnnouncementMarquee() {
   const messages = [
-    'Orders are carefully packed and shipped within 3-4 business days',
+    'Orders are carefully packed and shipped within 1-2 business days',
     "We currently do not offer Cash on Delivery — secure prepaid options only",
     "All online payments are 100% safe and powered by Razorpay",
     'We deliver across India with trusted and reliable courier partners',

@@ -276,9 +276,9 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
       }
 
       const productData = {
-        name: data.name,
-        description: data.description,
-        category: data.category,
+        name: data.name?.trim(),
+        description: data.description?.trim(),
+        category: data.category?.trim(),
         actual_price: intParseHandler(data.actual_price),
         discounted_price: intParseHandler(data.discounted_price),
         price: intParseHandler(data.discounted_price), // Backward compatibility
@@ -292,7 +292,7 @@ export function ProductForm({ product, onClose, onSave }: ProductFormProps) {
           colors: data.colors || "",
           dimensions: data.dimensions || undefined,
         },
-        instagram_media_id: data.instagram_media_id || undefined,
+        instagram_media_id: data.instagram_media_id?.trim() || undefined,
         highlight_in_home: data.highlight_in_home,
       };
 

@@ -5,7 +5,7 @@ export function Footer() {
     <footer style={{ 
       backgroundColor: '#1a1612',
       color: '#e8e3d8',
-      padding: '3rem 0',
+      padding: '5rem 0',
       marginTop: 'auto',
       borderTop: '1px solid #3d2317'
     }}>
