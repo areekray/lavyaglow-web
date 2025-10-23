@@ -30,9 +30,10 @@
   
   &__unavailable {
     text-align: center;
-    padding: $spacing-sm;
+    padding: $spacing-lg 0 $spacing-sm;
     font-size: $font-size-sm;
     color: $luxury-text;
+    font-weight: 800;
   }
 }
 

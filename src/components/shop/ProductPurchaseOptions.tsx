@@ -190,7 +190,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
   const hasSets = product.price_sets && product.price_sets.length > 0;
 
   return (
-    <div className="purchase-options">
+    <div className="purchase-options" style={!stockStatus.available ? { backgroundColor: 'rgba(239, 68, 68, 0.9)'} : {}}>
       {/* {!stockStatus.available && (
         <div className="purchase-options__header">
           <div className={`stock-status out-of-stock'}`}>
@@ -199,7 +199,7 @@ export function ProductPurchaseOptions({ product, onAddToCart }: ProductPurchase
         </div>
       )} */}
 
-      {product.characteristics?.colors && (
+      {product.characteristics?.colors && stockStatus.available && (
         <ColorSelector
           id='product-color-selector'
           availableColors={product.characteristics.colors}
