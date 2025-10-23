@@ -66,7 +66,8 @@ export const CategoryHeroCarousel = ({ slides, loading } : { slides: CategorySli
               <span className="title-accent">THE LAVYAGLOW WAY</span>
         </h1>
         <div className="hero-luxury__subtitle">
-          Handcrafted Luxury Scented Candles with 100% soy wax and non-toxic colors
+          Handcrafted Luxury Scented Candles with 100% soy wax.<br/>
+          🚚 We don't charge any additional shipping cost.
         </div>
       </div>
 

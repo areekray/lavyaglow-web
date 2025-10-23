@@ -134,7 +134,7 @@
 // Scroll arrows for navigation
 .scroll-arrow {
   position: absolute;
-  top: 50%;
+  top: 40%;
   transform: translateY(-50%);
   width: 48px;
   height: 48px;
@@ -146,7 +146,9 @@
   z-index: 10;
   transition: all $transition-normal;
   @include flex-center;
-  
+  // @include respond-to-max(sm) {
+  //   display: none;
+  // }
   svg {
     width: 24px;
     height: 24px;
@@ -160,11 +162,11 @@
   }
   
   &--left {
-    left: 0;
+    left: -.75rem;
   }
   
   &--right {
-    right: 0;
+    right: -.75rem;
   }
   
   @include respond-to-max(sm) {
@@ -191,7 +193,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  padding: $spacing-md 0;
+  padding: $spacing-md $spacing-sm;
   position: relative;
   margin-bottom: 1rem;
 
@@ -222,38 +224,38 @@
   }
   
   // Fade gradient on left when scrollable
-  &.fade-left::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    background: linear-gradient(to right, $dark-bg, transparent);
-    pointer-events: none;
-    z-index: 5;
+  // &.fade-left::before {
+  //   content: '';
+  //   position: absolute;
+  //   left: 0;
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 80px;
+  //   background: linear-gradient(to right, $dark-bg, transparent);
+  //   pointer-events: none;
+  //   z-index: 5;
     
-    @include respond-to-max(sm) {
-      width: 40px;
-    }
-  }
+  //   @include respond-to-max(sm) {
+  //     width: 40px;
+  //   }
+  // }
   
-  // Fade gradient on right when scrollable
-  &.fade-right::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 80px;
-    background: linear-gradient(to left, $dark-bg, transparent);
-    pointer-events: none;
-    z-index: 5;
+  // // Fade gradient on right when scrollable
+  // &.fade-right::after {
+  //   content: '';
+  //   position: absolute;
+  //   right: 0;
+  //   top: 0;
+  //   bottom: 0;
+  //   width: 80px;
+  //   background: linear-gradient(to left, $dark-bg, transparent);
+  //   pointer-events: none;
+  //   z-index: 5;
     
-    @include respond-to-max(sm) {
-      width: 40px;
-    }
-  }
+  //   @include respond-to-max(sm) {
+  //     width: 40px;
+  //   }
+  // }
 }
 
 // Minimal product card (image + name only)

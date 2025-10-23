@@ -123,7 +123,7 @@
   &__background {
     position: absolute;
     inset: 0;
-        background: linear-gradient(135deg, #1a0d08 0%, #2c1810 50%, #4a2d1f 100%);
+        background: linear-gradient(135deg, #120804 0%, #2c1810 50%, #1a0d08 100%);
     z-index: 0;
   }
 
@@ -436,8 +436,8 @@
   
   @include respond-to-max(md) {
     top: 3rem;
-    width: clamp(40px, 6vh, 50px);
-    height: clamp(40px, 6vh, 50px);
+    width: 48px;
+    height: 48px;
   }
   svg {
     width: clamp(20px, 3.5vh, 28px);
