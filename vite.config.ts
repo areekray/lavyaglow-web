@@ -175,6 +175,7 @@ export default defineConfig({
                      url.pathname.includes('/rest/v1/') &&
                      url.searchParams.has('select') &&
                      url.searchParams.get('is_deleted') === 'eq.false' &&
+                     url.searchParams.get('in_stock') === 'eq.true' &&
                      url.searchParams.has('order');
             },
             handler: 'StaleWhileRevalidate',
