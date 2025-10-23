@@ -1,49 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import type { Product } from '@/types';
-import { supabase } from '@/services/supabase';
+import type { CategorySlide } from '@/types';
 import { Button } from '../ui/Button';
+import { ArrowDownIcon } from '@heroicons/react/24/outline';
 
-export const ExploreProducts = () => {
-  const [categories, setCategories] = useState<string[]>(['All']);
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+export const ExploreProducts = ({ categoryBasedProduct, nextCategory }: { categoryBasedProduct: CategorySlide, nextCategory: string }) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchCategoriesAndProducts();
-  }, []);
+  const products = categoryBasedProduct.products;
 
   useEffect(() => {
     checkScrollPosition();
-  }, [products, activeCategory]);
-
-  const fetchCategoriesAndProducts = async () => {
-    setLoading(true);
-    
-    // Fetch all products
-    const { data: allProducts, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('is_deleted', false)
-      .order('created_at', { ascending: false });
-
-    if (error) {
-      console.error('Error fetching products:', error);
-      setLoading(false);
-      return;
-    }
-
-    // Extract unique categories
-    const uniqueCategories = ['All', ...new Set(allProducts?.map((p: Product) => p.category).filter(Boolean))];
-    setCategories(uniqueCategories as string[]);
-    setProducts(allProducts || []);
-    setLoading(false);
-  };
+  }, [products]);
 
   const checkScrollPosition = () => {
     const container = scrollRef.current;
@@ -66,43 +36,20 @@ export const ExploreProducts = () => {
     });
   };
 
-  const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
-
   const handleProductClick = (productId: string) => {
     navigate(`/products/${productId}`);
   };
 
   return (
-    <section className="explore-products" id="explore-products">
+    <section className={`explore-products${!nextCategory ? ' last-section' : ''}`} id={`${categoryBasedProduct.category.toLowerCase()}-explore-products`}>
       <div className="container">
         {/* Header matching curated products style */}
         
           <div className="featured-luxury__header">
-            <h2 className="featured-luxury__title">Our Products</h2>
-            <div className="featured-luxury__subtitle">Delight someone special — or treat yourself to pure luxury.</div>
+            <h2 className="featured-luxury__title">{categoryBasedProduct.category} Candles</h2>
+            <div className="featured-luxury__subtitle">{categoryBasedProduct.description}</div>
           </div>
 
-        {/* Category Tabs */}
-        <div className="explore-products__tabs">
-          <div className="tabs-scroll">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={`tab-button ${activeCategory === category ? 'tab-button--active' : ''}`}
-                onClick={() => setActiveCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Product Cards with Scroll Controls */}
-        {loading ? (
-          <div className="explore-products__loading">Loading products...</div>
-        ) : (
           <div className="explore-products__carousel">
             {/* Left Arrow */}
             {canScrollLeft && (
@@ -123,13 +70,18 @@ export const ExploreProducts = () => {
               className={`explore-products__scroll ${canScrollLeft ? 'fade-left' : ''} ${canScrollRight ? 'fade-right' : ''}`}
               onScroll={checkScrollPosition}
             >
-              {filteredProducts.map((product) => (
+              {products.map((product) => (
                 <div
                   key={product.id}
                   className="explore-card"
-                  style={product.in_stock ? {} : { opacity: 0.5 }}
+                  style={product.in_stock ? {} : { }}
                   onClick={() => handleProductClick(product.id)}
                 >
+                  {product.in_stock ? null : (
+                    <div className={`product-card__stock-badge stock-status--out-of-stock`}>
+                      {"⚠️ Sold Out"}
+                    </div>
+                  )}
                   <div className="explore-card__image">
                     <img 
                       src={product.images?.[0] || '/placeholder.jpg'} 
@@ -163,17 +115,27 @@ export const ExploreProducts = () => {
               </button>
             )}
           </div>
-        )}
       </div>
       
         <small className="text-muted explore-products-shipping-cost">🚚 No additional shipping cost on any purchase</small>
           <div className="featured-luxury__cta">
-            
-            <Link to="/products">
-              <Button variant="luxury" size="lg">
-                View All Products
+            {nextCategory ? (
+              <Button variant="luxury" size="lg" onClick={() => {
+                const element = document.getElementById(`${nextCategory.toLowerCase()}-explore-products`);
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}>
+                {`Explore ${nextCategory} Candles`}
+                <ArrowDownIcon style={{ width: '20px', height: '20px', marginLeft: '0.5rem' }} />
               </Button>
-            </Link>
+            ): (
+              <Link to="/products">
+                <Button variant="luxury" size="lg">
+                  View All Products
+                </Button>
+              </Link>
+            )}
           </div>
     </section>
   );

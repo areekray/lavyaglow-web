@@ -103,6 +103,7 @@
       left: $spacing-xs;
       right: $spacing-xs;
       padding: $spacing-xs;
+      gap: 0.15rem;
     }
   }
 
@@ -124,7 +125,7 @@
     letter-spacing: 1px;
     
     @include respond-to-max(sm) {
-      font-size: $font-size-xs;
+      font-size: 0.5rem;
     }
   }
 

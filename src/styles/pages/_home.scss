@@ -318,21 +318,32 @@
   &__header {
     text-align: center;
     margin-bottom: $spacing-5xl;
-    @include respond-to-max(sm) { margin-bottom: $spacing-3xl; }
+    @include respond-to-max(sm) { margin-bottom: $spacing-xl; }
   }
   
   &__title {
     font-family: $font-family-special;
-    font-size: $font-size-4xl;
+    font-size: clamp(2rem, 6vh, 3.5rem);
     color: $luxury-text;
     margin-bottom: $spacing-md;
     font-weight: $font-weight-normal;
+    @include respond-to-max(lg) {
+      font-size: clamp(1.75rem, 5vh, 2.5rem);
+    }
+    
+    @include respond-to-max(md) {
+      font-size: clamp(1.5rem, 4vh, 1.5rem);
+    }
   }
   
   &__subtitle {
     font-family: $font-family-accent;
-    font-size: $font-size-2xl;
     color: $primary-color;
+    font-size: clamp(1rem, 2.2vh, 1.5rem);
+      
+    @include respond-to-max(md) {
+      font-size: clamp(0.875rem, 1.8vh, 1rem);
+    }
   }
   
   &__grid {
@@ -472,13 +483,12 @@
   &__grid {
     @include grid-responsive(3, $spacing-3xl);
     @include respond-to-max(sm) {
-      gap: 1rem;
+      gap: 2rem;
     }
   }
   
   &__item {
     text-align: center;
-    padding: $spacing-xl;
     
     h4 {
       font-family: $font-family-special;
@@ -495,8 +505,8 @@
   }
   
   &__icon {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     margin: 0 auto $spacing-lg;
     @include flex-center;
     border: 2px solid $primary-color;
@@ -504,12 +514,9 @@
     color: $primary-color;
     transition: all $transition-luxury;
     font-size: $font-size-2xl;
-    
-    &:hover {
-      background-color: $primary-color;
-      color: $dark-bg;
-      transform: scale(1.05);
-    }
+    background-color: $primary-color;
+    background-size: contain;
+    background-position: center;
   }
 }
 

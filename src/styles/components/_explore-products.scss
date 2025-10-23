@@ -3,9 +3,16 @@
 
 .explore-products {
   background-color: $dark-bg;
-  padding: $spacing-5xl 0;
+  padding: $spacing-5xl 0 0;
 
-  @include respond-to-max(sm) { padding: $spacing-3xl 0; }
+  @include respond-to-max(sm) { padding: $spacing-3xl 0 0; }
+
+  &.last-section {
+    padding-bottom: $spacing-5xl;
+    @include respond-to-max(sm) {
+      padding-bottom: $spacing-3xl;
+    }
+  }
 
   // Header styling matching curated products
   &__header {
@@ -255,7 +262,7 @@
   width: 250px;
   cursor: pointer;
   transition: transform $transition-normal;
-  
+  position: relative;
   @include respond-to-max(sm) {
     width: 180px;
   }

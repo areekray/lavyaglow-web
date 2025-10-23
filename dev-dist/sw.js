@@ -82,7 +82,7 @@ define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.cffgdcn10l8"
+    "revision": "0.j39ki3js1ao"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -195,6 +195,37 @@ define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
         cachedResponse
       }) => {
         return cachedResponse;
+      }
+    }]
+  }), 'GET');
+  workbox.registerRoute(({
+    url
+  }) => {
+    return url.hostname.includes("supabase.co") && url.pathname.includes("/rest/v1/") && url.searchParams.has("select") && url.searchParams.get("is_deleted") === "eq.false" && url.searchParams.has("order");
+  }, new workbox.StaleWhileRevalidate({
+    "cacheName": "lavyaglow-products-list",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 10,
+      maxAgeSeconds: 300,
+      purgeOnQuotaError: true
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [200]
+    }), {
+      cachedResponseWillBeUsed: async ({
+        cachedResponse,
+        request
+      }) => {
+        if (cachedResponse) {
+          console.log("\u{1F3AF} LavyaGlow: Serving products list from cache (stale):", request.url);
+          return cachedResponse;
+        }
+        return null;
+      },
+      requestWillFetch: async ({
+        request
+      }) => {
+        console.log("\u{1F310} LavyaGlow: Fetching fresh products list in background:", request.url);
+        return request;
       }
     }]
   }), 'GET');

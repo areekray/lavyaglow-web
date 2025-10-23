@@ -171,6 +171,42 @@ export default defineConfig({
           },
           {
             urlPattern: ({ url }) => {
+              return url.hostname.includes('supabase.co') &&
+                     url.pathname.includes('/rest/v1/') &&
+                     url.searchParams.has('select') &&
+                     url.searchParams.get('is_deleted') === 'eq.false' &&
+                     url.searchParams.has('order');
+            },
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'lavyaglow-products-list',
+              expiration: {
+                maxEntries: 10, // Only a few variations of this query
+                maxAgeSeconds: 5 * 60, // 5 minutes
+                purgeOnQuotaError: true
+              },
+              cacheableResponse: {
+                statuses: [200]
+              },
+              plugins: [
+                {
+                  cachedResponseWillBeUsed: async ({ cachedResponse, request }) => {
+                    if (cachedResponse) {
+                      console.log('🎯 LavyaGlow: Serving products list from cache (stale):', request.url);
+                      return cachedResponse;
+                    }
+                    return null;
+                  },
+                  requestWillFetch: async ({ request }) => {
+                    console.log('🌐 LavyaGlow: Fetching fresh products list in background:', request.url);
+                    return request;
+                  }
+                }
+              ]
+            }
+          },
+          {
+            urlPattern: ({ url }) => {
               return url.hostname.includes('supabase.co') && 
                      url.pathname.includes('/rest/v1/') &&
                      !url.pathname.includes('/storage/'); // Exclude storage URLs

@@ -26,6 +26,8 @@
 @use 'components/instagram-post' as *;
 @use 'components/explore-products' as *;
 @use 'components/our-story' as *;
+@use 'components/category-hero-carousel' as *;
+@use 'components/scroll-to-top' as *;
 
 // Pages
 @use 'pages/home' as *;
@@ -100,7 +102,7 @@
   letter-spacing: 0.5px;
   margin-left: $spacing-sm;
   
-  @include respond-to(md) {
+  @include respond-to-max(md) {
     display: none; // Hide on mobile
   }
 }
@@ -222,7 +224,7 @@
     gap: $spacing-md;
     z-index: 3;
     
-    @include respond-to(sm) {
+    @include respond-to-max(sm) {
       bottom: 1rem;
       gap: $spacing-sm;
     }
@@ -239,7 +241,7 @@
     overflow: hidden;
     transition: all $transition-normal;
     
-    @include respond-to(sm) {
+    @include respond-to-max(sm) {
       width: 30px;
       height: 3px;
     }
@@ -284,7 +286,7 @@
     transition: all $transition-normal;
     backdrop-filter: blur(10px);
     
-    @include respond-to(sm) {
+    @include respond-to-max(sm) {
       width: 40px;
       height: 40px;
       
@@ -304,7 +306,7 @@
     &--prev {
       left: 2rem;
       
-      @include respond-to(sm) {
+      @include respond-to-max(sm) {
         left: 1rem;
       }
     }
@@ -312,7 +314,7 @@
     &--next {
       right: 2rem;
       
-      @include respond-to(sm) {
+      @include respond-to-max(sm) {
         right: 1rem;
       }
     }

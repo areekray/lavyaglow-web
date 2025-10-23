@@ -34,6 +34,12 @@ export interface Product {
   price_sets?: ProductPriceSet[];
 }
 
+export interface CategorySlide {
+  category: string;
+  products: Product[];
+  productCount: number;
+  description?: string;
+}
 export interface ProductPriceSet {
   id: string;
   product_id: string;
