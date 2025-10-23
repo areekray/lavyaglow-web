@@ -28,7 +28,7 @@ export function Home() {
         .from('products')
         .select('*')
         .eq('is_deleted', false)
-        .eq('is_stock', true)
+        .eq('in_stock', true)
         .order('created_at', { ascending: false });
   
       if (error) {

@@ -82,7 +82,7 @@ define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
    */
   workbox.precacheAndRoute([{
     "url": "index.html",
-    "revision": "0.f4usmanpu8"
+    "revision": "0.6avfonn4mto"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -201,7 +201,7 @@ define(['./workbox-7c0cbdc4'], (function (workbox) { 'use strict';
   workbox.registerRoute(({
     url
   }) => {
-    return url.hostname.includes("supabase.co") && url.pathname.includes("/rest/v1/") && url.searchParams.has("select") && url.searchParams.get("is_deleted") === "eq.false" && url.searchParams.has("order");
+    return url.hostname.includes("supabase.co") && url.pathname.includes("/rest/v1/") && url.searchParams.has("select") && url.searchParams.get("is_deleted") === "eq.false" && url.searchParams.get("in_stock") === "eq.true" && url.searchParams.has("order");
   }, new workbox.StaleWhileRevalidate({
     "cacheName": "lavyaglow-products-list",
     plugins: [new workbox.ExpirationPlugin({
