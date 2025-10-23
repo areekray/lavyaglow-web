@@ -50,7 +50,7 @@
       letter-spacing: 1px;
     }
     
-    @include respond-to(sm) {
+    @include respond-to-max(sm) {
       padding: $spacing-xs $spacing-md;
       
       span {
@@ -209,7 +209,7 @@
   height: 56px;
   margin-bottom: 2rem;
   
-  @include respond-to(sm) {
+  @include respond-to-max(sm) {
     flex-direction: column;
     gap: $spacing-lg;
   }
@@ -389,7 +389,7 @@
   backdrop-filter: blur(10px);
   transition: all $transition-normal;
   
-  @include respond-to(sm) {
+  @include respond-to-max(sm) {
     padding: $spacing-xs $spacing-md;
   }
   
@@ -409,7 +409,7 @@
     font-weight: $font-weight-medium;
     white-space: nowrap;
     
-    @include respond-to(sm) {
+    @include respond-to-max(sm) {
       font-size: $font-size-xs;
     }
   }
