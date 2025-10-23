@@ -266,7 +266,7 @@
   transition: transform $transition-normal;
   position: relative;
   @include respond-to-max(sm) {
-    width: 180px;
+    width: 200px;
   }
   
   &:hover {
