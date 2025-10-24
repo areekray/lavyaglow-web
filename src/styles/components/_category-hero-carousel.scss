@@ -325,7 +325,7 @@
     border-radius: $border-radius-xl; // Larger radius
     cursor: pointer;
     transition: transform $transition-normal, box-shadow $transition-normal;
-    
+    border: 1px solid $primary-color;
     // Aspect ratio with better proportions
     &::before {
       content: '';

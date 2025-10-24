@@ -28,22 +28,58 @@ export const imageUploadService = {
     }
   },
 
+  // async uploadImage(file: File, folder: string = 'products'): Promise<string> {
+  //   try {
+  //     // Compress image first
+  //     const compressedFile = await this.compressImage(file);
+      
+  //     // Create unique filename
+  //     const fileExt = 'webp'; // Force WebP for best compression
+  //     const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+  //     const filePath = `${folder}/${fileName}`;
+
+  //     console.log('Uploading compressed file to:', filePath);
+
+  //     // Upload compressed file to Supabase Storage
+  //     const { error } = await supabase.storage
+  //       .from('product-images')
+  //       .upload(filePath, compressedFile, {
+  //         cacheControl: '3600',
+  //         upsert: false
+  //       });
+        
+  //     if (error) {
+  //       console.error('Upload error:', error);
+  //       throw new Error(`Upload failed: ${error.message}`);
+  //     }
+
+  //     // Get public URL
+  //     const { data: urlData } = supabase.storage
+  //       .from('product-images')
+  //       .getPublicUrl(filePath);
+
+  //     return urlData.publicUrl;
+
+  //   } catch (error: any) {
+  //     console.error('Image upload service error:', error);
+  //     throw error;
+  //   }
+  // },
+
   async uploadImage(file: File, folder: string = 'products'): Promise<string> {
     try {
-      // Compress image first
-      const compressedFile = await this.compressImage(file);
-      
-      // Create unique filename
-      const fileExt = 'webp'; // Force WebP for best compression
+      // Get original file extension
+      const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
       const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
       const filePath = `${folder}/${fileName}`;
 
-      console.log('Uploading compressed file to:', filePath);
+      console.log('Uploading original file to:', filePath);
+      console.log('File size:', (file.size / 1024 / 1024).toFixed(2), 'MB');
 
-      // Upload compressed file to Supabase Storage
+      // Upload original file to Supabase Storage
       const { error } = await supabase.storage
         .from('product-images')
-        .upload(filePath, compressedFile, {
+        .upload(filePath, file, {
           cacheControl: '3600',
           upsert: false
         });
